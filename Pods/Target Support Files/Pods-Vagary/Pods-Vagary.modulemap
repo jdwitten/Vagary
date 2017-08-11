@@ -1,0 +1,6 @@
+framework module Pods_Vagary {
+  umbrella header "Pods-Vagary-umbrella.h"
+
+  export *
+  module * { export * }
+}
