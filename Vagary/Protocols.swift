@@ -16,3 +16,9 @@ protocol JSONParseable{
     func toJSON() -> [String: Any]
 
 }
+
+enum Loaded<T>{
+    case loading
+    case loaded(data: T)
+    case error
+}

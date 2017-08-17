@@ -7,78 +7,61 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import RxDataSources
+import ReSwift
 
 
 
 
-class FeedViewController: UIViewController, UITableViewDelegate {
+class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber, UISearchBarDelegate, UITableViewDataSource {
 
     
     @IBOutlet weak var postsTableView: UITableView!
-    let refreshControl = UIRefreshControl()
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var viewModel: FeedViewModel!
-    var disposeBag = DisposeBag()
-    let dataSource = FeedViewController.configureDataSource()
+    let api: TravelApi = TravelApi()
+    var posts: [Post] = []
+
     
     //let activityIndicator = ActivityIndicator()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        viewModel = FeedViewModel()
-        
-        postsTableView.addSubview(refreshControl)
-        
-        refreshControl.rx
-            .controlEvent(.valueChanged)
-            .asObservable()
-            .map{true}
-            .bindTo(viewModel.refresh)
-            .disposed(by: disposeBag)
-    
-       viewModel
-            .Posts
-            .map{ [SectionModel(model: "", items:$0)] }
-            .drive( postsTableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        viewModel
-            .Posts
-            .map{ _ in false }
-            .drive(refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-        
-        postsTableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
+        postsTableView.delegate = self
+        searchBar.delegate = self
+        postsTableView.dataSource = self
     }
     
-    static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, Post>>{
     
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Post>>()
+    func getPosts(with query: String) -> Store<AppState>.ActionCreator {
         
-        dataSource.configureCell = { (_, tv, ip, post: Post) in
-            let cell = tv.dequeueReusableCell(withIdentifier: TableViewCellId.PostFeed.rawValue)! as! PostFeedTableViewCell
-            cell.title.text = post.title
-            cell.userHandle.text = String(describing: post.author)
-            cell.postText.text = post.text
-            return cell
+        return { state, store in
+            TravelApi.getPosts(withQuery: state.feed.query ?? ""){ posts in
+                DispatchQueue.main.async {
+                    store.dispatch(PostResponse(posts: posts))
+                }
+            }
+            
+            return PostSearch(query: query)
         }
-        
-        
-        return dataSource
-        
     }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func newState(state: AppState){
+        let viewModel = FeedViewModel(state)
+        posts = viewModel.posts
+        print(posts)
+        postsTableView.reloadData()
     }
     
 
@@ -102,6 +85,31 @@ extension FeedViewController{
         return UIScreen.main.bounds.height * 0.75
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellId.PostFeed.rawValue , for: indexPath)
+        configureCell(cell, at: indexPath)
+        return cell
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        store.dispatch(getPosts(with: searchText))
+    }
+    
+    func configureCell(_ cell: UITableViewCell, at indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        if let cell = cell as? PostFeedTableViewCell{
+            cell.title.text = post.title
+            cell.postText.text = post.text
+            cell.userHandle.text = String(describing: post.author)
+        }
+    }
     
 }
+
+
 

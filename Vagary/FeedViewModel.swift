@@ -7,45 +7,26 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
-
-
 
 
 struct FeedViewModel{
     
     
-    let Posts: Driver<[Post]>
-    let api = TravelApi()
-    
-    let refresh: Variable<Bool>
+    var posts: [Post] = []
+    var query: String = ""
     
     
-    init(){
+    init(_ state: AppState){
+        let feedState = state.feed
         
-        self.refresh = Variable<Bool>(false)
-        
-        
-        let postResponseDriver: Driver<TravelAPIResponse> = refresh
-            .asDriver()
-            .map{ _ in PostSearchQuery(queryText: "", queryUser: 0, requestingUser: 0) }
-            .flatMapLatest{
-                return TravelApi.getPosts(withQuery: $0)
-                    .asDriver(onErrorJustReturn: .Error)
-            }
-        
-        self.Posts = postResponseDriver
-            .debug()
-            .map{
-                switch $0{
-                case .PostsResponse(let posts):
-                    return posts
-                default:
-                    return []
-                }
+        switch feedState.posts{
+        case .loaded(let data):
+            self.posts = data
+        default:
+            self.posts = []
         }
-
+        
+        query = feedState.query ?? ""
     }
     
     
