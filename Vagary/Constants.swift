@@ -17,9 +17,14 @@ enum TableViewCellId: String{
     
 }
 
+enum CollectionViewCellId: String{
+    case Trip = "TripCollectionViewCell"
+}
+
 
 enum ControllerStoryboardId: String{
     
     case FeedViewController = "FeedViewController"
     case RootTabBarController = "RootTabBarController"
+    case PassportViewController = "PassportViewController"
 }

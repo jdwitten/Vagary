@@ -1,0 +1,22 @@
+{
+    "trips" : [
+        {
+               "id" : 1,
+               "user": 1,
+               "title": "Backpacking the Balkans",
+               "posts" : [1, 2, 3]
+        },
+        {
+               "id": 2,
+               "user": 1,
+               "title": "Hiking the AT",
+               "posts": [4, 5, 6]
+        },
+        {
+               "id":3,
+               "user": 1,
+               "title": "Great American Adventure",
+               "posts": [7, 8, 9]
+        }
+    ]
+}

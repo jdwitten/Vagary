@@ -12,22 +12,116 @@ import ReSwift
 func AppReducer(action: Action, state: AppState?) -> AppState {
     
     
-    let state = state ?? AppState(feed: FeedState(query: "", posts: .loaded(data: [])))
+    let state = state ?? AppState()
+    
+    print(action)
     
     return AppState(
-        feed: FeedReducer(action: action, state: state.feed)
+        routing: routingReducer(action: action, state: state),
+        auth: authReducer(action: action, state: state),
+        feed: feedReducer(action: action, state: state),
+        passport: passportReducer(action: action, state: state),
+        postDetail: postDetailReducer(action: action, state: state),
+        tripDetail: tripDetailReducer(action: action, state: state),
+        draft: draftReducer(action: action, state: state)
     )
 }
 
-func FeedReducer(action: Action, state: FeedState?) -> FeedState {
-    var state = state ?? FeedState(query: "", posts: .loaded(data: []))
-    
+func feedReducer(action: Action, state: AppState?) -> FeedState {
+    var feedState = state?.feed ?? FeedState()
     if let action = action as? PostSearch {
-        state.query = action.query
+        feedState.query = action.query
     }
     else if let action = action as? PostResponse{
-        state.posts = action.posts
-        print(state.posts)
+        feedState.posts = action.posts
     }
-    return state
+     return feedState
 }
+
+
+func routingReducer(action: Action, state: AppState?) -> RoutingState{
+    var routingState = state?.routing ?? RoutingState()
+    if action is ShowPostDetail{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.append(.postDetail)
+            routingState.routes[routingState.selectedTab] = route
+        }
+    }
+    else if action is ShowTripDetail{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.append(.tripDetail)
+            routingState.routes[routingState.selectedTab] = route
+            print(route)
+        }
+    }
+    else if action is PopNavigation{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.removeLast()
+            routingState.routes[routingState.selectedTab] = route
+        }
+    }
+    else if let action = action as? ChangeTab{
+        routingState.selectedTab = action.route
+    }
+    return routingState
+    
+}
+
+
+func passportReducer(action: Action, state: AppState?) -> PassportState{
+    
+    var passportState = state?.passport ?? PassportState()
+    
+    if let action = action as? TripsSearch{
+        
+    }
+    else if let action = action as? TripsResponse{
+        passportState.trips = action.trips
+    }
+    
+    return passportState
+}
+
+func authReducer(action: Action, state: AppState?) -> AuthState{
+    
+    let authState = state?.auth ?? AuthState()
+    
+    return authState
+}
+
+
+func postDetailReducer(action: Action, state: AppState?) -> PostDetailState{
+    var postDetailState = state?.postDetail ?? PostDetailState()
+    
+    if let action = action as? PostDetailResponse{
+        postDetailState.post = action.post
+    }
+    
+    return postDetailState
+}
+
+func tripDetailReducer(action: Action, state: AppState?) -> TripDetailState{
+    var tripDetailState = state?.tripDetail ?? TripDetailState()
+    
+    if let action = action as? TripDetailResponse{
+        tripDetailState.trip = action.trip
+        
+    }
+    else if let action = action as? TripDetailPostsResponse{
+        tripDetailState.posts = action.posts
+    }
+    
+    return tripDetailState
+}
+
+func draftReducer(action: Action, state: AppState?) -> DraftState{
+    var draftState = state?.draft ?? DraftState()
+    
+    if let action = action as? ChangeDraftText{
+        //draftState.text = action.newText
+    }
+    
+    return draftState
+}
+
+

@@ -12,18 +12,15 @@ import ReSwift
 
 
 
-class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber, UISearchBarDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber, UITableViewDataSource, FeedController {
 
     
     @IBOutlet weak var postsTableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    let refreshControl = UIRefreshControl()
     
     var viewModel: FeedViewModel!
-    let api: TravelApi = TravelApi()
     var posts: [Post] = []
-
-    
-    //let activityIndicator = ActivityIndicator()
+    var delegate: FeedControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,16 +30,22 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print("view did load")
         postsTableView.delegate = self
-        searchBar.delegate = self
         postsTableView.dataSource = self
+        configureTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        store.unsubscribe(self)
     }
     
     
     func getPosts(with query: String) -> Store<AppState>.ActionCreator {
         
         return { state, store in
-            TravelApi.getPosts(withQuery: state.feed.query ?? ""){ posts in
+            let api: TravelApi = TravelApi()
+            api.getPosts(withQuery: state.feed.query ?? ""){ posts in
                 DispatchQueue.main.async {
                     store.dispatch(PostResponse(posts: posts))
                 }
@@ -57,10 +60,27 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
         // Dispose of any resources that can be recreated.
     }
     
+    func configureTableView(){
+        let nib = UINib(nibName: "PostFeedTableViewCell", bundle: nil)
+        postsTableView.register(nib, forCellReuseIdentifier: "PostFeedTableViewCell")
+        postsTableView.rowHeight = UITableViewAutomaticDimension
+        postsTableView.estimatedRowHeight = 400
+        self.refreshControl.addTarget(self, action: #selector(FeedViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
+        postsTableView.addSubview(refreshControl)
+    }
+    
+    func handleRefresh(_ refreshControl: UIRefreshControl){
+        delegate?.getPosts()
+    }
+    
     func newState(state: AppState){
         let viewModel = FeedViewModel(state)
         posts = viewModel.posts
-        print(posts)
+        if viewModel.loading == false{
+            refreshControl.endRefreshing()
+        }else{
+            refreshControl.beginRefreshing()
+        }
         postsTableView.reloadData()
     }
     
@@ -81,9 +101,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
 
 extension FeedViewController{
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * 0.75
-    }
+    //func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //return UIScreen.main.bounds.height * 0.6
+    //}
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -95,6 +115,15 @@ extension FeedViewController{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+        delegate?.selectedPost(posts[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         store.dispatch(getPosts(with: searchText))
@@ -104,7 +133,7 @@ extension FeedViewController{
         let post = posts[indexPath.row]
         if let cell = cell as? PostFeedTableViewCell{
             cell.title.text = post.title
-            cell.postText.text = post.text
+            //cell.postText.text = post.text
             cell.userHandle.text = String(describing: post.author)
         }
     }

@@ -22,3 +22,7 @@ enum Loaded<T>{
     case loaded(data: T)
     case error
 }
+
+protocol StoreListener{
+    func newState(_ : AppState)
+}

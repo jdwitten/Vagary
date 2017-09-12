@@ -1,0 +1,18 @@
+{
+    "post" :
+        {
+            "id" : 1,
+            "author": 1,
+            "title": "Backpacking the Balkans",
+            "body" : [
+                {
+                    "type": "image",
+                    "content": "https://www.gstatic.com/webp/gallery/1.jpg"
+                },
+                {
+                    "type": "text",
+                    "content": "This is some text for the post"
+                }
+            ]
+        }
+}

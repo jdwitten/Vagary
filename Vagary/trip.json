@@ -1,0 +1,9 @@
+{
+    "trip" :
+            {
+               "id" : 1,
+               "user": 1,
+               "title": "Backpacking the Balkans",
+              "posts" : [1, 2, 3]
+            }
+}
