@@ -14,6 +14,7 @@ struct FeedViewModel{
     
     var posts: [Post] = []
     var query: String = ""
+    var loading: Bool = false
     
     
     init(_ state: AppState){
@@ -22,8 +23,11 @@ struct FeedViewModel{
         switch feedState.posts{
         case .loaded(let data):
             self.posts = data
-        default:
-            self.posts = []
+            loading = false
+        case .loading:
+            loading = true
+        case .error:
+            loading = false
         }
         
         query = feedState.query ?? ""
