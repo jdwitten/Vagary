@@ -51,6 +51,34 @@ struct PopNavigation: Action{
     
 }
 
+struct SelectPostOption: Action{
+    var option: RoutingDestination
+}
+
 struct ChangeDraftText: Action{
     var newText: String
+}
+
+struct CreateDraft: Action{
+    var post: Loaded<Post>
+}
+
+struct EditDraftDetail: Action{
+    var field: DraftField
+}
+
+struct UpdateDraft: Action{
+    var field: DraftField
+}
+
+struct ShowDraft: Action{
+    var content: [PostElement]
+}
+
+struct LoadedDrafts: Action{
+    var drafts: Loaded<[Post]>
+}
+
+struct AddPostElement: Action{
+    var element: PostElement
 }

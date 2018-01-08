@@ -1,5 +1,4 @@
 {
-    "user" : {
         "id" : 1,
         "fname" : "Jonathan",
         "lname" : "Witten",
@@ -8,5 +7,4 @@
         "following" : [2, 3, 4, 5, 6, 7],
         "followers" : [2, 3, 4, 5, 6, 7],
         "trips" : [1, 2, 3]
-    }
 }

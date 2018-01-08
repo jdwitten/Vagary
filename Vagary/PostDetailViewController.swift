@@ -9,27 +9,26 @@
 import UIKit
 import ReSwift
 
-class PostDetailViewController: UIViewController, StoreSubscriber, FeedController {
-
-    var delegate: FeedControllerDelegate?
+class PostDetailViewController: UIViewController, StoreSubscriber {
     
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        configureBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self)
+        ViaStore.sharedStore.subscribe(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if self.isMovingFromParentViewController {
-            delegate?.popNavigation()
-        }
-        store.unsubscribe(self)
+        ViaStore.sharedStore.unsubscribe(self)
     }
     
     func newState(state: AppState) {
@@ -39,26 +38,40 @@ class PostDetailViewController: UIViewController, StoreSubscriber, FeedControlle
         }
     }
     
+    func configureBackButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToFeed(sender:)))
+    }
+    
+    @objc func backToFeed(sender: AnyObject) {
+        ViaStore.sharedStore.dispatch(PopNavigation())
+    }
+    
     func layoutContent(_ post: Post){
-        var topConstraint = self.view.topAnchor
-        
-        let body = post.content
-        
+        contentView.subviews.map{$0.removeFromSuperview()}
+        var topConstraint = contentView.topAnchor
+        let body = post.content ?? []
         let views: [UIView?] = body.map{ [unowned self] element in
             if let newView = self.createBodyElement(element){
-                self.view.addSubview(newView)
+                self.contentView.addSubview(newView)
                 newView.translatesAutoresizingMaskIntoConstraints = false
-                newView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-                newView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                newView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
+                newView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
                 newView.topAnchor.constraint(equalTo: topConstraint).isActive = true
-                newView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+                if newView is UIImageView{
+                    newView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+                } else if let newView = newView as? UIScrollView{
+                    newView.isScrollEnabled = false
+                }
+                
                 topConstraint = newView.bottomAnchor
                 return newView
             }
             return nil
         }
+        if views.last != nil {
+            views.last!?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        }
         self.view.layoutIfNeeded()
-        
     }
     
     func createBodyElement(_ element: PostElement) -> UIView?{

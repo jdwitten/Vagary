@@ -54,6 +54,42 @@ func routingReducer(action: Action, state: AppState?) -> RoutingState{
             print(route)
         }
     }
+    else if let action = action as? SelectPostOption{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.append(action.option)
+            routingState.routes[routingState.selectedTab] = route
+            print(route)
+        }
+    }
+    else if let action = action as? CreateDraft{
+        if case .loading = action.post{
+            return routingState
+        }
+        else if case .loaded = action.post{
+            if var route = routingState.routes[routingState.selectedTab]{
+                route.append(.draftPost)
+                routingState.routes[routingState.selectedTab] = route
+            }
+        }
+    }
+    else if action is EditDraftDetail{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.append(.editDraftDetail)
+            routingState.routes[routingState.selectedTab] = route
+        }
+    }
+    else if action is UpdateDraft{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.removeLast()
+            routingState.routes[routingState.selectedTab] = route
+        }
+    }
+    else if action is ShowDraft{
+        if var route = routingState.routes[routingState.selectedTab]{
+            route.append(.draftPost)
+            routingState.routes[routingState.selectedTab] = route
+        }
+    }
     else if action is PopNavigation{
         if var route = routingState.routes[routingState.selectedTab]{
             route.removeLast()
@@ -115,11 +151,47 @@ func tripDetailReducer(action: Action, state: AppState?) -> TripDetailState{
 }
 
 func draftReducer(action: Action, state: AppState?) -> DraftState{
-    var draftState = state?.draft ?? DraftState()
+    var state = state ?? AppState()
+    var draftState = state.draft
     
     if let action = action as? ChangeDraftText{
         //draftState.text = action.newText
     }
+        
+    else if let action = action as? UpdateDraft{
+        switch action.field{
+        case .Location(let location):
+            guard location != "" else {
+                draftState.error = "Please check location for errors"
+                break
+            }
+            draftState.workingPost?.location = location
+        case .Trip(let trip):
+            guard trip != "" else {
+                draftState.error = "Please check trip for errors"
+                break
+            }
+            draftState.workingPost?.trip.title = trip
+        case .Title(let title):
+            guard title != "" else {
+                draftState.error = "Please check title for errors"
+                break
+            }
+            draftState.workingPost?.title = title
+        }
+    }
+    else if let action = action as? EditDraftDetail{
+        draftState.currentlyEditing = action.field
+    }
+    
+    else if let action = action as? AddPostElement{
+        draftState.content.append(action.element)
+    }
+    else if let action = action as? LoadedDrafts{
+        draftState.drafts = action.drafts
+    }
+    
+    
     
     return draftState
 }

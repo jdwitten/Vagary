@@ -35,7 +35,7 @@ struct PassportState{
 }
 
 struct RoutingState: StateType{
-    var routes: [RoutingDestination: [RoutingDestination]] = [.feed: [.feed], .passport: [.passport], .draftPost: [.draftPost]]
+    var routes: [RoutingDestination: [RoutingDestination]] = [.feed: [.feed], .passport: [.passport], .draftPost: [.postOptions]]
     var selectedTab: RoutingDestination = .feed
 }
 
@@ -49,5 +49,9 @@ struct TripDetailState{
 }
 
 struct DraftState{
-    var post: Post?
+    var workingPost: Post? = Post(id: 1, author: 1, content: [], title: "", trip: Trip(id : 1, title: "", posts : []), location: "" )
+    var content: [PostElement] = []
+    var error: String? = nil
+    var currentlyEditing: DraftField? = nil
+    var drafts: Loaded<[Post]> = .loading
 }

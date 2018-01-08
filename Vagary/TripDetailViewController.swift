@@ -9,29 +9,31 @@
 import UIKit
 import ReSwift
 
-class TripDetailViewController: UIViewController, StoreSubscriber, PassportController {
+class TripDetailViewController: UIViewController, StoreSubscriber {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var postsLabel: UILabel!
-    var delegate: PassportControllerDelegate?
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        configureBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self)
+        ViaStore.sharedStore.subscribe(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if self.isMovingFromParentViewController {
-            delegate?.popNavigation()
-        }
-        store.unsubscribe(self)
+        ViaStore.sharedStore.unsubscribe(self)
+    }
+    
+    func configureBackButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToPassport(sender:)))
+    }
+    
+    @objc func backToPassport(sender: AnyObject) {
+        ViaStore.sharedStore.dispatch(PopNavigation())
     }
     
     func newState(state: AppState) {

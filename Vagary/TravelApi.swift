@@ -11,85 +11,50 @@ import Foundation
 class TravelApi{
     
     
-    func getPost(forId id: Int, completion: @escaping (Loaded<Post>) -> ()){
-        let json = parseJson("post")
-        if let jsonPost = json["post"] as? [String: Any], let post = Post(json: jsonPost){
-            completion(.loaded(data: post))
-        }else{
+    func get<T: Codable>(resource: T.Type, path: ResourcePath, forId id: Int, completion: @escaping (Loaded<T>) -> ()){
+        let jsonData = getJsonData(path.rawValue)
+        do {
+            if jsonData != nil{
+                let parsed = try JSONDecoder().decode(T.self, from: jsonData!)
+                completion(.loaded(data: parsed))
+            }
+            else{
+                completion(.error)
+            }
+        }catch{
             completion(.error)
         }
     }
     
-    func getPosts(withQuery query: String, completion: @escaping (Loaded<[Post]>) -> ()){
-        
-        let json = parseJson("posts")
-        var posts: [Post] = []
-        if let jsonPosts = json["posts"] as? [[String: Any]] {
-            for jsonPost in jsonPosts{
-                if let post = Post(json: jsonPost){
-                    posts.append(post)
-                }
+    func getMany<T: Codable>(resource: T.Type, path: ResourcePath, forId id: Int, completion: @escaping (Loaded<[T]>) -> ()){
+        let jsonData = getJsonData(path.rawValue)
+        do {
+            if jsonData != nil{
+                let parsed = try JSONDecoder().decode([T].self, from: jsonData!)
+                completion(.loaded(data: parsed))
             }
-        }
-        completion(.loaded(data: posts))
-    }
-    
-    func getPosts(forIds ids: [Int], completion: @escaping (Loaded<[Post]>) -> ()){
-        
-        let json = parseJson("posts")
-        var posts: [Post] = []
-        if let jsonPosts = json["posts"] as? [[String: Any]] {
-            for jsonPost in jsonPosts{
-                if let post = Post(json: jsonPost){
-                    posts.append(post)
-                }
+            else{
+                completion(.error)
             }
-        }
-        completion(.loaded(data: posts))
-    }
-    
-    func getTrip(forId id: Int, completion: @escaping (Loaded<Trip>) -> ()){
-        let json = parseJson("post")
-        if let jsonPost = json["post"] as? [String: Any], let post = Trip(json: jsonPost){
-            completion(.loaded(data: post))
-        }else{
+        }catch let error{
+            print(error)
             completion(.error)
         }
     }
+
     
-    func getTrips(for user: User, completion: @escaping (Loaded<[Trip]>)-> ()){
-        
-        let json = parseJson("trips")
-        var trips: [Trip] = []
-        if let jsonTrips = json["trips"] as? [[String: Any]] {
-            for jsonTrip in jsonTrips{
-                if let trip = Trip(json: jsonTrip){
-                    trips.append(trip)
-                }
-            }
-        }
-        
-        completion(.loaded(data: trips))
-        
-    }
-    
-    public func parseJson(_ path: String) -> [String: Any] {
+    public func getJsonData(_ path: String) -> Data? {
         do {
             if let file = Bundle.main.url(forResource: path, withExtension: "json"){
                 let data = try Data(contentsOf: file)
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                if let object = json as? [String: Any]{
-                    return object
-                }else{
-                    print("Invalid Json")
-                }
+                return data
             }else{
                 print("no file")
             }
-            return [:]
+            return nil
         }catch {
             print(error.localizedDescription)
-            return [:]
+            return nil
         }
     }
 }

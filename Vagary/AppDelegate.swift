@@ -9,11 +9,6 @@
 import UIKit
 import ReSwift
 
-var store = Store<AppState>(
-    reducer: AppReducer,
-    state: nil
-)
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         var appCoordinator = AppCoordinator()
-        store.subscribe(appCoordinator)
+        ViaStore.sharedStore.subscribe(appCoordinator)
         return true
     }
 

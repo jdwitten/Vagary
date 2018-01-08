@@ -8,18 +8,9 @@
 
 import Foundation
 import UIKit
-import ReSwift
 
 
-protocol Coordinator{
-    
-    func subscribe()
-    
-    func unsubscribe()
-    
-}
-
-class AppCoordinator: NSObject, FeedCoordinatorDelegate, PassportCoordinatorDelegate, DraftPostCoordinatorDelegate, StoreSubscriber, UITabBarControllerDelegate{
+class AppCoordinator: NSObject, StoreSubscriber, UITabBarControllerDelegate{
     
     var passportCoordinator: PassportCoordinator?
     var feedCoordinator: FeedCoordinator?
@@ -32,13 +23,8 @@ class AppCoordinator: NSObject, FeedCoordinatorDelegate, PassportCoordinatorDele
         tabBarController.delegate = self
     
         feedCoordinator = FeedCoordinator()
-        feedCoordinator?.delegate = self
-        
         passportCoordinator = PassportCoordinator()
-        passportCoordinator?.delegate = self
-        
         draftPostCoordinator = DraftPostCoordinator()
-        draftPostCoordinator?.delegate = self
         
         tabBarController.viewControllers = [feedCoordinator!.rootController!, passportCoordinator!.rootController!, draftPostCoordinator!.rootController!]
         
@@ -46,19 +32,7 @@ class AppCoordinator: NSObject, FeedCoordinatorDelegate, PassportCoordinatorDele
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         appDelegate.window?.rootViewController = tabBarController
         appDelegate.window?.makeKeyAndVisible()
-        
     }
-    
-    func newState(state: AppState){
-        if state.routing.selectedTab != RoutingDestination.destination(ofCoordinator: rootCoordinator){
-            rootCoordinator?.unsubscribe()
-            if state.routing.selectedTab == .feed { rootCoordinator = feedCoordinator }
-            else if state.routing.selectedTab == .passport { rootCoordinator = passportCoordinator }
-            else if state.routing.selectedTab == .draftPost { rootCoordinator = draftPostCoordinator}
-            rootCoordinator?.subscribe()
-        }
-    }
-    
     
 }
 
@@ -66,58 +40,46 @@ extension AppCoordinator{
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let viewController = viewController as? UINavigationController, viewController.childViewControllers[0] is FeedViewController{
-            store.dispatch(ChangeTab(route: .feed))
+            ViaStore.sharedStore.dispatch(ChangeTab(route: .feed))
         }
         else if let viewController = viewController as? UINavigationController, viewController.childViewControllers[0] is PassportViewController{
-            store.dispatch(ChangeTab(route: .passport))
+            ViaStore.sharedStore.dispatch(ChangeTab(route: .passport))
         }
-        else if let viewController = viewController as? UINavigationController, viewController.childViewControllers[0] is DraftPostViewController{
-            store.dispatch(ChangeTab(route: .draftPost))
+        else if let viewController = viewController as? UINavigationController, viewController.childViewControllers[0] is PostOptionsViewController{
+            ViaStore.sharedStore.dispatch(ChangeTab(route: .draftPost))
         }
     }
     
 }
 
-enum RoutingDestination: String{
-    case feed = "FeedViewController"
-    case passport = "PassportViewController"
-    case postDetail = "PostDetailViewController"
-    case tripDetail = "TripDetailViewController"
-    case draftPost = "DraftPostViewController"
+
+extension Coordinator {
     
-    static func destination(ofViewController viewController: UIViewController?) -> RoutingDestination?{
-        if viewController is FeedViewController{
-            return .feed
+    func build(newRoute: [RoutingDestination]) {
+        guard rootController != nil else { return }
+        var rootViewControllers = rootController!.viewControllers
+        for newRouteIndex in 0..<newRoute.count {
+            if newRouteIndex > route.count - 1 { //case: more controllers in new route so push onto nav stack
+                pushViewController(newRoute[newRouteIndex])
+                
+            } else if newRoute[newRouteIndex] != route[newRouteIndex] { //case: differing routes so replace top of stack with new route
+                let newTopOfStack = newRoute[newRouteIndex...].flatMap { $0.viewController }
+                rootViewControllers.removeLast(route.count - newRouteIndex)
+                rootController!.setViewControllers(rootViewControllers, animated: true)
+                newTopOfStack.forEach {
+                    rootController!.pushViewController($0, animated: true)
+                }
+                break
+            }
         }
-        else if viewController is PassportViewController{
-            return .passport
-        }
-        else if viewController is PostDetailViewController{
-            return .postDetail
-        }
-        else if viewController is TripDetailViewController{
-            return .tripDetail
-        }
-        else if viewController is DraftPostViewController{
-            return .draftPost
-        }
-        else{
-            return nil
+        if newRoute.count < route.count { //case: less controllers in new route so pop off existing routes
+            rootViewControllers.removeLast(route.count - newRoute.count)
+            rootController!.setViewControllers(rootViewControllers, animated: true)
         }
     }
     
-    static func destination(ofCoordinator coordinator: Coordinator?) -> RoutingDestination?{
-        if coordinator is FeedCoordinator{
-            return .feed
-        }
-        else if coordinator is PassportCoordinator{
-            return .passport
-        }
-        else if coordinator is DraftPostCoordinator{
-            return .draftPost
-        }
-        else{
-            return nil
-        }
+    func pushViewController(_ destination: RoutingDestination){
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: destination.rawValue)
+        rootController?.pushViewController(viewController, animated: true)
     }
 }

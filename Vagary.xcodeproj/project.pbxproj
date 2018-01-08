@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230DF70F1F75BD0D005EABE9 /* CreatePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */; };
+		230DF7101F75BD0D005EABE9 /* CreatePostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */; };
+		230DF7141F75CF38005EABE9 /* CreateDraftDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */; };
+		230DF7171F76B0F2005EABE9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230DF7161F76B0F2005EABE9 /* Cache.swift */; };
 		23236A8C1F4A14A800043021 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8B1F4A14A800043021 /* Trip.swift */; };
 		23236A8E1F4A157C00043021 /* PassportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8D1F4A157C00043021 /* PassportViewController.swift */; };
 		23236A901F4A170300043021 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8F1F4A170300043021 /* User.swift */; };
 		23236A921F4A18BA00043021 /* PassportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A911F4A18BA00043021 /* PassportCoordinator.swift */; };
 		23236A941F4A1A8900043021 /* PassportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A931F4A1A8900043021 /* PassportViewModel.swift */; };
 		23236A981F57A7AE00043021 /* TripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */; };
+		235929701F95971100FE4839 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359296F1F95971000FE4839 /* Route.swift */; };
+		235929721F96E58200FE4839 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235929711F96E58200FE4839 /* Store.swift */; };
 		236BD3291F43EC0F00812B34 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BD3281F43EC0F00812B34 /* AppState.swift */; };
 		236BD32B1F43F01100812B34 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BD32A1F43F01100812B34 /* Reducer.swift */; };
 		236BD32D1F43F10900812B34 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BD32C1F43F10900812B34 /* Action.swift */; };
+		23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A6003D1F6D7A570087767B /* CreatePostViewController.swift */; };
+		23A600401F6D7A670087767B /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A6003F1F6D7A670087767B /* CreatePostViewModel.swift */; };
 		23AAFDC61F590610003B9EE9 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 23AAFDC51F590610003B9EE9 /* user.json */; };
 		23AAFDC81F590794003B9EE9 /* trips.json in Resources */ = {isa = PBXBuildFile; fileRef = 23AAFDC71F590794003B9EE9 /* trips.json */; };
 		23AAFDCA1F59090A003B9EE9 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = 23AAFDC91F59090A003B9EE9 /* posts.json */; };
@@ -30,6 +38,12 @@
 		23B3B26E1F5E254C001A2D5B /* DraftPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */; };
 		23B3B2701F5E2841001A2D5B /* DraftPostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */; };
 		23B3B2741F677A9F001A2D5B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B2731F677A9F001A2D5B /* Extensions.swift */; };
+		23E5F2D51F88886C0082D5A9 /* PostOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5F2D41F88886C0082D5A9 /* PostOptionsViewController.swift */; };
+		23E5F2D91F888B7B0082D5A9 /* CreatePostImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5F2D81F888B7B0082D5A9 /* CreatePostImagesViewController.swift */; };
+		23E5F2DB1F888D320082D5A9 /* DraftListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5F2DA1F888D320082D5A9 /* DraftListViewController.swift */; };
+		23E5F2DE1F888E810082D5A9 /* DraftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */; };
+		23E5F2DF1F888E810082D5A9 /* DraftTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */; };
+		23F499801F7F63BF007DC22B /* PostElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F4997F1F7F63BF007DC22B /* PostElement.swift */; };
 		23FB17231F3D500200DA41A3 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB17221F3D500200DA41A3 /* ReSwift.framework */; };
 		31A3F751A343EFF9267E900B /* Pods_Vagary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C380CB09DD737CEB973D558A /* Pods_Vagary.framework */; };
 		49E6505AB24E5DAD88A22830 /* Pods_TravelUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F578A2CEFEEA0436839F152D /* Pods_TravelUITests.framework */; };
@@ -76,15 +90,23 @@
 /* Begin PBXFileReference section */
 		14F085449400FA4233E92F95 /* Pods-VagaryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VagaryUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VagaryUITests/Pods-VagaryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		1B0DDFFC0B5B36F65B743E4C /* Pods-TravelTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelTests/Pods-TravelTests.debug.xcconfig"; sourceTree = "<group>"; };
+		230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostTableViewCell.swift; sourceTree = "<group>"; };
+		230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostTableViewCell.xib; sourceTree = "<group>"; };
+		230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDraftDetailViewController.swift; sourceTree = "<group>"; };
+		230DF7161F76B0F2005EABE9 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		23236A8B1F4A14A800043021 /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		23236A8D1F4A157C00043021 /* PassportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportViewController.swift; sourceTree = "<group>"; };
 		23236A8F1F4A170300043021 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		23236A911F4A18BA00043021 /* PassportCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportCoordinator.swift; sourceTree = "<group>"; };
 		23236A931F4A1A8900043021 /* PassportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportViewModel.swift; sourceTree = "<group>"; };
 		23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripCollectionViewCell.swift; sourceTree = "<group>"; };
+		2359296F1F95971000FE4839 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		235929711F96E58200FE4839 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		236BD3281F43EC0F00812B34 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		236BD32A1F43F01100812B34 /* Reducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
 		236BD32C1F43F10900812B34 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		23A6003D1F6D7A570087767B /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		23A6003F1F6D7A670087767B /* CreatePostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
 		23AAFDC51F590610003B9EE9 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		23AAFDC71F590794003B9EE9 /* trips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trips.json; sourceTree = "<group>"; };
 		23AAFDC91F59090A003B9EE9 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = "<group>"; };
@@ -99,6 +121,12 @@
 		23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftPostViewModel.swift; sourceTree = "<group>"; };
 		23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftPostCoordinator.swift; sourceTree = "<group>"; };
 		23B3B2731F677A9F001A2D5B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		23E5F2D41F88886C0082D5A9 /* PostOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptionsViewController.swift; sourceTree = "<group>"; };
+		23E5F2D81F888B7B0082D5A9 /* CreatePostImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostImagesViewController.swift; sourceTree = "<group>"; };
+		23E5F2DA1F888D320082D5A9 /* DraftListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftListViewController.swift; sourceTree = "<group>"; };
+		23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftTableViewCell.swift; sourceTree = "<group>"; };
+		23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DraftTableViewCell.xib; sourceTree = "<group>"; };
+		23F4997F1F7F63BF007DC22B /* PostElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostElement.swift; sourceTree = "<group>"; };
 		23FB17221F3D500200DA41A3 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = "Pods/../build/Debug-iphoneos/ReSwift/ReSwift.framework"; sourceTree = "<group>"; };
 		24E69F95AD043EA67D796215 /* Pods-TravelUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelUITests/Pods-TravelUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		276B34656365DC55E37C8A6E /* Pods-VagaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VagaryTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VagaryTests/Pods-VagaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -177,12 +205,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		230DF7151F76B0CF005EABE9 /* Persistance */ = {
+			isa = PBXGroup;
+			children = (
+				230DF7161F76B0F2005EABE9 /* Cache.swift */,
+			);
+			name = Persistance;
+			sourceTree = "<group>";
+		};
+		2359296E1F9596E800FE4839 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				2359296F1F95971000FE4839 /* Route.swift */,
+			);
+			name = Routing;
+			sourceTree = "<group>";
+		};
 		236BD3271F43EBDE00812B34 /* Store */ = {
 			isa = PBXGroup;
 			children = (
 				236BD3281F43EC0F00812B34 /* AppState.swift */,
 				236BD32A1F43F01100812B34 /* Reducer.swift */,
 				236BD32C1F43F10900812B34 /* Action.swift */,
+				235929711F96E58200FE4839 /* Store.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -244,6 +289,8 @@
 		4B9420701F1C4B8C00FDE7EB /* Vagary */ = {
 			isa = PBXGroup;
 			children = (
+				2359296E1F9596E800FE4839 /* Routing */,
+				230DF7151F76B0CF005EABE9 /* Persistance */,
 				4B6539241F1EF6DF00E41C7B /* Coordinators */,
 				4B9420A91F1C4FEF00FDE7EB /* App */,
 				4B9420A81F1C4FD800FDE7EB /* View Models */,
@@ -281,6 +328,10 @@
 				4B9420AB1F1C505600FDE7EB /* PostFeedTableViewCell.xib */,
 				4BCF6E771F1C61CF00695484 /* DesignableImage.swift */,
 				23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */,
+				230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */,
+				230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */,
+				23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */,
+				23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -291,6 +342,7 @@
 				4B65392D1F1EFEA700E41C7B /* Post.swift */,
 				23236A8B1F4A14A800043021 /* Trip.swift */,
 				23236A8F1F4A170300043021 /* User.swift */,
+				23F4997F1F7F63BF007DC22B /* PostElement.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -303,6 +355,11 @@
 				23B3B25D1F5BB3D3001A2D5B /* PostDetailViewController.swift */,
 				23B3B2631F5CC88B001A2D5B /* TripDetailViewController.swift */,
 				23B3B26B1F5E1FC4001A2D5B /* DraftPostViewController.swift */,
+				23A6003D1F6D7A570087767B /* CreatePostViewController.swift */,
+				230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */,
+				23E5F2D41F88886C0082D5A9 /* PostOptionsViewController.swift */,
+				23E5F2D81F888B7B0082D5A9 /* CreatePostImagesViewController.swift */,
+				23E5F2DA1F888D320082D5A9 /* DraftListViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -315,6 +372,7 @@
 				23B3B25F1F5BB463001A2D5B /* PostViewModel.swift */,
 				23B3B2651F5CC901001A2D5B /* TripViewModel.swift */,
 				23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */,
+				23A6003F1F6D7A670087767B /* CreatePostViewModel.swift */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -494,10 +552,12 @@
 				4B94207B1F1C4B9100FDE7EB /* Assets.xcassets in Resources */,
 				23AAFDCA1F59090A003B9EE9 /* posts.json in Resources */,
 				4B9420791F1C4B8F00FDE7EB /* Main.storyboard in Resources */,
+				23E5F2DF1F888E810082D5A9 /* DraftTableViewCell.xib in Resources */,
 				4B9420AD1F1C505600FDE7EB /* PostFeedTableViewCell.xib in Resources */,
 				23AAFDC61F590610003B9EE9 /* user.json in Resources */,
 				23B3B2621F5BBEB6001A2D5B /* post.json in Resources */,
 				23B3B26A1F5CCA88001A2D5B /* trip.json in Resources */,
+				230DF7101F75BD0D005EABE9 /* CreatePostTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,31 +736,43 @@
 				4B65392C1F1EFD3700E41C7B /* FeedViewModel.swift in Sources */,
 				23236A941F4A1A8900043021 /* PassportViewModel.swift in Sources */,
 				23B3B25E1F5BB3D3001A2D5B /* PostDetailViewController.swift in Sources */,
+				230DF7171F76B0F2005EABE9 /* Cache.swift in Sources */,
 				4B6539261F1EF71E00E41C7B /* AppCoordinator.swift in Sources */,
 				23236A8E1F4A157C00043021 /* PassportViewController.swift in Sources */,
 				4B9420721F1C4B8D00FDE7EB /* AppDelegate.swift in Sources */,
+				230DF7141F75CF38005EABE9 /* CreateDraftDetailViewController.swift in Sources */,
 				23B3B2741F677A9F001A2D5B /* Extensions.swift in Sources */,
 				23236A8C1F4A14A800043021 /* Trip.swift in Sources */,
 				236BD32B1F43F01100812B34 /* Reducer.swift in Sources */,
+				23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */,
+				235929701F95971100FE4839 /* Route.swift in Sources */,
 				4B6539301F1EFEE200E41C7B /* Protocols.swift in Sources */,
 				23B3B26C1F5E1FC4001A2D5B /* DraftPostViewController.swift in Sources */,
 				23B3B26E1F5E254C001A2D5B /* DraftPostViewModel.swift in Sources */,
+				23F499801F7F63BF007DC22B /* PostElement.swift in Sources */,
 				23236A921F4A18BA00043021 /* PassportCoordinator.swift in Sources */,
 				4B65392E1F1EFEA700E41C7B /* Post.swift in Sources */,
 				4B6539281F1EFA9A00E41C7B /* FeedCoordinator.swift in Sources */,
+				23E5F2DB1F888D320082D5A9 /* DraftListViewController.swift in Sources */,
 				4B6539321F1F016200E41C7B /* TravelApi.swift in Sources */,
+				23E5F2DE1F888E810082D5A9 /* DraftTableViewCell.swift in Sources */,
 				4BCF6E781F1C61D000695484 /* DesignableImage.swift in Sources */,
 				4B65392A1F1EFD0500E41C7B /* FeedViewController.swift in Sources */,
 				236BD3291F43EC0F00812B34 /* AppState.swift in Sources */,
+				230DF70F1F75BD0D005EABE9 /* CreatePostTableViewCell.swift in Sources */,
 				23236A901F4A170300043021 /* User.swift in Sources */,
 				23B3B2701F5E2841001A2D5B /* DraftPostCoordinator.swift in Sources */,
+				23A600401F6D7A670087767B /* CreatePostViewModel.swift in Sources */,
 				23B3B2641F5CC88B001A2D5B /* TripDetailViewController.swift in Sources */,
 				4B9420AC1F1C505600FDE7EB /* PostFeedTableViewCell.swift in Sources */,
 				23B3B2661F5CC901001A2D5B /* TripViewModel.swift in Sources */,
 				23B3B2601F5BB463001A2D5B /* PostViewModel.swift in Sources */,
 				236BD32D1F43F10900812B34 /* Action.swift in Sources */,
+				23E5F2D91F888B7B0082D5A9 /* CreatePostImagesViewController.swift in Sources */,
 				4B6539371F1F96A500E41C7B /* Constants.swift in Sources */,
+				235929721F96E58200FE4839 /* Store.swift in Sources */,
 				23236A981F57A7AE00043021 /* TripCollectionViewCell.swift in Sources */,
+				23E5F2D51F88886C0082D5A9 /* PostOptionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,7 +939,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jdwitten.Vagary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -888,7 +960,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jdwitten.Vagary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -1,3 +1,4 @@
+
 //
 //  FeedCoordinator.swift
 //  Travel
@@ -11,10 +12,9 @@ import UIKit
 import ReSwift
 
 
-class FeedCoordinator: Coordinator, StoreSubscriber, FeedControllerDelegate{
-    
-    var delegate: FeedCoordinatorDelegate?
+class FeedCoordinator: Coordinator, StoreSubscriber, FeedHandler{
     var rootController: UINavigationController?
+    var route: [RoutingDestination] = [.feed]
     var api = TravelApi()
     
    init(){
@@ -22,83 +22,20 @@ class FeedCoordinator: Coordinator, StoreSubscriber, FeedControllerDelegate{
         if let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedRootNavController") as? UINavigationController{
             navController.tabBarItem = UITabBarItem(title: "Feed", image: #imageLiteral(resourceName: "first"), tag: 0)
             rootController = navController
-            if let feedController = rootController?.topViewController as? FeedViewController{
-                feedController.delegate = self as! FeedControllerDelegate
-            }
-            //if let feedController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedViewController") as? FeedViewController{
-                //rootController?.pushViewController(feedController, animated: false)
-            //}
-
         }else{
             fatalError("Could Not Instantiate Feed View Controller")
         }
-        
+        ViaStore.sharedStore.subscribe(self)
     }
     
     func newState(state: AppState){
-        if state.routing.routes[.feed]?.last != RoutingDestination.destination(ofViewController: rootController?.topViewController){
-            pushViewController(state.routing.routes[.feed]?.last ?? .feed)
-        }
+        guard state.routing.selectedTab == .feed else { return }
+        build(newRoute: state.routing.routes[.feed]!)
+        route = state.routing.routes[.feed]!
     }
-    
-    func pushViewController(_ destination: RoutingDestination){
-        if var viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: destination.rawValue) as? FeedController{
-            viewController.delegate = self
-            rootController?.pushViewController(viewController as! UIViewController, animated: true)
-        }
-        
-    }
-    
-    func selectedPost(_ post: Post) {
-        print("show post")
-        store.dispatch(ShowPostDetail(postId: post.id))
-        api.getPost(forId: post.id){post in
-            store.dispatch(PostDetailResponse(post: post))
-            
-        }
-    }
-    
-    func popNavigation(){
-        store.dispatch(PopNavigation())
-    }
-    
-    func getPosts(){
-        api.getPosts(withQuery: ""){ posts in
-            DispatchQueue.main.async {
-                store.dispatch(PostResponse(posts: posts))
-            }
-        }
-    }
-    
-    func subscribe(){
-        store.subscribe(self)
-    }
-    
-    func unsubscribe(){
-        store.unsubscribe(self)
-    }
-    
-    
-    
 }
 
+protocol FeedHandler { }
 
-protocol FeedController{
-    var delegate: FeedControllerDelegate? { get set }
-}
-
-protocol FeedCoordinatorDelegate{
-    
-}
-
-
-protocol FeedControllerDelegate{
-    
-    func selectedPost(_ post: Post)
-    
-    func popNavigation()
-    
-    func getPosts()
-}
 
 

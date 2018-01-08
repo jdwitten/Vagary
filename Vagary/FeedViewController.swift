@@ -12,7 +12,7 @@ import ReSwift
 
 
 
-class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber, UITableViewDataSource, FeedController {
+class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber, UITableViewDataSource {
 
     
     @IBOutlet weak var postsTableView: UITableView!
@@ -20,11 +20,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
     
     var viewModel: FeedViewModel!
     var posts: [Post] = []
-    var delegate: FeedControllerDelegate?
+    var api = TravelApi()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self)
+        ViaStore.sharedStore.subscribe(self)
     }
     
     override func viewDidLoad() {
@@ -37,21 +37,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        store.unsubscribe(self)
+        ViaStore.sharedStore.unsubscribe(self)
     }
     
     
-    func getPosts(with query: String) -> Store<AppState>.ActionCreator {
+    func getPosts() -> Store<AppState>.ActionCreator {
         
         return { state, store in
             let api: TravelApi = TravelApi()
-            api.getPosts(withQuery: state.feed.query ?? ""){ posts in
+            api.getMany(resource: Post.self, path: .posts, forId: 0){ posts in
                 DispatchQueue.main.async {
                     store.dispatch(PostResponse(posts: posts))
                 }
             }
             
-            return PostSearch(query: query)
+            return PostSearch(query: "")
         }
     }
 
@@ -69,8 +69,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
         postsTableView.addSubview(refreshControl)
     }
     
-    func handleRefresh(_ refreshControl: UIRefreshControl){
-        delegate?.getPosts()
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl){
+        ViaStore.sharedStore.dispatch(getPosts())
     }
     
     func newState(state: AppState){
@@ -117,7 +117,13 @@ extension FeedViewController{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        delegate?.selectedPost(posts[indexPath.row])
+        print("show post")
+        let post = posts[indexPath.row]
+        ViaStore.sharedStore.dispatch(ShowPostDetail(postId: post.id))
+        api.get(resource: Post.self, path: .post, forId: post.id){post in
+            ViaStore.sharedStore.dispatch(PostDetailResponse(post: post))
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -126,7 +132,7 @@ extension FeedViewController{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        store.dispatch(getPosts(with: searchText))
+        ViaStore.sharedStore.dispatch(getPosts())
     }
     
     func configureCell(_ cell: UITableViewCell, at indexPath: IndexPath) {
