@@ -411,43 +411,6 @@
             </objects>
             <point key="canvasLocation" x="1927" y="494"/>
         </scene>
-        <!--First-->
-        <scene sceneID="y9k-5l-tVo">
-            <objects>
-                <navigationController storyboardIdentifier="FeedRootNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sep-ym-Kki" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vBc-Tz-03e">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="XhO-Lz-LeC"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TNH-dk-99C" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="172" y="-324.28785607196403"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Lf6-3k-jpj">
-            <objects>
-                <navigationController storyboardIdentifier="PassportRootNavController" automaticallyAdjustsScrollViewInsets="NO" id="50X-ad-rNX" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jcs-Jl-bJT">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="SRb-mc-HVP" kind="relationship" relationship="rootViewController" id="oaN-hL-EZg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="g8S-ys-ezr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="170.40000000000001" y="494.30284857571218"/>
-        </scene>
         <!--Draft Post View Controller-->
         <scene sceneID="lqr-Tk-s5I">
             <objects>
@@ -563,24 +526,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wBG-Gd-Kv5">
-                                <rect key="frame" x="20" y="72" width="335" height="575"/>
+                                <rect key="frame" x="20" y="28" width="335" height="619"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYv-55-ctr">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="191.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="206.5"/>
                                         <state key="normal" title="Write a Post"/>
                                         <connections>
                                             <action selector="writePostPress:" destination="Y8F-fG-gt6" eventType="touchUpInside" id="Mqz-Td-6rS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0d4-qV-k0D">
-                                        <rect key="frame" x="0.0" y="191.5" width="335" height="192"/>
+                                        <rect key="frame" x="0.0" y="206.5" width="335" height="206"/>
                                         <state key="normal" title="Share Images"/>
                                         <connections>
                                             <action selector="sharImagesPress:" destination="Y8F-fG-gt6" eventType="touchUpInside" id="do4-I2-hXh"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26f-yz-d2f">
-                                        <rect key="frame" x="0.0" y="383.5" width="335" height="191.5"/>
+                                        <rect key="frame" x="0.0" y="412.5" width="335" height="206.5"/>
                                         <state key="normal" title="Open Drafts"/>
                                         <connections>
                                             <action selector="openDrafts:" destination="Y8F-fG-gt6" eventType="touchUpInside" id="bZP-I0-KMB"/>
@@ -761,30 +724,11 @@
             </objects>
             <point key="canvasLocation" x="1926" y="1235"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="0ye-8Q-unx">
-            <objects>
-                <navigationController storyboardIdentifier="DraftPostRootNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1T8-ff-WhV" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gwn-EW-tMf">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y8F-fG-gt6" kind="relationship" relationship="rootViewController" id="jrY-jz-itW"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YU2-hm-8Ts" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="170" y="1467"/>
-        </scene>
     </scenes>
     <resources>
         <image name="IMG_4178 2" width="4032" height="3024"/>
         <image name="JonathanWitten" width="488" height="651"/>
         <image name="US_icon" width="512" height="345"/>
-        <image name="first" width="30" height="30"/>
         <image name="follower_icon" width="512" height="512"/>
         <image name="image" width="128" height="128"/>
         <image name="text_icon" width="512" height="512"/>
