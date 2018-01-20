@@ -7,6 +7,7 @@ target 'Vagary' do
 
   # Pods for Vagary
   pod 'ReSwift'
+  pod 'PromiseKit', '~> 4.4'
 
   target 'VagaryTests' do
     inherit! :search_paths

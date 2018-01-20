@@ -28,7 +28,9 @@ extension UIImageView{
                         // Finally convert that Data into an image and do what you wish with it.
                         let image = UIImage(data: imageData)
                         // Do something with your image.
-                        self.image = image
+                        DispatchQueue.main.async { [unowned self] in
+                            self.image = image
+                        }
                     } else {
                         print("Couldn't get image: Image is nil")
                     }
@@ -41,3 +43,37 @@ extension UIImageView{
     }
     
 }
+
+public struct ImageWrapper: Codable {
+    public let image: UIImage
+    
+    public enum CodingKeys: String, CodingKey {
+        case image
+    }
+    
+    public init(image: UIImage) {
+        self.image = image
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let data = try container.decode(Data.self, forKey: CodingKeys.image)
+        guard let image = UIImage(data: data) else {
+            throw CacheError.FetchingError
+        }
+        
+        self.image = image
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        guard let data = UIImageJPEGRepresentation(image, 1.0) else {
+            throw CacheError.InsertError
+        }
+        
+        try container.encode(data, forKey: CodingKeys.image)
+    }
+}
+
+
+

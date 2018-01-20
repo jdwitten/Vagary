@@ -9,21 +9,22 @@
 import UIKit
 import ReSwift
 
-var store = Store<AppState>(
-    reducer: AppReducer,
-    state: nil
-)
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        var appCoordinator = AppCoordinator()
-        store.subscribe(appCoordinator)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+        appDelegate.window?.makeKeyAndVisible()
+        guard let draftCache = Cache<Post>(path: "Drafts") else {
+            return false
+        }
+        appCoordinator = AppCoordinator(dependencies: AppDependency(factory: UIPresenterFactory(), api: TravelApi(), draftCache: draftCache))
         return true
     }
 

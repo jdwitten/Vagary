@@ -26,3 +26,16 @@ enum Loaded<T>{
 protocol StoreListener{
     func newState(_ : AppState)
 }
+
+protocol Resource{
+}
+
+enum ResourcePath: String{
+    case post = "post"
+    case posts = "posts"
+    case trip = "trip"
+    case trips = "trips"
+    case user = "user"
+    case draft = "draft"
+    case drafts = "drafts"
+}

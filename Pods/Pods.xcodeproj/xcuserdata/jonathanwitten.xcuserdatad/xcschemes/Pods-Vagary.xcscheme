@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D675CBCE2251C805B18E3E9E49E15FFE"
+               BlueprintIdentifier = "06C35C61EC771B4A59B93605FFE85403"
                BuildableName = "Pods_Vagary.framework"
                BlueprintName = "Pods-Vagary"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -36,6 +37,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D675CBCE2251C805B18E3E9E49E15FFE"
+            BlueprintIdentifier = "06C35C61EC771B4A59B93605FFE85403"
             BuildableName = "Pods_Vagary.framework"
             BlueprintName = "Pods-Vagary"
             ReferencedContainer = "container:Pods.xcodeproj">
