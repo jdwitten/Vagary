@@ -63,6 +63,10 @@ class DraftPostCoordinator: DraftHandler {
             }
         }
     }
+    
+    func appendDraftElement(element: PostElement) {
+        ViaStore.sharedStore.dispatch(DraftAction.addPostElement(element))
+    }
 }
 
 protocol DraftHandler {
@@ -70,6 +74,7 @@ protocol DraftHandler {
     func selectFieldToEdit(field: DraftField)
     func updateDraftField(field: DraftField)
     func createDraft()
+    func appendDraftElement(element: PostElement)
 }
 
 enum DraftField{

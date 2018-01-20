@@ -10,14 +10,33 @@ import Foundation
 import ReSwift
 
 
-struct DraftPostViewModel: ViewModel {
+struct DraftPostViewModel: ViewModel, TableViewModel {
     
-    var content: [PostElement] = []
+    var sections: [SectionViewModel]?
     
     static func build(_ state: AppState) -> DraftPostViewModel? {
         guard let auth = state.authenticatedState else {
             return nil
         }
-        return DraftPostViewModel(content: auth.draft.content)
+        let cells: [CellViewModel] = auth.draft.content.map{ element in
+            if case .image(let imageWrapper) = element {
+                return CenteredImageCellViewModel(image: imageWrapper.image)
+            } else if case .text(let text) = element {
+                return CenteredTextCellViewModel(text: text)
+            } else {
+                return nil
+            }
+        }
+        
+        let section = DraftContentSection(cells: cells)
+        return DraftPostViewModel(sections: [section])
+    }
+}
+
+struct DraftContentSection: SectionViewModel {
+    var cells: [CellViewModel]?
+    
+    init(cells: [CellViewModel]) {
+        self.cells = cells
     }
 }

@@ -18,6 +18,11 @@
 		23236A941F4A1A8900043021 /* PassportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A931F4A1A8900043021 /* PassportViewModel.swift */; };
 		23236A981F57A7AE00043021 /* TripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */; };
 		235929721F96E58200FE4839 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235929711F96E58200FE4839 /* Store.swift */; };
+		235DE7C220140031003AEC2F /* CenteredImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235DE7C020140031003AEC2F /* CenteredImageTableViewCell.swift */; };
+		235DE7C320140031003AEC2F /* CenteredImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 235DE7C120140031003AEC2F /* CenteredImageTableViewCell.xib */; };
+		235DE7C52014043B003AEC2F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235DE7C42014043B003AEC2F /* TableViewModel.swift */; };
+		235DE7C820140677003AEC2F /* CenteredTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235DE7C620140677003AEC2F /* CenteredTextTableViewCell.swift */; };
+		235DE7C920140677003AEC2F /* CenteredTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 235DE7C720140677003AEC2F /* CenteredTextTableViewCell.xib */; };
 		236BD3291F43EC0F00812B34 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BD3281F43EC0F00812B34 /* AppState.swift */; };
 		236BD32B1F43F01100812B34 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BD32A1F43F01100812B34 /* AppReducer.swift */; };
 		23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A6003D1F6D7A570087767B /* CreatePostViewController.swift */; };
@@ -111,6 +116,11 @@
 		23236A931F4A1A8900043021 /* PassportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportViewModel.swift; sourceTree = "<group>"; };
 		23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripCollectionViewCell.swift; sourceTree = "<group>"; };
 		235929711F96E58200FE4839 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		235DE7C020140031003AEC2F /* CenteredImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredImageTableViewCell.swift; sourceTree = "<group>"; };
+		235DE7C120140031003AEC2F /* CenteredImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CenteredImageTableViewCell.xib; sourceTree = "<group>"; };
+		235DE7C42014043B003AEC2F /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		235DE7C620140677003AEC2F /* CenteredTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredTextTableViewCell.swift; sourceTree = "<group>"; };
+		235DE7C720140677003AEC2F /* CenteredTextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CenteredTextTableViewCell.xib; sourceTree = "<group>"; };
 		236BD3281F43EC0F00812B34 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		236BD32A1F43F01100812B34 /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		23A6003D1F6D7A570087767B /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +245,34 @@
 			name = Persistance;
 			sourceTree = "<group>";
 		};
+		235DE7BD2013FFFE003AEC2F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				235DE7BE20140008003AEC2F /* TableView */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		235DE7BE20140008003AEC2F /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				235DE7BF2014000F003AEC2F /* TableViewCells */,
+				235DE7C42014043B003AEC2F /* TableViewModel.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		235DE7BF2014000F003AEC2F /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				235DE7C020140031003AEC2F /* CenteredImageTableViewCell.swift */,
+				235DE7C120140031003AEC2F /* CenteredImageTableViewCell.xib */,
+				235DE7C620140677003AEC2F /* CenteredTextTableViewCell.swift */,
+				235DE7C720140677003AEC2F /* CenteredTextTableViewCell.xib */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
 		23AAFDC41F5905CB003B9EE9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,12 +350,12 @@
 			children = (
 				23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */,
 				23B3B26B1F5E1FC4001A2D5B /* DraftPostViewController.swift */,
+				23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */,
 				23A6003D1F6D7A570087767B /* CreatePostViewController.swift */,
 				230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */,
 				23E5F2D41F88886C0082D5A9 /* PostOptionsViewController.swift */,
 				23E5F2D81F888B7B0082D5A9 /* CreatePostImagesViewController.swift */,
 				23E5F2DA1F888D320082D5A9 /* DraftListViewController.swift */,
-				23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */,
 				23A6003F1F6D7A670087767B /* CreatePostViewModel.swift */,
 				23D486A02005B66400CE9EC0 /* DraftState.swift */,
 				230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */,
@@ -360,6 +398,7 @@
 		4B9420701F1C4B8C00FDE7EB /* Vagary */ = {
 			isa = PBXGroup;
 			children = (
+				235DE7BD2013FFFE003AEC2F /* Utilities */,
 				23D486A7200BFD5500CE9EC0 /* API */,
 				23D4869D20059DA300CE9EC0 /* Draft */,
 				23D4869C20059CCD00CE9EC0 /* Passport */,
@@ -596,9 +635,11 @@
 				4B9420791F1C4B8F00FDE7EB /* Main.storyboard in Resources */,
 				23E5F2DF1F888E810082D5A9 /* DraftTableViewCell.xib in Resources */,
 				4B9420AD1F1C505600FDE7EB /* PostFeedTableViewCell.xib in Resources */,
+				235DE7C320140031003AEC2F /* CenteredImageTableViewCell.xib in Resources */,
 				23AAFDC61F590610003B9EE9 /* user.json in Resources */,
 				23B3B2621F5BBEB6001A2D5B /* post.json in Resources */,
 				23B3B26A1F5CCA88001A2D5B /* trip.json in Resources */,
+				235DE7C920140677003AEC2F /* CenteredTextTableViewCell.xib in Resources */,
 				230DF7101F75BD0D005EABE9 /* CreatePostTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -786,6 +827,7 @@
 				23B3B25E1F5BB3D3001A2D5B /* PostDetailViewController.swift in Sources */,
 				230DF7171F76B0F2005EABE9 /* Cache.swift in Sources */,
 				4B6539261F1EF71E00E41C7B /* AppCoordinator.swift in Sources */,
+				235DE7C220140031003AEC2F /* CenteredImageTableViewCell.swift in Sources */,
 				23236A8E1F4A157C00043021 /* PassportViewController.swift in Sources */,
 				4B9420721F1C4B8D00FDE7EB /* AppDelegate.swift in Sources */,
 				230DF7141F75CF38005EABE9 /* CreateDraftDetailViewController.swift in Sources */,
@@ -803,6 +845,7 @@
 				4B65392E1F1EFEA700E41C7B /* Post.swift in Sources */,
 				4B6539281F1EFA9A00E41C7B /* FeedCoordinator.swift in Sources */,
 				23D48687200311EE00CE9EC0 /* AppDependency.swift in Sources */,
+				235DE7C52014043B003AEC2F /* TableViewModel.swift in Sources */,
 				23D4868E200329EE00CE9EC0 /* PresenterFactory.swift in Sources */,
 				23E5F2DB1F888D320082D5A9 /* DraftListViewController.swift in Sources */,
 				4B6539321F1F016200E41C7B /* TravelApi.swift in Sources */,
@@ -818,6 +861,7 @@
 				23A600401F6D7A670087767B /* CreatePostViewModel.swift in Sources */,
 				23B3B2641F5CC88B001A2D5B /* TripDetailViewController.swift in Sources */,
 				4B9420AC1F1C505600FDE7EB /* PostFeedTableViewCell.swift in Sources */,
+				235DE7C820140677003AEC2F /* CenteredTextTableViewCell.swift in Sources */,
 				23B3B2661F5CC901001A2D5B /* TripViewModel.swift in Sources */,
 				23D4868120030FAC00CE9EC0 /* ViewModel.swift in Sources */,
 				23B3B2601F5BB463001A2D5B /* PostViewModel.swift in Sources */,

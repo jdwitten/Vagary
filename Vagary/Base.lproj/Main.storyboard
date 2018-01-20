@@ -422,41 +422,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kiy-oS-CAV">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="629"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ywO-xZ-ZaK">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <subviews>
-                                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tjl-gi-Gha">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                <items>
-                                                    <navigationItem title="Title" id="Zld-bt-3XE">
-                                                        <barButtonItem key="leftBarButtonItem" title="Save Draft" id="pYc-DU-aSj">
-                                                            <connections>
-                                                                <action selector="saveDraft:" destination="tgV-Hw-2bN" id="1Jp-ZK-0C7"/>
-                                                            </connections>
-                                                        </barButtonItem>
-                                                        <barButtonItem key="rightBarButtonItem" title="Post" id="OMk-kR-tH7">
-                                                            <connections>
-                                                                <action selector="pressPost:" destination="tgV-Hw-2bN" id="yef-Yv-i2Z"/>
-                                                            </connections>
-                                                        </barButtonItem>
-                                                    </navigationItem>
-                                                </items>
-                                            </navigationBar>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="ywO-xZ-ZaK" firstAttribute="leading" secondItem="kiy-oS-CAV" secondAttribute="leading" id="4BN-DE-mCw"/>
-                                    <constraint firstAttribute="bottom" secondItem="ywO-xZ-ZaK" secondAttribute="bottom" id="UBM-YR-RiS"/>
-                                    <constraint firstItem="ywO-xZ-ZaK" firstAttribute="top" secondItem="kiy-oS-CAV" secondAttribute="top" id="UWo-OY-Tbo"/>
-                                    <constraint firstAttribute="trailing" secondItem="ywO-xZ-ZaK" secondAttribute="trailing" id="oQ7-cb-Eqy"/>
-                                </constraints>
-                            </scrollView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="95W-hl-VxC">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-Ap-6I5">
                                 <rect key="frame" x="147" y="578" width="81" height="25"/>
                                 <subviews>
@@ -487,13 +456,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ywO-xZ-ZaK" firstAttribute="width" secondItem="ufo-0C-f2g" secondAttribute="width" id="18j-N3-eSj"/>
                             <constraint firstItem="Cl0-Ap-6I5" firstAttribute="centerX" secondItem="ufo-0C-f2g" secondAttribute="centerX" id="2hw-KD-nGw"/>
-                            <constraint firstAttribute="trailing" secondItem="kiy-oS-CAV" secondAttribute="trailing" id="51Q-7D-z3l"/>
+                            <constraint firstItem="95W-hl-VxC" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leading" id="J3q-wk-b3j"/>
+                            <constraint firstItem="95W-hl-VxC" firstAttribute="top" secondItem="ufo-0C-f2g" secondAttribute="top" id="Pqa-Q5-RCR"/>
                             <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="Cl0-Ap-6I5" secondAttribute="bottom" constant="20" id="W7r-ic-Psk"/>
-                            <constraint firstItem="kiy-oS-CAV" firstAttribute="top" secondItem="ufo-0C-f2g" secondAttribute="top" id="c6f-A9-h07"/>
-                            <constraint firstItem="kiy-oS-CAV" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leading" id="d43-c8-aDc"/>
-                            <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="kiy-oS-CAV" secondAttribute="bottom" id="zXZ-aG-pzP"/>
+                            <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="95W-hl-VxC" secondAttribute="bottom" id="Y5s-9k-qb3"/>
+                            <constraint firstAttribute="trailing" secondItem="95W-hl-VxC" secondAttribute="trailing" id="jqs-CA-TQs"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -501,16 +469,15 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="buttonsBottomConstraint" destination="W7r-ic-Psk" id="I4F-Xw-BFH"/>
-                        <outlet property="contentView" destination="ywO-xZ-ZaK" id="G9y-tz-hks"/>
                         <outlet property="editingModeButtons" destination="Cl0-Ap-6I5" id="fcF-PX-grT"/>
                         <outlet property="imageButton" destination="Ftn-AS-DNj" id="C6g-s9-w3l"/>
-                        <outlet property="scrollView" destination="kiy-oS-CAV" id="a4Z-9N-LK4"/>
+                        <outlet property="tableView" destination="95W-hl-VxC" id="ysl-Dt-0gT"/>
                         <outlet property="textButton" destination="Lzk-Bo-IDz" id="HMr-jA-SKH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKA-qs-rad" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3303" y="1235"/>
+            <point key="canvasLocation" x="3301.5999999999999" y="1234.6326836581711"/>
         </scene>
         <!--Post Options View Controller-->
         <scene sceneID="AlF-v3-7e8">
