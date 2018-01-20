@@ -54,8 +54,13 @@ class DraftPostCoordinator: DraftHandler {
         }
         let _ = firstly {
             apiService.createDraft(title: post.title, location: post.location, trip: post.trip.title)
-        }.then{ response in
-            draftCache.insert(item: response.draft)
+        }.then{ response -> Promise<Bool> in
+            self.draftCache.insert(item: response.draft)
+        }.then{ success -> Void in
+            if success {
+                let draftPostPresenter = self.factory.draftPostPresenter(handler: self)
+                self.rootPresenter?.push(presenter: draftPostPresenter, animated: true)
+            }
         }
     }
 }

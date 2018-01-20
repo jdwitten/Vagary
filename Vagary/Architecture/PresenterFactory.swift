@@ -19,6 +19,7 @@ protocol PresenterFactory {
     func postOptionsPresenter(handler: DraftHandler) -> PostOptionsPresenter
     func createPostPresenter(handler: DraftHandler) -> CreatePostPresenter
     func createDraftDetailPresenter(handler: DraftHandler, field: DraftField) -> CreateDraftDetailPresenter
+    func draftPostPresenter(handler: DraftHandler) -> DraftPostPresenter
 }
 
 struct UIPresenterFactory: PresenterFactory {
@@ -52,6 +53,10 @@ struct UIPresenterFactory: PresenterFactory {
     
     func createDraftDetailPresenter(handler: DraftHandler, field: DraftField) -> CreateDraftDetailPresenter {
         return CreateDraftDetailViewController.build(handler: handler, field: field)
+    }
+    
+    func draftPostPresenter(handler: DraftHandler) -> DraftPostPresenter {
+        return DraftPostViewController.build(handler: handler)
     }
     
 }

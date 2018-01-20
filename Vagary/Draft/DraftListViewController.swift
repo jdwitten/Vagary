@@ -73,13 +73,13 @@ class DraftListViewController: UITableViewController, StoreSubscriber{
     func reloadDrafts(){
         DispatchQueue.main.async{
             do{
-                try ViaStore.draftCache?.fetch([Post].self){ data in
-                    if data != nil{
-                        ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.loaded(data: data!)))
-                    }else{
-                        ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.loaded(data: [])))
-                    }
-                }
+//                try ViaStore.draftCache?.fetch([Post].self){ data in
+//                    if data != nil{
+//                        ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.loaded(data: data!)))
+//                    }else{
+//                        ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.loaded(data: [])))
+//                    }
+//                }
             }catch let error {
                 print(error)
                 ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.error))
