@@ -35,10 +35,18 @@ class Cache<T: Codable>: CacheService {
         self.documentsUrl = url
         self.path = documentsUrl.path.appending(path)
         self.pathUrl = URL(fileURLWithPath: self.path)
+        if !FileManager.default.fileExists(atPath: path) {
+            do {
+                try encoder.encode(Array<T>()).write(to: self.pathUrl)
+            } catch {
+                return nil
+            }
+        }
     }
     
     func fetch() -> Promise<[CacheType]> {
         guard FileManager.default.fileExists(atPath: path) else {
+            
             return Promise(error: CacheError.FetchingError)
         }
         let queue = DispatchQueue.global(qos: .background)

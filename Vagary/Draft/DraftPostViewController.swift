@@ -13,7 +13,7 @@ protocol DraftPostPresenter: Presenter {
     var handler: DraftHandler? { get set }
 }
 
-class DraftPostViewController: UIViewController, StoreSubscriber, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class DraftPostViewController: UIViewController, StoreSubscriber, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DraftPostPresenter {
 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -41,10 +41,11 @@ class DraftPostViewController: UIViewController, StoreSubscriber, UITextViewDele
         super.viewWillDisappear(animated)
         ViaStore.sharedStore.unsubscribe(self)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    static func build(handler: DraftHandler) -> DraftPostViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DraftPostViewController") as! DraftPostViewController
+        vc.handler = handler
+        return vc
     }
 
     func configureBackButton() {
@@ -69,14 +70,11 @@ class DraftPostViewController: UIViewController, StoreSubscriber, UITextViewDele
     
     
     func newState(state: AppState){
-        DispatchQueue.main.async { [unowned self] in
-            if let viewModel = DraftPostViewModel.build(state) {
-                print(viewModel.content)
-                if viewModel.content.count > self.contentView.subviews.count{
-                    self.appendContentElement(element: viewModel.content.last!)
-                }else{
-                    self.layoutContent(viewModel.content)
-                }
+        if let viewModel = DraftPostViewModel.build(state) {
+            if viewModel.content.count > self.contentView.subviews.count{
+                self.appendContentElement(element: viewModel.content.last!)
+            }else{
+                self.layoutContent(viewModel.content)
             }
         }
     }
@@ -200,20 +198,9 @@ class DraftPostViewController: UIViewController, StoreSubscriber, UITextViewDele
         }
         dismiss(animated: true)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-extension DraftPostViewController{
+extension DraftPostViewController {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.becomeFirstResponder()

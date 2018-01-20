@@ -15,8 +15,6 @@ class ViaStore {
         reducer: appReducer,
         state: AppState.authenticated(AuthenticatedState())
     )
-    static var draftCache: Cache? = Cache(path: "drafts")
-    
     private let api: TravelApi
     
     

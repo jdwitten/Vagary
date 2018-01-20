@@ -60,36 +60,36 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
     }
         
     @IBAction func pressNext(_ sender: Any) {
-        ViaStore.sharedStore.dispatch(createDraft())
+        handler?.createDraft()
     }
     
-    func createDraft() -> Store<AppState>.ActionCreator {
-        
-        return { state, store in
-            guard let authState = state.authenticatedState else {
-                return nil
-            }
-            do{
-                if let workingPost = authState.draft.workingPost {
-                    let drafts = authState.draft.drafts
-                    if case .loaded(var collection) = drafts{
-                        collection.append(authState.draft.workingPost!)
-                        try ViaStore.draftCache?.replace(with: collection){ success in
-                            if success{
-                                store.dispatch(DraftAction.createDraft(workingPost))
-                            }else{
-                                
-                            }
-                        }
-                    }
-                }
-            }catch let error {
-                print(error)
-                return nil
-            }
-            return nil
-        }
-    }
+//    func createDraft() -> Store<AppState>.ActionCreator {
+//        
+//        return { state, store in
+//            guard let authState = state.authenticatedState else {
+//                return nil
+//            }
+//            do{
+//                if let workingPost = authState.draft.workingPost {
+//                    let drafts = authState.draft.drafts
+//                    if case .loaded(var collection) = drafts{
+//                        collection.append(authState.draft.workingPost!)
+//                        try ViaStore.draftCache?.replace(with: collection){ success in
+//                            if success{
+//                                store.dispatch(DraftAction.createDraft(workingPost))
+//                            }else{
+//                                
+//                            }
+//                        }
+//                    }
+//                }
+//            }catch let error {
+//                print(error)
+//                return nil
+//            }
+//            return nil
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
