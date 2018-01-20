@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Post: Codable, Resource{
+struct Post: Codable, Resource {
     
     var id: Int
     var author: Int

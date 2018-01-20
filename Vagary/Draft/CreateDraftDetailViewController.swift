@@ -23,7 +23,19 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
     var field: DraftField?
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        if let f = field {
+            switch f {
+            case .Location(let location):
+                typeLabel.text = "Location"
+                textField.text = location
+            case .Title(let title):
+                typeLabel.text = "Title"
+                textField.text = title
+            case .Trip(let trip):
+                typeLabel.text = "Trip"
+                textField.text = trip
+            }
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,7 +46,26 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
         ViaStore.sharedStore.unsubscribe(self)
     }
     
-
+    static func build(handler: DraftHandler, field: DraftField) -> CreateDraftDetailViewController{
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateDraftDetailViewController") as! CreateDraftDetailViewController
+        vc.handler = handler
+        vc.field = field
+        return vc
+    }
+    
+    @IBAction func updateFieldDetail(_ sender: Any) {
+        guard let f = field else {
+            return
+        }
+        let newField: DraftField
+        switch f {
+        case .Location(_): newField = .Location(location: textField.text ?? "")
+        case .Title(_): newField = .Title(title: textField.text ?? "")
+        case .Trip(_): newField = .Trip(trip: textField.text ?? "")
+        }
+        handler?.updateDraftField(field: newField)
+    }
+    
     @IBAction func pressDone(_ sender: Any) {
         if field != nil, textField.text != nil{
             switch field!{
@@ -61,20 +92,8 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
     }
     
     func newState(state: AppState) {
-//        field = state.draft.currentlyEditing
-//        if field != nil{
-//            switch field!{
-//            case .Location(let location):
-//                typeLabel.text = "Location"
-//                textField.text = location
-//            case .Title(let title):
-//                typeLabel.text = "Title"
-//                textField.text = title
-//            case .Trip(let trip):
-//                typeLabel.text = "Trip"
-//                textField.text = trip
-//            }
-//        }
+        //workingPost = state.authenticatedState?.draft.workingPost
+        
     }
 
 }

@@ -141,6 +141,8 @@
 		23D4869A2003306A00CE9EC0 /* NavigationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPresenter.swift; sourceTree = "<group>"; };
 		23D4869E2005A51500CE9EC0 /* PassportState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportState.swift; sourceTree = "<group>"; };
 		23D486A02005B66400CE9EC0 /* DraftState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftState.swift; sourceTree = "<group>"; };
+		23D486A3200BF49800CE9EC0 /* PromiseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23D486A5200BF62E00CE9EC0 /* PromiseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23E5F2D41F88886C0082D5A9 /* PostOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptionsViewController.swift; sourceTree = "<group>"; };
 		23E5F2D81F888B7B0082D5A9 /* CreatePostImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostImagesViewController.swift; sourceTree = "<group>"; };
 		23E5F2DA1F888D320082D5A9 /* DraftListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftListViewController.swift; sourceTree = "<group>"; };
@@ -318,17 +320,19 @@
 				23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */,
 				23A6003F1F6D7A670087767B /* CreatePostViewModel.swift */,
 				23D486A02005B66400CE9EC0 /* DraftState.swift */,
+				230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */,
+				230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */,
 			);
 			path = Draft;
 			sourceTree = "<group>";
 		};
-		4B6539331F1F027400E41C7B /* Networking */ = {
+		23D486A7200BFD5500CE9EC0 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				4B6539311F1F016200E41C7B /* TravelApi.swift */,
 				4B6539341F1F029D00E41C7B /* TravelAPIResponses.swift */,
 			);
-			name = Networking;
+			path = API;
 			sourceTree = "<group>";
 		};
 		4B9420651F1C4B8B00FDE7EB = {
@@ -356,6 +360,7 @@
 		4B9420701F1C4B8C00FDE7EB /* Vagary */ = {
 			isa = PBXGroup;
 			children = (
+				23D486A7200BFD5500CE9EC0 /* API */,
 				23D4869D20059DA300CE9EC0 /* Draft */,
 				23D4869C20059CCD00CE9EC0 /* Passport */,
 				23D486852003111100CE9EC0 /* Feed */,
@@ -397,8 +402,6 @@
 				4B9420AB1F1C505600FDE7EB /* PostFeedTableViewCell.xib */,
 				4BCF6E771F1C61CF00695484 /* DesignableImage.swift */,
 				23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */,
-				230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */,
-				230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */,
 				23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */,
 				23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */,
 			);
@@ -420,7 +423,6 @@
 			isa = PBXGroup;
 			children = (
 				23AAFDC41F5905CB003B9EE9 /* Data */,
-				4B6539331F1F027400E41C7B /* Networking */,
 				4B9420711F1C4B8D00FDE7EB /* AppDelegate.swift */,
 				4B94207A1F1C4B9100FDE7EB /* Assets.xcassets */,
 				4B94207F1F1C4B9200FDE7EB /* Info.plist */,
@@ -453,6 +455,8 @@
 		A89B39EAE1329C5A3BA6193E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23D486A5200BF62E00CE9EC0 /* PromiseKit.framework */,
+				23D486A3200BF49800CE9EC0 /* PromiseKit.framework */,
 				23B3B2581F5A7CDA001A2D5B /* MapKit.framework */,
 				23FB17221F3D500200DA41A3 /* ReSwift.framework */,
 				4BF2C3E01F265FC400037DFE /* RxDataSources.framework */,
@@ -734,10 +738,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Vagary/Pods-Vagary-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -983,7 +989,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/ReSwift",
 				);
 				INFOPLIST_FILE = Vagary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jdwitten.Vagary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1004,7 +1010,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/ReSwift",
 				);
 				INFOPLIST_FILE = Vagary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jdwitten.Vagary;
 				PRODUCT_NAME = "$(TARGET_NAME)";

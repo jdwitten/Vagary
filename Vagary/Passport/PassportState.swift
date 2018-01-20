@@ -9,7 +9,7 @@
 import Foundation
 import ReSwift
 
-struct PassportState {
+struct PassportState: StateType {
     var user: User? = nil
     var trips: Loaded<[Trip]> = .loaded(data: [])
     var selectedTrip: Trip?
@@ -29,9 +29,9 @@ struct PassportReducer: SubstateReducer {
     typealias ActionType = PassportAction
     typealias SubstateType = PassportState
     
-    func unwrap(action: Action, state: AppState) -> AppState? {
+    func unwrap(action: Action, state: AppState) -> StateType? {
         if action is PassportAction {
-            return state
+            return state.authenticatedState?.passport
         } else {
             return nil
         }

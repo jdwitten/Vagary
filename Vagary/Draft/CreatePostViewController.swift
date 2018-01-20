@@ -17,14 +17,17 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
 
     @IBOutlet weak var nextButton: UIBarButtonItem!
     
-    @IBOutlet weak var newView: UIView!
     @IBOutlet weak var formTableView: UITableView!
     var workingPost: Post?
     var drafts: Loaded<[Post]> = Loaded.loading
-    @IBOutlet weak var tabStackView: UIStackView!
-    let draftTableView = UITableView()
     
     var handler: DraftHandler?
+    
+    static func build(handler: DraftHandler) -> CreatePostViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreatePostViewController") as! CreatePostViewController
+        vc.handler = handler
+        return vc
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +35,7 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         formTableView.dataSource = self
         let nib = UINib(nibName: "CreatePostTableViewCell", bundle: nil)
         formTableView.register(nib, forCellReuseIdentifier: "CreatePostTableViewCell")
-        formTableView.rowHeight = UITableViewAutomaticDimension
-        formTableView.estimatedRowHeight = 400
+        formTableView.rowHeight = 75
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,10 +47,6 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         super.viewWillDisappear(animated)
         ViaStore.sharedStore.unsubscribe(self)
     }
-    
-    func editDraftDetail(field: DraftField) {
-        ViaStore.sharedStore.dispatch(DraftAction.editDraftDetail(field))
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,7 +57,6 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         self.workingPost = state.authenticatedState?.draft.workingPost
         self.drafts = state.authenticatedState?.draft.drafts ?? .error
         formTableView.reloadData()
-        draftTableView.reloadData()
     }
         
     @IBAction func pressNext(_ sender: Any) {
@@ -100,38 +97,15 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       return getCellForFormRow(tableView: tableView, indexPath: indexPath)
-    }
-    
-    func getCellForFormRow(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreatePostTableViewCell" , for: indexPath)
         if let cell = cell as? CreatePostTableViewCell{
-            cell.detailStackView.subviews.forEach({$0.removeFromSuperview()})
             switch indexPath.row{
             case 0:
-                cell.cellLabel.text = "Title"
-                if workingPost?.title != nil {
-                    let label = UILabel()
-                    label.text = workingPost?.title
-                    label.sizeToFit()
-                    cell.detailStackView.addArrangedSubview(label)
-                }
+                cell.configure(field: "Title", detail: workingPost?.title)
             case 1:
-                cell.cellLabel.text = "Location"
-                if workingPost?.location != nil{
-                    let label = UILabel()
-                    label.text = workingPost?.location
-                    label.sizeToFit()
-                    cell.detailStackView.addArrangedSubview(label)
-                }
+                cell.configure(field: "Location", detail: workingPost?.location)
             case 2:
-                cell.cellLabel.text = "Trip"
-                if workingPost?.trip != nil{
-                    let label = UILabel()
-                    label.text = workingPost?.trip.title
-                    label.sizeToFit()
-                    cell.detailStackView.addArrangedSubview(label)
-                }
+                cell.configure(field: "Trip", detail: workingPost?.trip.title)
             default:
                 break
             }
@@ -140,27 +114,15 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row{
+        switch indexPath.row {
         case 0:
-            editDraftDetail(field: .Title(title: workingPost?.title ?? ""))
+            handler?.selectFieldToEdit(field: .Title(title: workingPost?.title ?? ""))
         case 1:
-            editDraftDetail(field: .Location(location: workingPost?.location ?? ""))
+            handler?.selectFieldToEdit(field: .Location(location: workingPost?.location ?? ""))
         case 2:
-            editDraftDetail(field: .Trip(trip: workingPost?.trip.title ?? ""))
+            handler?.selectFieldToEdit(field: .Trip(trip: workingPost?.trip.title ?? ""))
         default:
             break
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

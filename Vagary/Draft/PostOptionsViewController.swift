@@ -34,14 +34,14 @@ class PostOptionsViewController: UIViewController, PostOptionsPresenter {
     }
     
     @IBAction func writePostPress(_ sender: Any) {
-        ViaStore.sharedStore.dispatch(DraftAction.selectPostOption(.post))
+        handler?.selectPostOption(option: .post)
     }
     
     @IBAction func shareImagesPress(_ sender: Any) {
-        ViaStore.sharedStore.dispatch(DraftAction.selectPostOption(.images))
+        handler?.selectPostOption(option: .images)
     }
     @IBAction func openDrafts(_ sender: Any) {
-        ViaStore.sharedStore.dispatch(DraftAction.selectPostOption(.drafts))
+        handler?.selectPostOption(option: .drafts)
     }
     /*
     // MARK: - Navigation

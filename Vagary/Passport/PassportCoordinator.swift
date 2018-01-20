@@ -8,10 +8,11 @@
 
 import Foundation
 import ReSwift
+import PromiseKit
 
 class PassportCoordinator: PassportHandler {
     
-    var rootController: NavigationPresenter?
+    var rootPresenter: NavigationPresenter?
     let api = TravelApi()
     let dependencies: AppDependency
     var factory: PresenterFactory {
@@ -20,10 +21,22 @@ class PassportCoordinator: PassportHandler {
     
     init(dependencies: AppDependency){
         self.dependencies = dependencies
-        rootController = factory.navigationPresenter()
-        rootController?.push(presenter: factory.passportPresenter(handler: self), animated: true)
+        rootPresenter = factory.navigationPresenter()
+        rootPresenter?.push(presenter: factory.passportPresenter(handler: self), animated: true)
+    }
+    
+    func updateTrips() {
+        let _ = firstly {
+            dependencies.api.getTrips()
+        }.then { response -> Void in
+            ViaStore.sharedStore.dispatch(PassportAction.tripsResponse(.loaded(data: response.trips)))
+        }.catch{ error in
+            ViaStore.sharedStore.dispatch(PassportAction.tripsResponse(.error))
+        }
     }
 }
 
-protocol PassportHandler { }
+protocol PassportHandler {
+    func updateTrips()
+}
 

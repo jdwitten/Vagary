@@ -7,7 +7,10 @@
 //
 
 import Foundation
+import ReSwift
 
 struct AppDependency {
     let factory: PresenterFactory
+    let api: APIService
+    let draftCache: Cache<Post>
 }

@@ -8,7 +8,17 @@
 
 import Foundation
 
+struct PostsResponse {
+    var posts: [Post]
+}
 
+struct TripsResponse {
+    var trips: [Trip]
+}
+
+struct CreateDraftResponse {
+    var draft: Post
+}
 
 enum TravelAPIResponse{
     

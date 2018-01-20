@@ -44,7 +44,7 @@ class PassportViewController: UIViewController, StoreSubscriber, UICollectionVie
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        ViaStore.sharedStore.dispatch(getTrips())
+        getTrips()
         let path = UIBezierPath(roundedRect:shelf.bounds,
                                 byRoundingCorners:[.topRight, .topLeft],
                                 cornerRadii: CGSize(width: 25, height:  25))
@@ -82,20 +82,8 @@ class PassportViewController: UIViewController, StoreSubscriber, UICollectionVie
         }
     }
     
-    func getTrips() -> Store<AppState>.ActionCreator {
-        
-        return { state, store in
-            if let user = state.authenticatedState?.auth.user {
-                let api: TravelApi = TravelApi()
-                api.getMany(resource: Trip.self, path: .trips, forId: 0){ trips in
-                    DispatchQueue.main.async {
-                        store.dispatch(PassportAction.tripsResponse(trips))
-                    }
-                }
-                return PassportAction.tripsSearch(user)
-            }
-            else{ return nil }
-        }
+    func getTrips()  {
+        handler?.updateTrips()
     }
     
     @objc func userDidTapTripsLabel(tapGestureRecognizer: UITapGestureRecognizer){
@@ -137,12 +125,12 @@ extension PassportViewController{
         if indexPath.row < trips.count{
             let trip = trips[indexPath.row]
             ViaStore.sharedStore.dispatch(PassportAction.showTripDetail(trip.id))
-            api.get(resource: Trip.self, path: .trip, forId: trip.id){trip in
-                ViaStore.sharedStore.dispatch(PassportAction.tripDetailResponse(trip))
-            }
-            api.getMany(resource: Post.self, path: .posts, forId: 1){ posts in
-                ViaStore.sharedStore.dispatch(PassportAction.tripDetailPostsResponse(posts))
-            }
+//            api.get(resource: Trip.self, path: .trip, forId: trip.id){trip in
+//                ViaStore.sharedStore.dispatch(PassportAction.tripDetailResponse(trip))
+//            }
+//            api.getMany(resource: Post.self, path: .posts, forId: 1){ posts in
+//                ViaStore.sharedStore.dispatch(PassportAction.tripDetailPostsResponse(posts))
+//            }
         }
     }
     

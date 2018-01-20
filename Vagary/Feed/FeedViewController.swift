@@ -38,6 +38,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
         postsTableView.delegate = self
         postsTableView.dataSource = self
         configureTableView()
+        
+        handler?.updatePosts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,20 +52,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
         return vc
     }
     
-    
-    func getPosts() -> Store<AppState>.ActionCreator {
-        
-        return { state, store in
-            let api: TravelApi = TravelApi()
-            api.getMany(resource: Post.self, path: .posts, forId: 0){ posts in
-                DispatchQueue.main.async {
-                    store.dispatch(FeedAction.updatePosts(posts))
-                }
-            }
-            
-            return FeedAction.postSearch("")
-        }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,7 +68,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl){
-        ViaStore.sharedStore.dispatch(getPosts())
+        handler?.updatePosts()
     }
     
     func newState(state: AppState){
@@ -119,14 +107,14 @@ extension FeedViewController{
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         print("show post")
         let post = posts[indexPath.row]
-        api.get(resource: Post.self, path: .post, forId: post.id) { loadedPost in
-            switch loadedPost{
-            case .loaded(let p):
-                ViaStore.sharedStore.dispatch(FeedAction.updatePostDetail(p))
-            default:
-                break
-            }
-        }
+//        api.get(resource: Post.self, path: .post, forId: post.id) { loadedPost in
+//            switch loadedPost{
+//            case .loaded(let p):
+//                ViaStore.sharedStore.dispatch(FeedAction.updatePostDetail(p))
+//            default:
+//                break
+//            }
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -134,8 +122,7 @@ extension FeedViewController{
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        ViaStore.sharedStore.dispatch(getPosts())
+        handler?.updatePosts()
     }
     
     func configureCell(_ cell: UITableViewCell, at indexPath: IndexPath) {

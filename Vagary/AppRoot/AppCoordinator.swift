@@ -25,9 +25,20 @@ class AppCoordinator {
         var tabBarPresenter = dependencies.factory.tabBarPresenter()
         
         feedCoordinator = FeedCoordinator(dependencies: dependencies)
+        passportCoordinator = PassportCoordinator(dependencies: dependencies)
+        draftPostCoordinator = DraftPostCoordinator(dependencies: dependencies)
         rootPresenter = dependencies.factory.rootPresenter()
         
-        tabBarPresenter.presenters = [dependencies.factory.feedPresenter(handler: feedCoordinator!)]
+        guard let feedRoot = feedCoordinator?.rootPresenter,
+            let passportRoot = passportCoordinator?.rootPresenter,
+            let draftRoot = draftPostCoordinator?.rootPresenter else {
+                return
+        }
+        
+        tabBarPresenter.presenters = [feedRoot,
+                                      passportRoot,
+                                      draftRoot]
+        
         rootPresenter.setRoot(presenter: tabBarPresenter)
         
     }

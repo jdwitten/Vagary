@@ -13,7 +13,7 @@ class ViaStore {
     
     static let sharedStore = Store(
         reducer: appReducer,
-        state: nil
+        state: AppState.authenticated(AuthenticatedState())
     )
     static var draftCache: Cache? = Cache(path: "drafts")
     

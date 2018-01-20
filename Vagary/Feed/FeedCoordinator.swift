@@ -8,12 +8,11 @@
 //
 
 import Foundation
-import UIKit
 import ReSwift
+import PromiseKit
 
 
 class FeedCoordinator: FeedHandler {
-    var rootController: UINavigationController?
     var api = TravelApi()
     
     let dependencies: AppDependency
@@ -24,9 +23,21 @@ class FeedCoordinator: FeedHandler {
         rootPresenter = dependencies.factory.navigationPresenter()
         rootPresenter.push(presenter: dependencies.factory.feedPresenter(handler: self), animated: true)
     }
+    
+    func updatePosts() {
+        let _ = firstly {
+            dependencies.api.getPosts()
+        }.then { response in
+            ViaStore.sharedStore.dispatch(FeedAction.updatePosts(.loaded(data: response.posts)))
+        }.catch{ error in
+            ViaStore.sharedStore.dispatch(FeedAction.updatePosts(.error))
+        }
+    }
 }
 
-protocol FeedHandler { }
+protocol FeedHandler {
+    func updatePosts()
+}
 
 
 

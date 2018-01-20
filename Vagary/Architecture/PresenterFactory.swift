@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ReSwift
 
 protocol PresenterFactory {
     func feedPresenter(handler: FeedHandler) -> FeedPresenter
@@ -16,6 +17,8 @@ protocol PresenterFactory {
     func rootPresenter() -> RootPresenter
     func passportPresenter(handler: PassportHandler) -> PassportPresenter
     func postOptionsPresenter(handler: DraftHandler) -> PostOptionsPresenter
+    func createPostPresenter(handler: DraftHandler) -> CreatePostPresenter
+    func createDraftDetailPresenter(handler: DraftHandler, field: DraftField) -> CreateDraftDetailPresenter
 }
 
 struct UIPresenterFactory: PresenterFactory {
@@ -42,4 +45,13 @@ struct UIPresenterFactory: PresenterFactory {
     func postOptionsPresenter(handler: DraftHandler) -> PostOptionsPresenter {
         return PostOptionsViewController.build(handler: handler)
     }
+    
+    func createPostPresenter(handler: DraftHandler) -> CreatePostPresenter {
+        return CreatePostViewController.build(handler: handler)
+    }
+    
+    func createDraftDetailPresenter(handler: DraftHandler, field: DraftField) -> CreateDraftDetailPresenter {
+        return CreateDraftDetailViewController.build(handler: handler, field: field)
+    }
+    
 }

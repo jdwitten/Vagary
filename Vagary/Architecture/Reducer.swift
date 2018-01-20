@@ -11,7 +11,7 @@ import ReSwift
 
 protocol AnySubstateReducer {
     func reduce(state: AppState, action: Action, substate: Any) -> AppState
-    func unwrap(action: Action, state: AppState) -> AppState?
+    func unwrap(action: Action, state: AppState) -> StateType?
 }
 
 protocol SubstateReducer: AnySubstateReducer {

@@ -25,9 +25,9 @@ struct FeedReducer: SubstateReducer {
     
     typealias SubstateType = FeedState
     typealias ActionType = FeedAction
-    func unwrap(action: Action, state: AppState) -> AppState? {
+    func unwrap(action: Action, state: AppState) -> StateType? {
         if action is FeedAction {
-            return state
+            return state.authenticatedState?.feed
         } else {
             return nil
         }

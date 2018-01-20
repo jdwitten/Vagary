@@ -7,59 +7,93 @@
 //
 
 import Foundation
+import PromiseKit
 
+protocol CacheService {
+    var path: String { get set }
+    func fetch() -> Promise<[CacheType]>
+    func insert(item: CacheType) -> Promise<Bool>
+    func replace(with collection: [CacheType]) -> Promise<Bool>
+    associatedtype CacheType: Codable
+}
 
-class Cache{
+class Cache<T: Codable>: CacheService {
+
+    var path: String
+    var documentsUrl: URL
+    var pathUrl: URL
+    typealias CacheType = T
     
-    
-    var path: String?
-    var documentsUrl: URL?
-    var pathUrl: URL?
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
 
     init?(path: String){
         let manager = FileManager.default
-        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first as NSURL?
-        self.documentsUrl = url as URL?
-        if documentsUrl != nil{
-            self.path = documentsUrl!.path.appending(path)
-            self.pathUrl = URL(fileURLWithPath: self.path!)
-        }else{
+        guard let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
         }
+        self.documentsUrl = url
+        self.path = documentsUrl.path.appending(path)
+        self.pathUrl = URL(fileURLWithPath: self.path)
     }
     
-    
-    func fetch<T: Codable>(_ type: T.Type, completion: @escaping (_ data: T?) -> ()) throws{
-        guard path != nil else{
-            throw CacheError.FetchingError
+    func fetch() -> Promise<[CacheType]> {
+        guard FileManager.default.fileExists(atPath: path) else {
+            return Promise(error: CacheError.FetchingError)
         }
-        if !FileManager.default.fileExists(atPath: path!) {
-            return completion(nil)
-        }
-        if let data = FileManager.default.contents(atPath: path!) {
-            let decoder = JSONDecoder()
-            do {
-                let models = try decoder.decode(type, from: data)
-                return completion(models)
-            } catch {
-                completion(nil)
+        let queue = DispatchQueue.global(qos: .background)
+        return Promise { fulfill, reject in
+            queue.async {
+                guard let data = FileManager.default.contents(atPath: self.path) else {
+                    reject(CacheError.FetchingError)
+                    return
+                }
+                do {
+                    let models = try self.decoder.decode([CacheType].self, from: data)
+                    fulfill(models)
+                } catch {
+                    reject(CacheError.FetchingError)
+                }
             }
-        } else {
-            completion(nil)
         }
     }
     
-    func replace<T>(with collection: [T], completion: @escaping ( _ success: Bool) -> ()) throws{
-        guard path != nil, pathUrl != nil else {
-            throw CacheError.InsertError
+    func replace(with collection: [T]) -> Promise<Bool> {
+        let queue = DispatchQueue.global(qos: .background)
+        return Promise { fulfill, reject in
+            queue.async {
+                do {
+                    let data = try self.encoder.encode(collection)
+                    try data.write(to: self.pathUrl, options: [.atomic])
+                    fulfill(true)
+                } catch {
+                    reject(CacheError.FetchingError)
+                }
+            }
         }
-        let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(collection)
-            try data.write(to: pathUrl!, options: [.atomic])
-            return completion(true)
-        } catch {
-            fatalError(error.localizedDescription)
+    }
+    
+    func insert(item: T) -> Promise<Bool> {
+        guard FileManager.default.fileExists(atPath: path) else {
+            return Promise(error: CacheError.FetchingError)
+        }
+        let queue = DispatchQueue.global(qos: .background)
+        return Promise { fulfill, reject in
+            queue.async {
+                guard let data = FileManager.default.contents(atPath: self.path) else {
+                    reject(CacheError.FetchingError)
+                    return
+                }
+                do {
+                    var models = try self.decoder.decode([CacheType].self, from: data)
+                    models.append(item)
+                    let data = try self.encoder.encode(models)
+                    try data.write(to: self.pathUrl, options: [.atomic])
+                    fulfill(true)
+                } catch {
+                    reject(CacheError.FetchingError)
+                }
+            }
         }
     }
 }
