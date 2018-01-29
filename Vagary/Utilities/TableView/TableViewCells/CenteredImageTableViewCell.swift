@@ -15,14 +15,18 @@ class CenteredImageTableViewCell: UITableViewCell {
 }
 
 struct CenteredImageCellViewModel: CellViewModel {
-    var reuseIdentifier: String? = "CenteredImageTableViewCell"
+
+    var reuseIdentifier: String = "CenteredImageTableViewCell"
     var image: UIImage
     
     init(image: UIImage) {
         self.image = image
     }
     
-    func configure(_ cell: CenteredImageTableViewCell) {
+    func configure(_ cell: UITableViewCell) {
+        guard let cell = cell as? CenteredImageTableViewCell else {
+            return
+        }
         cell.centeredImage.image = self.image
     }
     

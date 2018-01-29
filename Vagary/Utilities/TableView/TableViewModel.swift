@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import UIKit
 
 protocol TableViewModel {
     
-    var sections: [SectionViewModel]?
+    var sections: [SectionViewModel]? { get set }
 }
 
 protocol SectionViewModel {
-    var cells: [CellViewModel]?
+    var cells: [CellViewModel]? { get set }
 }
 
 protocol CellViewModel {
-    var reuseIdentifier: String
+    var reuseIdentifier: String { get set }
     
     func configure(_ cell: UITableViewCell)
 }

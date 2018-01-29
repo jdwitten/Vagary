@@ -22,7 +22,10 @@ struct CenteredTextCellViewModel: CellViewModel {
         self.text = text
     }
     
-    func configure(_ cell: CenteredTextTableViewCell) {
+    func configure(_ cell: UITableViewCell) {
+        guard let cell = cell as? CenteredTextTableViewCell else {
+            return
+        }
         cell.label.text = text
     }
 }

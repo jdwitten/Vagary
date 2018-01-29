@@ -59,6 +59,9 @@ class DraftPostCoordinator: DraftHandler {
         }.then{ success -> Void in
             if success {
                 let draftPostPresenter = self.factory.draftPostPresenter(handler: self)
+                if let content = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost?.content {
+                    draftPostPresenter.setLayout(content: content)
+                }
                 self.rootPresenter?.push(presenter: draftPostPresenter, animated: true)
             }
         }
@@ -66,6 +69,10 @@ class DraftPostCoordinator: DraftHandler {
     
     func appendDraftElement(element: PostElement) {
         ViaStore.sharedStore.dispatch(DraftAction.addPostElement(element))
+    }
+    
+    func finishEditingDraft(content: [PostElement]) {
+        ViaStore.sharedStore.dispatch(DraftAction.setContent(content))
     }
 }
 
@@ -75,6 +82,7 @@ protocol DraftHandler {
     func updateDraftField(field: DraftField)
     func createDraft()
     func appendDraftElement(element: PostElement)
+    func finishEditingDraft(content: [PostElement])
 }
 
 enum DraftField{

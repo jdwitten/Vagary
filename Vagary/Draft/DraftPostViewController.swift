@@ -11,12 +11,13 @@ import ReSwift
 
 protocol DraftPostPresenter: Presenter {
     var handler: DraftHandler? { get set }
+    func setLayout(content: [PostElement])
 }
 
 class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DraftPostPresenter {
-
-    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var buttonsBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var editingModeButtons: UIStackView!
     @IBOutlet weak var imageButton: UIButton!
@@ -26,6 +27,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     var handler: DraftHandler?
     
     var viewModel: DraftPostViewModel?
+    private var layout: [PostElement]?
     
     
     override func viewDidLoad() {
@@ -33,8 +35,9 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         NotificationCenter.default.addObserver(self, selector: #selector(DraftPostViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DraftPostViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         configureBackButton()
-        tableView.dataSource = self
-        tableView.delegate = self
+        if let content = layout {
+           layout(content: content)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,11 +57,24 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
 
     func configureBackButton() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToDetail(sender:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneEditing(sender:)))
     }
     
-    @objc func backToDetail(sender: AnyObject) {
+    @objc func doneEditing(sender: UIBarButtonItem) {
+        handler?.finishEditingDraft(content: layout)
+    }
+    
+    func setLayout(content: [PostElement]) {
+        layout = content
         
+    }
+    
+    func layout(content: [PostElement]) {
+        for element in content {
+            if let view = createBodyElement(element) {
+                stackView.addArrangedSubview(view)
+            }
+        }
     }
     
     @objc func keyboardWillShow(notification:NSNotification){
@@ -74,77 +90,30 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     func addNewElement(element: PostElement) {
-        ViaStore.sharedStore.dispatch(DraftAction.addPostElement(element))
+        if let view = createBodyElement(element) {
+            stackView.addArrangedSubview(view)
+            self.view.layoutIfNeeded()
+            scrollView.scrollToBottom(animated: true, offsetFromBottom: 30.0)
+            if let textView = view as? UITextView {
+                textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+                textView.becomeFirstResponder()
+            }
+            layout?.append(element)
+        }
     }
-   
-//    func layoutContent(_ content: [PostElement]){
-//        let _ = contentView.subviews.map{$0.removeFromSuperview()}
-//        var topConstraint = contentView.topAnchor
-//        let views: [UIView?] = content.map{ [unowned self] element in
-//          if let newView = self.createBodyElement(element){
-//            self.contentView.addSubview(newView)
-//            newView.translatesAutoresizingMaskIntoConstraints = false
-//            newView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-//            newView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-//            newView.topAnchor.constraint(equalTo: topConstraint).isActive = true
-//            if newView is UIImageView{
-//              newView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-//            } else if let newView = newView as? UIScrollView{
-//              newView.isScrollEnabled = false
-//            }
-//
-//            topConstraint = newView.bottomAnchor
-//            return newView
-//        }
-//        return nil
-//      }
-//      if views.last != nil {
-//        self.bottomConstraint = views.last!?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-//        NSLayoutConstraint.activate([self.bottomConstraint!])
-//      }
-//      self.view.layoutIfNeeded()
-//    }
-//
-//    func appendContentElement(element: PostElement){
-//        if let newView = createBodyElement(element){
-//            let topView = contentView.subviews.last
-//            self.contentView.addSubview(newView)
-//            newView.translatesAutoresizingMaskIntoConstraints = false
-//            if bottomConstraint != nil, topView != nil {
-//                NSLayoutConstraint.deactivate([bottomConstraint!])
-//                topView!.bottomAnchor.constraint(equalTo: newView.topAnchor).isActive = true
-//                //newView.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
-//            } else{
-//                newView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-//            }
-//            newView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-//            newView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-//            bottomConstraint = newView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-//            NSLayoutConstraint.activate([bottomConstraint!])
-//            if newView is UIImageView{
-//                newView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-//            } else if let newView = newView as? UIScrollView{
-//                newView.isScrollEnabled = false
-//            }
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-    
 
     func createBodyElement(_ element: PostElement) -> UIView?{
-        if let element = element as? String{
+        if case let .text(text) = element {
             let textView = UITextView()
-            textView.text = element
+            textView.isScrollEnabled = false
+            textView.text = text
             return textView
         }
-        else if let element = element as? URL {
-            if let image = UIImageView(url: element){
-                return image
-            }
-        }
-        else if let element = element as? UIImage{
-            let imageView = UIImageView()
-            imageView.image = element
+        else if case let .image(imageWrapper) = element {
+           let imageView = UIImageView(image: imageWrapper.image)
+            imageView.contentMode = .scaleAspectFit
+            imageView.clipsToBounds = true
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: imageWrapper.image.size.width / imageWrapper.image.size.height).isActive = true
             return imageView
         }
         return nil
@@ -175,10 +144,12 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             let wrapper = ImageWrapper(image: editedImage)
             addNewElement(element: .image(wrapper))
+            addNewElement(element: .text(""))
         }
         else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             let wrapper = ImageWrapper(image: possibleImage)
             addNewElement(element: .image(wrapper))
+            addNewElement(element: .text(""))
         } else {
             return
         }
@@ -189,30 +160,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
 extension DraftPostViewController: StoreSubscriber {
     func newState(state: AppState){
         viewModel = DraftPostViewModel.build(state)
-        tableView.reloadData()
-    }
-}
-
-extension DraftPostViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let firstSection = viewModel?.first else {
-            return 0
-        }
-        return firstSection.cells.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = indexPath.row
-        guard let items = viewModel?.sections?.first?.cells,
-            row < items.count else {
-            return UITableViewCell()
-        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: items[row].reuseIdentifier)
-        items[row].configure(cell)
     }
 }
 

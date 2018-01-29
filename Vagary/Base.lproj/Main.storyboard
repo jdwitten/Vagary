@@ -422,15 +422,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="95W-hl-VxC">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gog-Fs-vWx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-Ap-6I5">
-                                <rect key="frame" x="147" y="578" width="81" height="25"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzk-Bo-IDz">
-                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UfX-zW-6Yu">
+                                        <rect key="frame" x="0.0" y="191" width="375" height="200"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="width" secondItem="gog-Fs-vWx" secondAttribute="width" id="LF5-j1-Bpg"/>
+                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="top" secondItem="gog-Fs-vWx" secondAttribute="top" id="cer-nI-JSd"/>
+                                    <constraint firstAttribute="trailing" secondItem="UfX-zW-6Yu" secondAttribute="trailing" id="dwd-8w-tNP"/>
+                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="leading" secondItem="gog-Fs-vWx" secondAttribute="leading" id="liP-8p-Icp"/>
+                                    <constraint firstAttribute="bottom" secondItem="UfX-zW-6Yu" secondAttribute="bottom" id="x0f-2s-aHu"/>
+                                </constraints>
+                            </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-Ap-6I5">
+                                <rect key="frame" x="175" y="578" width="25" height="25"/>
+                                <subviews>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzk-Bo-IDz">
+                                        <rect key="frame" x="-175" y="0.0" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="3V5-ZP-A0i"/>
                                             <constraint firstAttribute="height" constant="25" id="gRf-7g-3Ez"/>
@@ -441,7 +452,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ftn-AS-DNj">
-                                        <rect key="frame" x="56" y="0.0" width="25" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="N7Q-Ea-uC3"/>
                                             <constraint firstAttribute="width" constant="25" id="iYj-DS-S6w"/>
@@ -457,11 +468,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cl0-Ap-6I5" firstAttribute="centerX" secondItem="ufo-0C-f2g" secondAttribute="centerX" id="2hw-KD-nGw"/>
-                            <constraint firstItem="95W-hl-VxC" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leading" id="J3q-wk-b3j"/>
-                            <constraint firstItem="95W-hl-VxC" firstAttribute="top" secondItem="ufo-0C-f2g" secondAttribute="top" id="Pqa-Q5-RCR"/>
+                            <constraint firstItem="Cl0-Ap-6I5" firstAttribute="bottom" secondItem="gog-Fs-vWx" secondAttribute="bottom" id="BMf-gL-F2G"/>
+                            <constraint firstAttribute="trailing" secondItem="gog-Fs-vWx" secondAttribute="trailing" id="Iuc-vi-Orb"/>
+                            <constraint firstItem="gog-Fs-vWx" firstAttribute="top" secondItem="ufo-0C-f2g" secondAttribute="top" id="KIs-lQ-JO8"/>
                             <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="Cl0-Ap-6I5" secondAttribute="bottom" constant="20" id="W7r-ic-Psk"/>
-                            <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="95W-hl-VxC" secondAttribute="bottom" id="Y5s-9k-qb3"/>
-                            <constraint firstAttribute="trailing" secondItem="95W-hl-VxC" secondAttribute="trailing" id="jqs-CA-TQs"/>
+                            <constraint firstItem="gog-Fs-vWx" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leading" id="ewn-vB-GBh"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -471,7 +482,8 @@
                         <outlet property="buttonsBottomConstraint" destination="W7r-ic-Psk" id="I4F-Xw-BFH"/>
                         <outlet property="editingModeButtons" destination="Cl0-Ap-6I5" id="fcF-PX-grT"/>
                         <outlet property="imageButton" destination="Ftn-AS-DNj" id="C6g-s9-w3l"/>
-                        <outlet property="tableView" destination="95W-hl-VxC" id="ysl-Dt-0gT"/>
+                        <outlet property="scrollView" destination="gog-Fs-vWx" id="KCN-CH-avs"/>
+                        <outlet property="stackView" destination="UfX-zW-6Yu" id="0Cu-0l-wEV"/>
                         <outlet property="textButton" destination="Lzk-Bo-IDz" id="HMr-jA-SKH"/>
                     </connections>
                 </viewController>

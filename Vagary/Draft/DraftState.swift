@@ -25,6 +25,7 @@ enum DraftAction: Action {
     case showDraft([PostElement])
     case loadedDrafts(Loaded<[Post]>)
     case addPostElement(PostElement)
+    case setContent([PostElement])
 }
 
 struct DraftReducer: SubstateReducer {
@@ -73,6 +74,8 @@ struct DraftReducer: SubstateReducer {
             newState.drafts = drafts
         case .addPostElement(let element):
             newState.content.append(element)
+        case .setContent(let content):
+            newState.content = content
         }
         return newState
     }

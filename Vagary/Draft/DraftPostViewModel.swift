@@ -18,7 +18,7 @@ struct DraftPostViewModel: ViewModel, TableViewModel {
         guard let auth = state.authenticatedState else {
             return nil
         }
-        let cells: [CellViewModel] = auth.draft.content.map{ element in
+        let cells: [CellViewModel] = auth.draft.content.flatMap{ element in
             if case .image(let imageWrapper) = element {
                 return CenteredImageCellViewModel(image: imageWrapper.image)
             } else if case .text(let text) = element {

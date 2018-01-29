@@ -19,15 +19,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="183.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s8Z-a5-QMk">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s8Z-a5-QMk">
                         <rect key="frame" x="16" y="11" width="288" height="162"/>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="s8Z-a5-QMk" secondAttribute="trailing" id="D2K-Cl-U3Y"/>
+                    <constraint firstItem="s8Z-a5-QMk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="6Ff-3K-Wi5"/>
+                    <constraint firstItem="s8Z-a5-QMk" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Vp7-5v-HXx"/>
                     <constraint firstAttribute="bottomMargin" secondItem="s8Z-a5-QMk" secondAttribute="bottom" id="r7b-lS-iDT"/>
                     <constraint firstItem="s8Z-a5-QMk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="te3-IQ-YnR"/>
-                    <constraint firstItem="s8Z-a5-QMk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="zAF-jV-9tK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
