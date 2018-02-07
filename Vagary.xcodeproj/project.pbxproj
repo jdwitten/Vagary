@@ -11,6 +11,8 @@
 		230DF7101F75BD0D005EABE9 /* CreatePostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */; };
 		230DF7141F75CF38005EABE9 /* CreateDraftDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */; };
 		230DF7171F76B0F2005EABE9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230DF7161F76B0F2005EABE9 /* Cache.swift */; };
+		2313DBF12020212F00F60E53 /* Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2313DBF02020212F00F60E53 /* Draft.swift */; };
+		2313DBF32020266D00F60E53 /* DraftListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2313DBF22020266D00F60E53 /* DraftListViewModel.swift */; };
 		23236A8C1F4A14A800043021 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8B1F4A14A800043021 /* Trip.swift */; };
 		23236A8E1F4A157C00043021 /* PassportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8D1F4A157C00043021 /* PassportViewController.swift */; };
 		23236A901F4A170300043021 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23236A8F1F4A170300043021 /* User.swift */; };
@@ -110,6 +112,8 @@
 		230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostTableViewCell.xib; sourceTree = "<group>"; };
 		230DF7131F75CF37005EABE9 /* CreateDraftDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDraftDetailViewController.swift; sourceTree = "<group>"; };
 		230DF7161F76B0F2005EABE9 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		2313DBF02020212F00F60E53 /* Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draft.swift; sourceTree = "<group>"; };
+		2313DBF22020266D00F60E53 /* DraftListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftListViewModel.swift; sourceTree = "<group>"; };
 		23236A8B1F4A14A800043021 /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		23236A8D1F4A157C00043021 /* PassportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportViewController.swift; sourceTree = "<group>"; };
 		23236A8F1F4A170300043021 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -371,6 +375,9 @@
 				23D486A02005B66400CE9EC0 /* DraftState.swift */,
 				230DF70D1F75BD0D005EABE9 /* CreatePostTableViewCell.swift */,
 				230DF70E1F75BD0D005EABE9 /* CreatePostTableViewCell.xib */,
+				2313DBF22020266D00F60E53 /* DraftListViewModel.swift */,
+				23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */,
+				23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */,
 			);
 			path = Draft;
 			sourceTree = "<group>";
@@ -452,8 +459,6 @@
 				4B9420AB1F1C505600FDE7EB /* PostFeedTableViewCell.xib */,
 				4BCF6E771F1C61CF00695484 /* DesignableImage.swift */,
 				23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */,
-				23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */,
-				23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				23236A8B1F4A14A800043021 /* Trip.swift */,
 				23236A8F1F4A170300043021 /* User.swift */,
 				23F4997F1F7F63BF007DC22B /* PostElement.swift */,
+				2313DBF02020212F00F60E53 /* Draft.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -853,6 +859,7 @@
 				23B3B26E1F5E254C001A2D5B /* DraftPostViewModel.swift in Sources */,
 				23F499801F7F63BF007DC22B /* PostElement.swift in Sources */,
 				23D4869020032B7100CE9EC0 /* TabBarPresenter.swift in Sources */,
+				2313DBF32020266D00F60E53 /* DraftListViewModel.swift in Sources */,
 				23236A921F4A18BA00043021 /* PassportCoordinator.swift in Sources */,
 				4B65392E1F1EFEA700E41C7B /* Post.swift in Sources */,
 				4B6539281F1EFA9A00E41C7B /* FeedCoordinator.swift in Sources */,
@@ -875,6 +882,7 @@
 				4B9420AC1F1C505600FDE7EB /* PostFeedTableViewCell.swift in Sources */,
 				235DE7C820140677003AEC2F /* CenteredTextTableViewCell.swift in Sources */,
 				23B3B2661F5CC901001A2D5B /* TripViewModel.swift in Sources */,
+				2313DBF12020212F00F60E53 /* Draft.swift in Sources */,
 				23D4868120030FAC00CE9EC0 /* ViewModel.swift in Sources */,
 				23B3B2601F5BB463001A2D5B /* PostViewModel.swift in Sources */,
 				23E5F2D91F888B7B0082D5A9 /* CreatePostImagesViewController.swift in Sources */,

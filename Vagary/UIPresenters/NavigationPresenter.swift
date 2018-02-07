@@ -11,6 +11,8 @@ import UIKit
 
 protocol NavigationPresenter: Presenter {
     func push(presenter: Presenter, animated: Bool)
+    func pop(animated: Bool)
+    func setPresenters(presenters: [Presenter])
 }
 
 extension UINavigationController: NavigationPresenter {
@@ -19,6 +21,16 @@ extension UINavigationController: NavigationPresenter {
             return
         }
         self.pushViewController(vc, animated: animated)
+    }
+    
+    func pop(animated: Bool) {
+        self.popViewController(animated: animated)
+    }
+    
+    func setPresenters(presenters: [Presenter]) {
+        if let vcs = presenters as? [UIViewController] {
+            self.setViewControllers(vcs, animated: true)
+        }
     }
 }
 

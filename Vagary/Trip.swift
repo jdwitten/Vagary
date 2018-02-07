@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Trip: Codable, Resource{
+struct Trip: Codable, Resource {
     var id: Int
     var title: String
     var posts: [Int]

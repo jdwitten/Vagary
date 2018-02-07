@@ -12,11 +12,12 @@ import PromiseKit
 protocol APIService {
     func getPosts() -> Promise<PostsResponse>
     func getTrips() -> Promise<TripsResponse>
-    func createDraft(title: String, location: String, trip: String) -> Promise<CreateDraftResponse>
+    func createDraft() -> Promise<DraftResponse>
+    func updateDraft(draft: Draft) -> Promise<DraftResponse>
 }
 
 class TravelApi: APIService {
-    
+ 
     func getPosts() -> Promise<PostsResponse> {
         return firstly {
             request(resource: [Post].self, path: ResourcePath.posts)
@@ -33,9 +34,13 @@ class TravelApi: APIService {
         }
     }
     
-    func createDraft(title: String, location: String, trip: String) -> Promise<CreateDraftResponse> {
-        let post = Post(id: 1, author: 1, content: [], title: title, trip: Trip(id: 0, title: "", posts: []) , location: location)
-        return Promise(value: CreateDraftResponse(draft: post))
+    func createDraft() -> Promise<DraftResponse> {
+        let post = Draft(id: 1, author: 1, content: [], title: "", trip: Trip(id: 0, title: "", posts: []), location: "")
+        return Promise(value: DraftResponse(draft: post))
+    }
+    
+    func updateDraft(draft: Draft) -> Promise<DraftResponse> {
+        return Promise(value: DraftResponse(draft: draft))
     }
     
     

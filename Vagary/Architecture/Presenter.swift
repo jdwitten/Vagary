@@ -9,4 +9,7 @@
 import Foundation
 
 protocol Presenter {
+    
+    func present(presenter: Presenter, animated: Bool)
+    func dismiss(animated: Bool)
 }

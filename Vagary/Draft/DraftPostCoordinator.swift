@@ -13,6 +13,7 @@ import PromiseKit
 class DraftPostCoordinator: DraftHandler {
     
     var rootPresenter: NavigationPresenter?
+    var createPostNavigationPresenter: NavigationPresenter?
     
     var dependencies: AppDependency
     var factory: PresenterFactory {
@@ -22,7 +23,7 @@ class DraftPostCoordinator: DraftHandler {
         return dependencies.api
     }
     
-    var draftCache: Cache<Post> {
+    var draftCache: Cache<Draft> {
         return dependencies.draftCache
     }
     
@@ -34,45 +35,81 @@ class DraftPostCoordinator: DraftHandler {
     }
     
     func selectPostOption(option: PostOption) {
-        ViaStore.sharedStore.dispatch(DraftAction.selectPostOption(option))
-        let createPostPresenter = dependencies.factory.createPostPresenter(handler: self)
-        rootPresenter?.push(presenter: createPostPresenter, animated: true)
+        switch option {
+        case .drafts:
+            firstly {
+                draftCache.fetch()
+            }.then{ drafts -> Void in
+                DispatchQueue.main.async {
+                    ViaStore.sharedStore.dispatch(DraftAction.loadedDrafts(.loaded(data: drafts)))
+                    let draftListPresenter = self.dependencies.factory.draftListPresenter(handler: self)
+                    self.rootPresenter?.push(presenter: draftListPresenter, animated: true)
+                }
+            }
+        case .post, .images:
+            firstly {
+                apiService.createDraft()
+            }.then{ response -> Promise<Bool> in
+                ViaStore.sharedStore.dispatch(DraftAction.updateDraft(response.draft))
+                return self.draftCache.insert(item: response.draft)
+            }.then { success -> Void in
+                return
+            }
+            let navPresenter = dependencies.factory.navigationPresenter()
+            let createPostPresenter = dependencies.factory.createPostPresenter(handler: self)
+            navPresenter.setPresenters(presenters: [createPostPresenter])
+            rootPresenter?.present(presenter: navPresenter, animated: true)
+            createPostNavigationPresenter = navPresenter
+        }
     }
     
     func selectFieldToEdit(field: DraftField) {
         let draftDetailPresenter = factory.createDraftDetailPresenter(handler: self, field: field)
-        rootPresenter?.push(presenter: draftDetailPresenter, animated: true)
+        let nav = dependencies.factory.navigationPresenter()
+        nav.setPresenters(presenters: [draftDetailPresenter])
+        createPostNavigationPresenter?.present(presenter: nav, animated: true)
     }
     
     func updateDraftField(field: DraftField) {
-        ViaStore.sharedStore.dispatch(DraftAction.updateDraft(field))
+        if var draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost {
+            switch field {
+            case .Location(let location): draft.location = location
+            case .Title(let title): draft.title = title
+            case .Trip(let trip): draft.trip?.title = trip
+            }
+            ViaStore.sharedStore.dispatch(DraftAction.updateDraft(draft))
+            let _ = self.draftCache.replace(item: draft)
+        }
     }
     
-    func createDraft() {
-        guard let post = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost else {
+    func showDraftContent() {
+        guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost else {
             return
         }
-        let _ = firstly {
-            apiService.createDraft(title: post.title, location: post.location, trip: post.trip.title)
-        }.then{ response -> Promise<Bool> in
-            self.draftCache.insert(item: response.draft)
-        }.then{ success -> Void in
-            if success {
-                let draftPostPresenter = self.factory.draftPostPresenter(handler: self)
-                if let content = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost?.content {
-                    draftPostPresenter.setLayout(content: content)
-                }
-                self.rootPresenter?.push(presenter: draftPostPresenter, animated: true)
-            }
-        }
-    }
-    
-    func appendDraftElement(element: PostElement) {
-        ViaStore.sharedStore.dispatch(DraftAction.addPostElement(element))
+        let draftPostPresenter = self.factory.draftPostPresenter(handler: self)
+        draftPostPresenter.setLayout(content: draft.content ?? [])
+        self.createPostNavigationPresenter?.push(presenter: draftPostPresenter, animated: true)
     }
     
     func finishEditingDraft(content: [PostElement]) {
         ViaStore.sharedStore.dispatch(DraftAction.setContent(content))
+        
+        guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost else {
+            return
+        }
+        
+        firstly {
+            apiService.updateDraft(draft: draft)
+        }.then { response -> Void in
+            self.draftCache.replace(item: draft)
+            self.rootPresenter?.dismiss(animated: true)
+        }.catch { error in
+            // TODO: handle errors saving drafts
+        }
+    }
+    
+    func doneEditingDraftInfoDetail() {
+        self.createPostNavigationPresenter?.dismiss(animated: true)
     }
 }
 
@@ -80,9 +117,9 @@ protocol DraftHandler {
     func selectPostOption(option: PostOption)
     func selectFieldToEdit(field: DraftField)
     func updateDraftField(field: DraftField)
-    func createDraft()
-    func appendDraftElement(element: PostElement)
+    func showDraftContent()
     func finishEditingDraft(content: [PostElement])
+    func doneEditingDraftInfoDetail()
 }
 
 enum DraftField{

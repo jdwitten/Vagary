@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         appDelegate.window?.makeKeyAndVisible()
-        guard let draftCache = Cache<Post>(path: "Drafts") else {
+        guard let draftCache = Cache<Draft>(path: "Drafts") else {
             return false
         }
         appCoordinator = AppCoordinator(dependencies: AppDependency(factory: UIPresenterFactory(), api: TravelApi(), draftCache: draftCache))

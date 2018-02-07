@@ -16,8 +16,8 @@ struct TripsResponse {
     var trips: [Trip]
 }
 
-struct CreateDraftResponse {
-    var draft: Post
+struct DraftResponse {
+    var draft: Draft
 }
 
 enum TravelAPIResponse{

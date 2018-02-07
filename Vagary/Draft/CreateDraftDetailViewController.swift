@@ -36,6 +36,7 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
                 textField.text = trip
             }
         }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(done(_:)))
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,6 +54,10 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
         return vc
     }
     
+    @objc func done(_ sender: UIBarButtonItem) {
+        handler?.doneEditingDraftInfoDetail()
+    }
+    
     @IBAction func updateFieldDetail(_ sender: Any) {
         guard let f = field else {
             return
@@ -64,26 +69,6 @@ class CreateDraftDetailViewController: UIViewController, StoreSubscriber, Create
         case .Trip(_): newField = .Trip(trip: textField.text ?? "")
         }
         handler?.updateDraftField(field: newField)
-    }
-    
-    @IBAction func pressDone(_ sender: Any) {
-        if field != nil, textField.text != nil{
-            switch field!{
-            case .Location:
-                updateDraft(field: .Location(location:textField.text!))
-            case .Title:
-                updateDraft(field: .Title(title:textField.text!))
-            case .Trip:
-                updateDraft(field:.Trip(trip:textField.text!))
-            }
-        }
-        
-        dismiss(animated: true, completion: nil)
-        
-    }
-    
-    func updateDraft(field: DraftField) {
-        ViaStore.sharedStore.dispatch(DraftAction.updateDraft(field))
     }
     
     override func didReceiveMemoryWarning() {

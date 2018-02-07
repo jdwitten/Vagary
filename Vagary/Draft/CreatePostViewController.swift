@@ -18,8 +18,7 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
     @IBOutlet weak var nextButton: UIBarButtonItem!
     
     @IBOutlet weak var formTableView: UITableView!
-    var workingPost: Post?
-    var drafts: Loaded<[Post]> = Loaded.loading
+    var workingPost: Draft?
     
     var handler: DraftHandler?
     
@@ -55,42 +54,12 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
     
     func newState(state: AppState) {
         self.workingPost = state.authenticatedState?.draft.workingPost
-        self.drafts = state.authenticatedState?.draft.drafts ?? .error
         formTableView.reloadData()
     }
         
     @IBAction func pressNext(_ sender: Any) {
-        handler?.createDraft()
+        handler?.showDraftContent()
     }
-    
-//    func createDraft() -> Store<AppState>.ActionCreator {
-//        
-//        return { state, store in
-//            guard let authState = state.authenticatedState else {
-//                return nil
-//            }
-//            do{
-//                if let workingPost = authState.draft.workingPost {
-//                    let drafts = authState.draft.drafts
-//                    if case .loaded(var collection) = drafts{
-//                        collection.append(authState.draft.workingPost!)
-//                        try ViaStore.draftCache?.replace(with: collection){ success in
-//                            if success{
-//                                store.dispatch(DraftAction.createDraft(workingPost))
-//                            }else{
-//                                
-//                            }
-//                        }
-//                    }
-//                }
-//            }catch let error {
-//                print(error)
-//                return nil
-//            }
-//            return nil
-//        }
-//    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -105,7 +74,7 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
             case 1:
                 cell.configure(field: "Location", detail: workingPost?.location)
             case 2:
-                cell.configure(field: "Trip", detail: workingPost?.trip.title)
+                cell.configure(field: "Trip", detail: workingPost?.trip?.title)
             default:
                 break
             }
@@ -120,7 +89,7 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         case 1:
             handler?.selectFieldToEdit(field: .Location(location: workingPost?.location ?? ""))
         case 2:
-            handler?.selectFieldToEdit(field: .Trip(trip: workingPost?.trip.title ?? ""))
+            handler?.selectFieldToEdit(field: .Trip(trip: workingPost?.trip?.title ?? ""))
         default:
             break
         }

@@ -10,4 +10,15 @@ import Foundation
 import UIKit
 
 extension UIViewController: Presenter {
+    func present(presenter: Presenter, animated: Bool) {
+        guard let vc = presenter as? UIViewController else {
+            return
+        }
+        self.present(vc, animated: animated, completion: nil)
+    }
+    
+    func dismiss(animated: Bool) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

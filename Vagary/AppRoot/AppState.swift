@@ -20,7 +20,6 @@ enum AppState: StateType {
             return nil
         }
     }
-    
 }
 
 struct AuthenticatedState {

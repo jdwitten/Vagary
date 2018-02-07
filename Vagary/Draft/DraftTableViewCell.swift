@@ -23,3 +23,19 @@ class DraftTableViewCell: UITableViewCell {
     }
     
 }
+
+struct DraftCellViewModel: CellViewModel {
+    var reuseIdentifier: String = "DraftCellViewModel"
+    
+    var title: String
+    
+    init(title: String = "") {
+        self.title = title
+    }
+    
+    func configure(_ cell: UITableViewCell) {
+        if let cell = cell as? DraftTableViewCell {
+            cell.titleLabel.text = title
+        }
+    }
+}

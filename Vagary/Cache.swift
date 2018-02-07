@@ -14,10 +14,11 @@ protocol CacheService {
     func fetch() -> Promise<[CacheType]>
     func insert(item: CacheType) -> Promise<Bool>
     func replace(with collection: [CacheType]) -> Promise<Bool>
+    func replace(item: CacheType) -> Promise<Bool>
     associatedtype CacheType: Codable
 }
 
-class Cache<T: Codable>: CacheService {
+class Cache<T: Codable & Equatable>: CacheService {
 
     var path: String
     var documentsUrl: URL
@@ -96,6 +97,32 @@ class Cache<T: Codable>: CacheService {
                     var models = try self.decoder.decode([CacheType].self, from: data)
                     models.append(item)
                     let data = try self.encoder.encode(models)
+                    try data.write(to: self.pathUrl, options: [.atomic])
+                    fulfill(true)
+                } catch {
+                    reject(CacheError.FetchingError)
+                }
+            }
+        }
+    }
+    
+    func replace(item: T) -> Promise<Bool> {
+        guard FileManager.default.fileExists(atPath: path) else {
+            return Promise(error: CacheError.FetchingError)
+        }
+        let queue = DispatchQueue.global(qos: .background)
+        return Promise { fulfill, reject in
+            queue.async {
+                guard let data = FileManager.default.contents(atPath: self.path) else {
+                    reject(CacheError.FetchingError)
+                    return
+                }
+                do {
+                    var models = try self.decoder.decode([CacheType].self, from: data)
+                    let newCollection = models.map { current in
+                        return current == item ? item : current
+                    }
+                    let data = try self.encoder.encode(newCollection)
                     try data.write(to: self.pathUrl, options: [.atomic])
                     fulfill(true)
                 } catch {

@@ -61,7 +61,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     @objc func doneEditing(sender: UIBarButtonItem) {
-        handler?.finishEditingDraft(content: layout)
+        handler?.finishEditingDraft(content: layout ?? [])
     }
     
     func setLayout(content: [PostElement]) {
@@ -171,11 +171,6 @@ extension DraftPostViewController {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        print("text View change")
-        ViaStore.sharedStore.dispatch(DraftAction.changeDraftText(textView.text))
     }
 }
 
