@@ -8,22 +8,14 @@
 
 import Foundation
 
-struct PostsResponse {
+struct PostsResponse: Codable {
     var posts: [Post]
 }
 
-struct TripsResponse {
+struct TripsResponse: Codable {
     var trips: [Trip]
 }
 
-struct DraftResponse {
+struct DraftResponse: Codable {
     var draft: Draft
-}
-
-enum TravelAPIResponse{
-    
-    case PostsResponse([Post])
-    case Error
-    case Loading
-    
 }

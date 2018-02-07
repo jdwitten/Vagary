@@ -22,7 +22,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, StoreSubscriber
     
     var viewModel: FeedViewModel!
     var posts: [Post] = []
-    var api = TravelApi()
     
     var handler: FeedHandler?
     

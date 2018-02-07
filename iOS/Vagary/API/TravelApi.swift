@@ -16,20 +16,25 @@ protocol APIService {
     func updateDraft(draft: Draft) -> Promise<DraftResponse>
 }
 
+protocol APINetwork {
+    func request<T: Codable>(resource: T.Type, path: ResourcePath) -> Promise<T> 
+}
+
 class TravelApi: APIService {
     
+    let network: APINetwork
+    
+    init(network: APINetwork) {
+        self.network = network
+    }
  
     func getPosts() -> Promise<PostsResponse> {
-        return firstly {
-            request(resource: [Post].self, path: ResourcePath.posts)
-        }.then { posts in
-            return Promise(value: PostsResponse(posts: posts))
-        }
+        return self.network.request(resource: PostsResponse.self, path: ResourcePath.posts)
     }
     
     func getTrips() -> Promise<TripsResponse> {
         return firstly {
-            request(resource: [Trip].self, path: ResourcePath.trips)
+            self.network.request(resource: [Trip].self, path: ResourcePath.trips)
         }.then { trips in
             return Promise(value: TripsResponse(trips: trips))
         }
@@ -42,30 +47,6 @@ class TravelApi: APIService {
     
     func updateDraft(draft: Draft) -> Promise<DraftResponse> {
         return Promise(value: DraftResponse(draft: draft))
-    }
-    
-    
-    private func request<T: Codable>(resource: T.Type, path: ResourcePath) -> Promise<T> {
-        return firstly {
-           getJsonData(path.rawValue)
-        }.then { response -> Promise<T> in
-            let objects = try JSONDecoder().decode(T.self, from: response)
-            return Promise(value: objects)
-        }
-    }
-    
-
-    private func getJsonData(_ path: String) -> Promise<Data> {
-        do {
-            if let file = Bundle.main.url(forResource: path, withExtension: "json"){
-                let data = try Data(contentsOf: file)
-                return Promise(value: data)
-            }else{
-                throw APIError.apiError
-            }
-        }catch let error {
-            return Promise(error: error)
-        }
     }
 }
 

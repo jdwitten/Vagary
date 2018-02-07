@@ -15,13 +15,6 @@ class ViaStore {
         reducer: appReducer,
         state: AppState.authenticated(AuthenticatedState())
     )
-    private let api: TravelApi
-    
-    
-    init() {
-        api = TravelApi()
-        
-    }
     
 }
 

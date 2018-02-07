@@ -13,7 +13,6 @@ import PromiseKit
 class PassportCoordinator: PassportHandler {
     
     var rootPresenter: NavigationPresenter?
-    let api = TravelApi()
     let dependencies: AppDependency
     var factory: PresenterFactory {
         return dependencies.factory

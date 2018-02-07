@@ -13,7 +13,6 @@ import PromiseKit
 
 
 class FeedCoordinator: FeedHandler {
-    var api = TravelApi()
     
     let dependencies: AppDependency
     let rootPresenter: NavigationPresenter

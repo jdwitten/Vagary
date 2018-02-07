@@ -20,7 +20,6 @@ class PassportViewController: UIViewController, StoreSubscriber, UICollectionVie
     
     var user: User?
     var trips: [Trip] = []
-    let api = TravelApi()
     
     var handler: PassportHandler?
   
