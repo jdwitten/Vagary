@@ -17,6 +17,7 @@ protocol APIService {
 }
 
 class TravelApi: APIService {
+    
  
     func getPosts() -> Promise<PostsResponse> {
         return firstly {
