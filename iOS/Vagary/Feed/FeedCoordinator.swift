@@ -32,10 +32,17 @@ class FeedCoordinator: FeedHandler {
             ViaStore.sharedStore.dispatch(FeedAction.updatePosts(.error))
         }
     }
+    
+    func viewPost(post: Post) {
+        ViaStore.sharedStore.dispatch(FeedAction.updatePostDetail(post))
+        let postPresenter = dependencies.factory.postDetailPresenter(handler: self)
+        rootPresenter.push(presenter: postPresenter, animated: true)
+    }
 }
 
 protocol FeedHandler {
     func updatePosts()
+    func viewPost(post: Post)
 }
 
 

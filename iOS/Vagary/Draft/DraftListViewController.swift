@@ -63,12 +63,12 @@ class DraftListViewController: UITableViewController, StoreSubscriber, DraftList
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.sections?.count ?? 0
+        return viewModel?.sections.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let vmSection = viewModel?.sections?[section] {
-            return vmSection.cells?.count ?? 0
+        if let vmSection = viewModel?.sections[section] {
+            return vmSection.cells.count
         } else {
             return 0
         }
@@ -77,7 +77,7 @@ class DraftListViewController: UITableViewController, StoreSubscriber, DraftList
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DraftTableViewCell", for: indexPath) as! DraftTableViewCell
-        viewModel?.sections?[indexPath.section].cells?[indexPath.row].configure(cell)
+        viewModel?.sections[indexPath.section].cells[indexPath.row].configure(cell)
         return cell
     }
 

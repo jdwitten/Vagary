@@ -9,10 +9,11 @@
 import Foundation
 
 
-struct FeedViewModel: ViewModel {
+struct FeedViewModel: ViewModel, TableViewModel {    
+    static var cellsToRegister: [String] = ["PostFeedTableViewCell"]
+
+    var sections: [SectionViewModel]
     
-    
-    var posts: [Post] = []
     var query: String = ""
     var loading: Bool = false
     
@@ -23,16 +24,20 @@ struct FeedViewModel: ViewModel {
         }
         
         switch feedState.posts{
-        case .loaded(let data):
-            return FeedViewModel(posts: data, query: feedState.query ?? "", loading: false)
+        case .loaded(let posts):
+            let postCells = posts.map({ PostCellViewModel(post: $0) })
+            let sections = [StandardTableViewSection(cells: postCells)]
+            return FeedViewModel(sections: sections, query: feedState.query ?? "", loading: false)
         case .loading:
-            return FeedViewModel(posts: [], query: feedState.query ?? "", loading: true)
+            return FeedViewModel(sections: [], query: feedState.query ?? "", loading: true)
         case .error:
-            return FeedViewModel(posts: [], query: feedState.query ?? "", loading: false)
+            return FeedViewModel(sections: [], query: feedState.query ?? "", loading: false)
         }
     }
-    
-    
+}
+
+enum FeedCellAction: AnyCellAction {
+    case selectPost
 }
 
 

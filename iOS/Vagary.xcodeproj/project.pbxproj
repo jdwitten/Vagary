@@ -325,6 +325,8 @@
 				23D486882003132900CE9EC0 /* FeedState.swift */,
 				23B3B25D1F5BB3D3001A2D5B /* PostDetailViewController.swift */,
 				23B3B25F1F5BB463001A2D5B /* PostViewModel.swift */,
+				4B9420AA1F1C505600FDE7EB /* PostFeedTableViewCell.swift */,
+				4B9420AB1F1C505600FDE7EB /* PostFeedTableViewCell.xib */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -461,8 +463,6 @@
 			children = (
 				4B9420771F1C4B8E00FDE7EB /* Main.storyboard */,
 				4B94207C1F1C4B9200FDE7EB /* LaunchScreen.storyboard */,
-				4B9420AA1F1C505600FDE7EB /* PostFeedTableViewCell.swift */,
-				4B9420AB1F1C505600FDE7EB /* PostFeedTableViewCell.xib */,
 				4BCF6E771F1C61CF00695484 /* DesignableImage.swift */,
 				23236A971F57A7AE00043021 /* TripCollectionViewCell.swift */,
 			);

@@ -9,10 +9,17 @@
 import UIKit
 import ReSwift
 
-class PostDetailViewController: UIViewController, StoreSubscriber {
+protocol PostDetailPresenter: Presenter {
+    var handler: FeedHandler? { get set }
+}
+
+class PostDetailViewController: UIViewController, StoreSubscriber, PostDetailPresenter {
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    var handler: FeedHandler?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -29,6 +36,12 @@ class PostDetailViewController: UIViewController, StoreSubscriber {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ViaStore.sharedStore.unsubscribe(self)
+    }
+    
+    static func build(handler: FeedHandler) -> PostDetailViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostDetailViewController") as! PostDetailViewController
+        vc.handler = handler
+        return vc
     }
     
     func newState(state: AppState) {

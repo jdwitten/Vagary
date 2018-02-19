@@ -9,7 +9,8 @@
 import Foundation
 
 struct DraftListViewModel: TableViewModel {
-    var sections: [SectionViewModel]?
+    var sections: [SectionViewModel]
+    static var cellsToRegister: [String] = []
     
     static func build(_ state: AppState) -> DraftListViewModel? {
         guard let drafts = state.authenticatedState?.draft.drafts else {
@@ -22,10 +23,6 @@ struct DraftListViewModel: TableViewModel {
         case .loaded(let loadedDrafts):
             cells = loadedDrafts.map{ DraftCellViewModel(title: $0.title ?? "")}
         }
-        return DraftListViewModel(sections: [DraftListSection(cells: cells)])
+        return DraftListViewModel(sections: [StandardTableViewSection(cells: cells)])
     }
-}
-
-struct DraftListSection: SectionViewModel {
-    var cells: [CellViewModel]?
 }

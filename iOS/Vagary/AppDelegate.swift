@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         appDelegate.window?.makeKeyAndVisible()
+        UITabBarController.configureAppearance()
         guard let draftCache = Cache<Draft>(path: "Drafts") else {
             return false
         }

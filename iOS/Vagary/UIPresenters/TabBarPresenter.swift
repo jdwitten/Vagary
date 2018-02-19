@@ -21,4 +21,8 @@ extension UITabBarController: TabBarPresenter {
             self.viewControllers = newPresenters as? [UIViewController]
         }
     }
+    
+    static func configureAppearance() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+    }
 }

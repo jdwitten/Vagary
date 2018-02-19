@@ -12,13 +12,14 @@ import ReSwift
 
 struct DraftPostViewModel: ViewModel, TableViewModel {
     
-    var sections: [SectionViewModel]?
+    var sections: [SectionViewModel]
+    static var cellsToRegister: [String] = []
     
     static func build(_ state: AppState) -> DraftPostViewModel? {
         guard let auth = state.authenticatedState else {
             return nil
         }
-        let cells: [CellViewModel]? = auth.draft.workingPost?.content?.flatMap{ element in
+        let cells: [AnyCellViewModel]? = auth.draft.workingPost?.content?.flatMap{ element in
             if case .image(let imageWrapper) = element {
                 return CenteredImageCellViewModel(image: imageWrapper.image)
             } else if case .text(let text) = element {
@@ -28,15 +29,7 @@ struct DraftPostViewModel: ViewModel, TableViewModel {
             }
         }
         
-        let section = DraftContentSection(cells: cells ?? [])
+        let section = StandardTableViewSection(cells: cells ?? [])
         return DraftPostViewModel(sections: [section])
-    }
-}
-
-struct DraftContentSection: SectionViewModel {
-    var cells: [CellViewModel]?
-    
-    init(cells: [CellViewModel]) {
-        self.cells = cells
     }
 }
