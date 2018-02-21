@@ -84,18 +84,19 @@ class PostDetailViewController: UIViewController, StoreSubscriber, PostDetailPre
     }
     
     func createBodyElement(_ element: PostElement) -> UIView?{
-        if let element = element as? String{
+        switch element {
+        case .text(let text):
             let textView = UITextView()
-            textView.text = element
+            textView.text = text
             return textView
-        }
-        else if let element = element as? URL {
-            if let image = UIImageView(url: element){
+        case .url(let url):
+            if let validURL = URL(string: url), let image = UIImageView(url: validURL){
                 return image
+            } else {
+                return nil
             }
+        case .image(let wrapper):
+            return UIImageView(image: wrapper.image)
         }
-        
-        return nil
-        
     }
 }

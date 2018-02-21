@@ -14,10 +14,11 @@ protocol APIService {
     func getTrips() -> Promise<TripsResponse>
     func createDraft() -> Promise<DraftResponse>
     func updateDraft(draft: Draft) -> Promise<DraftResponse>
+    func getPost(id: String) -> Promise<PostResponse>
 }
 
 protocol APINetwork {
-    func request<T: Codable>(resource: T.Type, path: ResourcePath) -> Promise<T> 
+    func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]?) -> Promise<T>
 }
 
 class TravelApi: APIService {
@@ -29,12 +30,12 @@ class TravelApi: APIService {
     }
  
     func getPosts() -> Promise<PostsResponse> {
-        return self.network.request(resource: PostsResponse.self, path: ResourcePath.posts)
+        return self.network.request(resource: PostsResponse.self, path: ResourcePath.posts, requestParams: nil)
     }
     
     func getTrips() -> Promise<TripsResponse> {
         return firstly {
-            self.network.request(resource: [Trip].self, path: ResourcePath.trips)
+            self.network.request(resource: [Trip].self, path: ResourcePath.trips, requestParams: nil)
         }.then { trips in
             return Promise(value: TripsResponse(trips: trips))
         }
@@ -47,6 +48,10 @@ class TravelApi: APIService {
     
     func updateDraft(draft: Draft) -> Promise<DraftResponse> {
         return Promise(value: DraftResponse(draft: draft))
+    }
+    
+    func getPost(id: String) -> Promise<PostResponse> {
+        return self.network.request(resource: PostResponse.self, path: ResourcePath.post, requestParams: ["id": id])
     }
 }
 

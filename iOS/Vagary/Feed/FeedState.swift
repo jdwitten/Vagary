@@ -18,7 +18,7 @@ struct FeedState: StateType {
 enum FeedAction: Action {
     case postSearch(String)
     case updatePosts(Loaded<[Post]>)
-    case updatePostDetail(Post)
+    case selectPost(Post)
 }
 
 struct FeedReducer: SubstateReducer {
@@ -46,8 +46,8 @@ struct FeedReducer: SubstateReducer {
             nextState.query = query
         case .updatePosts(let posts):
             nextState.posts = posts
-        case .updatePostDetail(let post):
-            break
+        case .selectPost(let post):
+            nextState.selectedPost = post
         }
         return nextState
     }

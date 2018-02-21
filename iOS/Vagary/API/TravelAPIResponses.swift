@@ -19,3 +19,7 @@ struct TripsResponse: Codable {
 struct DraftResponse: Codable {
     var draft: Draft
 }
+
+struct PostResponse: Codable {
+    var post: Post
+}

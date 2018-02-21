@@ -88,8 +88,8 @@ extension FeedViewController: CellActionDelegate {
     func handleCellAction(_ action: FeedCellAction, indexPath: IndexPath, data: Any?) {
         switch action {
         case .selectPost:
-            if let post = (self.dataSource.dataSource.viewModel(at: indexPath) as? PostCellViewModel)?.post {
-                handler?.viewPost(post: post)
+            if let post = self.dataSource.dataSource.viewModel(at: indexPath) as? PostCellViewModel {
+                handler?.viewPost(post: post.id)
             }
             
         }

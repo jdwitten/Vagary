@@ -1,4 +1,4 @@
-
+{ "post" :
         {
             "id" : 1,
             "author": 1,
@@ -27,3 +27,4 @@
             "location": "Croatia"
             
         }
+}

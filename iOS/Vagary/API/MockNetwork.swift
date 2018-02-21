@@ -11,7 +11,7 @@ import PromiseKit
 
 class MockNetwork: APINetwork {
     
-    func request<T: Codable>(resource: T.Type, path: ResourcePath) -> Promise<T> {
+    func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]? = nil) -> Promise<T> {
         return firstly {
             getJsonData(path.rawValue)
         }.then { response -> Promise<T> in

@@ -16,7 +16,7 @@ class Network: APINetwork {
         self.baseURL = baseURL
     }
     
-    func request<T: Codable>(resource: T.Type, path: ResourcePath) -> Promise<T> {
+    func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]? = nil) -> Promise<T> {
         return firstly { () -> Promise<(Data, URLResponse)> in
             let urlPath = baseURL + "/\(path.rawValue)"
             if let url = URL(string: urlPath) {

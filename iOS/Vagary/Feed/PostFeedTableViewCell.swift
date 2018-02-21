@@ -23,17 +23,6 @@ class PostFeedTableViewCell: UITableViewCell, RespondingWhenSelectedCell {
     
     var action: AnyCellAction?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
 
 class PostCellViewModel: CellViewModel {
@@ -48,10 +37,9 @@ class PostCellViewModel: CellViewModel {
     var userImage: String
     var userHandle: String
     var timestamp: String
-    
+    var id: Int
+
     var action: FeedCellAction
-    
-    var post: Post? = nil
     
     init(tripText: String,
          locationText: String,
@@ -61,6 +49,7 @@ class PostCellViewModel: CellViewModel {
          userImage: String,
          userHandle: String,
          timestamp: String,
+         id: Int,
          action: FeedCellAction) {
         self.tripText = tripText
         self.locationText = locationText
@@ -70,6 +59,7 @@ class PostCellViewModel: CellViewModel {
         self.userImage = userImage
         self.userHandle = userHandle
         self.timestamp = timestamp
+        self.id = id
         self.action = action
     }
     
@@ -82,8 +72,8 @@ class PostCellViewModel: CellViewModel {
                   userImage: "JonathanWitten",
                   userHandle: String(describing: post.author),
                   timestamp: "",
+                  id: post.id,
                   action: FeedCellAction.selectPost)
-        self.post = post
     }
     
     func configure(_ cell: PostFeedTableViewCell) {
