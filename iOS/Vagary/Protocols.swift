@@ -38,4 +38,5 @@ enum ResourcePath: String{
     case user = "user"
     case draft = "draft"
     case drafts = "drafts"
+    case postImageRequest = "posts/image/request"
 }

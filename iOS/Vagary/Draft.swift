@@ -22,3 +22,24 @@ extension Draft: Equatable {
         return lhs.id == rhs.id
     }
 }
+
+extension Draft {
+    var markdown: String? {
+        var s: String = ""
+        for element in content ?? [] {
+            switch element {
+            case .image(let wrapper):
+                switch wrapper {
+                case .image(let image):
+                    break
+                case .url(let url):
+                    s.append(contentsOf: " ![image](\(url))")
+                }
+            case .text(let text):
+                s.append(contentsOf: " ")
+                s.append(contentsOf: text)
+            }
+        }
+        return s
+    }
+}

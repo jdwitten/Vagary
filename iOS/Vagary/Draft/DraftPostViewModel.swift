@@ -21,7 +21,8 @@ struct DraftPostViewModel: ViewModel, TableViewModel {
         }
         let cells: [AnyCellViewModel]? = auth.draft.workingPost?.content?.flatMap{ element in
             if case .image(let imageWrapper) = element {
-                return CenteredImageCellViewModel(image: imageWrapper.image)
+//                return CenteredImageCellViewModel(image: imageWrap)
+                return nil
             } else if case .text(let text) = element {
                 return CenteredTextCellViewModel(text: text)
             } else {

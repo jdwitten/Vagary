@@ -66,7 +66,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     func setLayout(content: [PostElement]) {
         layout = content
-        
     }
     
     func layout(content: [PostElement]) {
@@ -90,6 +89,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     func addNewElement(element: PostElement) {
+        handler?.appendDraftElement(element: element)
         if let view = createBodyElement(element) {
             stackView.addArrangedSubview(view)
             self.view.layoutIfNeeded()
@@ -98,7 +98,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
                 textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
                 textView.becomeFirstResponder()
             }
-            layout?.append(element)
         }
     }
 
@@ -110,11 +109,23 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
             return textView
         }
         else if case let .image(imageWrapper) = element {
-           let imageView = UIImageView(image: imageWrapper.image)
-            imageView.contentMode = .scaleAspectFit
-            imageView.clipsToBounds = true
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: imageWrapper.image.size.width / imageWrapper.image.size.height).isActive = true
-            return imageView
+            switch imageWrapper {
+            case .image(let image):
+                let imageView = UIImageView(image: image)
+                imageView.contentMode = .scaleAspectFit
+                imageView.clipsToBounds = true
+                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
+            case .url(let url):
+                if let url = URL(string: url) {
+                    let imageView = UIImageView()
+                    imageView.loadFromURL(url: url) { image in
+                        imageView.contentMode = .scaleAspectFit
+                        imageView.clipsToBounds = true
+                        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
+                    }
+                    return imageView
+                }
+            }
         }
         return nil
     }
@@ -125,7 +136,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
 
     @IBAction func pressImage(_ sender: Any) {
         selectPicture()
-        //delegate?.addNewElement(element: URL(string: "https://www.gstatic.com/webp/gallery/1.jpg")!)
     }
     
     func selectPicture() {
@@ -141,15 +151,11 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            let wrapper = ImageWrapper(image: editedImage)
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage  {
+            let wrapper = DraftImage.image(editedImage)
             addNewElement(element: .image(wrapper))
             addNewElement(element: .text(""))
-        }
-        else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            let wrapper = ImageWrapper(image: possibleImage)
-            addNewElement(element: .image(wrapper))
-            addNewElement(element: .text(""))
+            handler?.addedImage(image: editedImage, at: max(0, (layout?.count ?? 0) - 1))
         } else {
             return
         }
@@ -160,6 +166,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
 extension DraftPostViewController: StoreSubscriber {
     func newState(state: AppState){
         viewModel = DraftPostViewModel.build(state)
+        layout = state.authenticatedState?.draft.workingPost?.content
     }
 }
 

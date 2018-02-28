@@ -64,11 +64,11 @@ class PostCellViewModel: CellViewModel {
     }
     
     convenience init(post: Post) {
-        self.init(tripText: post.trip.title,
+        self.init(tripText: post.trip?.title ?? "",
                   locationText: post.location,
                   coverImage: "IMG_4178 2" ,
                   title: post.title,
-                  postText: "",
+                  postText: post.body,
                   userImage: "JonathanWitten",
                   userHandle: String(describing: post.author),
                   timestamp: "",

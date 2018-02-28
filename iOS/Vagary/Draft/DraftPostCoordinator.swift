@@ -94,12 +94,16 @@ class DraftPostCoordinator: DraftHandler {
     func finishEditingDraft(content: [PostElement]) {
         ViaStore.sharedStore.dispatch(DraftAction.setContent(content))
         
-        guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost else {
+        guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost,
+            let markdown = draft.markdown,
+            let title = draft.title,
+            let trip = draft.trip,
+            let location = draft.location else {
             return
         }
-        
+        let renderablePost = Post(id: draft.id, author: draft.author, body: markdown, title: title, trip: trip , location: location)
         firstly {
-            apiService.updateDraft(draft: draft)
+            apiService.createPost(draft: draft)
         }.then { response -> Void in
             self.draftCache.replace(item: draft)
             self.rootPresenter?.dismiss(animated: true)
@@ -111,6 +115,30 @@ class DraftPostCoordinator: DraftHandler {
     func doneEditingDraftInfoDetail() {
         self.createPostNavigationPresenter?.dismiss(animated: true)
     }
+    
+    func addedImage(image: UIImage, at index: Int)  {
+        var url: String = ""
+        firstly {
+            self.apiService.getPostImageURL(fileType: "jpeg")
+        }.then{ response -> Promise<Void> in
+            url = response.url
+            if let data = UIImageJPEGRepresentation(image, 1) {
+                return self.apiService.uploadImage(to: response.signedRequest, data: data)
+            } else {
+                return Promise(error: DraftCoordinatorError.invalidImageData)
+            }
+        }.then { response -> Void in
+            ViaStore.sharedStore.dispatch(DraftAction.updateElement(PostElement.image(DraftImage.url(url)), index))
+        }
+    }
+    
+    func appendDraftElement(element: PostElement) {
+        ViaStore.sharedStore.dispatch(DraftAction.appendDraftElement(element))
+    }
+}
+
+enum DraftCoordinatorError: Error {
+    case invalidImageData
 }
 
 protocol DraftHandler {
@@ -120,6 +148,8 @@ protocol DraftHandler {
     func showDraftContent()
     func finishEditingDraft(content: [PostElement])
     func doneEditingDraftInfoDetail()
+    func addedImage(image: UIImage, at index: Int)
+    func appendDraftElement(element: PostElement)
 }
 
 enum DraftField{

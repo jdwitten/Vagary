@@ -12,13 +12,13 @@ import ReSwift
 struct FeedState: StateType {
     var query: String? = ""
     var posts: Loaded<[Post]> = .loaded(data: [])
-    var selectedPost: Post?
+    var selectedPost: String?
 }
 
 enum FeedAction: Action {
     case postSearch(String)
     case updatePosts(Loaded<[Post]>)
-    case selectPost(Post)
+    case selectPost(String)
 }
 
 struct FeedReducer: SubstateReducer {

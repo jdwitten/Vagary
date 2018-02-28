@@ -33,20 +33,16 @@ class FeedCoordinator: FeedHandler {
         }
     }
     
-    func viewPost(post: Int) {
-        firstly { () -> Promise<PostResponse> in
-            let postPresenter = dependencies.factory.postDetailPresenter(handler: self)
-            rootPresenter.push(presenter: postPresenter, animated: true)
-            return self.dependencies.api.getPost(id: String(post))
-        }.then { response -> Void in
-          ViaStore.sharedStore.dispatch(FeedAction.selectPost(response.post))
-        }
+    func viewPost(post: String) {
+        ViaStore.sharedStore.dispatch(FeedAction.selectPost(post))
+        let postPresenter = dependencies.factory.postDetailPresenter(handler: self)
+        rootPresenter.push(presenter: postPresenter, animated: true)
     }
 }
 
 protocol FeedHandler {
     func updatePosts()
-    func viewPost(post: Int)
+    func viewPost(post: String)
 }
 
 

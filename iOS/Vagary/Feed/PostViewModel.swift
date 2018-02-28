@@ -12,7 +12,7 @@ import ReSwift
 
 struct PostViewModel: ViewModel {
     
-    var post: Post?
+    var post: String?
     var loading: Bool
     
     static func build(_ state: AppState) -> PostViewModel? {

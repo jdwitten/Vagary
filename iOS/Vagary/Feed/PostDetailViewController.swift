@@ -8,6 +8,7 @@
 
 import UIKit
 import ReSwift
+import MarkdownView
 
 protocol PostDetailPresenter: Presenter {
     var handler: FeedHandler? { get set }
@@ -17,6 +18,7 @@ class PostDetailViewController: UIViewController, StoreSubscriber, PostDetailPre
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    var markdownView: MarkdownView?
     
     var handler: FeedHandler?
     
@@ -25,7 +27,18 @@ class PostDetailViewController: UIViewController, StoreSubscriber, PostDetailPre
         // Do any additional setup after loading the view.
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        configureBackButton()
+        configureMarkdownView()
+    }
+    
+    func configureMarkdownView() {
+        markdownView = MarkdownView()
+        guard let md = markdownView else { return }
+        md.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(md)
+        view.leadingAnchor.constraint(equalTo: md.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: md.trailingAnchor).isActive = true
+        md.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        md.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,58 +58,14 @@ class PostDetailViewController: UIViewController, StoreSubscriber, PostDetailPre
     }
     
     func newState(state: AppState) {
-        if let viewModel = PostViewModel.build(state) {
-            if viewModel.post != nil{
-                layoutContent(viewModel.post!)
-            }
+        if let viewModel = PostViewModel.build(state),
+            let post = viewModel.post {
+                displayMarkdown(body: post)
         }
     }
     
-    func configureBackButton() {
+    func displayMarkdown(body: String) {
+        markdownView?.load(markdown: body, enableImage: true )
     }
-    
-    func layoutContent(_ post: Post){
-        contentView.subviews.map{$0.removeFromSuperview()}
-        var topConstraint = contentView.topAnchor
-        let body = post.content ?? []
-        let views: [UIView?] = body.map{ [unowned self] element in
-            if let newView = self.createBodyElement(element){
-                self.contentView.addSubview(newView)
-                newView.translatesAutoresizingMaskIntoConstraints = false
-                newView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-                newView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-                newView.topAnchor.constraint(equalTo: topConstraint).isActive = true
-                if newView is UIImageView{
-                    newView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-                } else if let newView = newView as? UIScrollView{
-                    newView.isScrollEnabled = false
-                }
-                
-                topConstraint = newView.bottomAnchor
-                return newView
-            }
-            return nil
-        }
-        if views.last != nil {
-            views.last!?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        }
-        self.view.layoutIfNeeded()
-    }
-    
-    func createBodyElement(_ element: PostElement) -> UIView?{
-        switch element {
-        case .text(let text):
-            let textView = UITextView()
-            textView.text = text
-            return textView
-        case .url(let url):
-            if let validURL = URL(string: url), let image = UIImageView(url: validURL){
-                return image
-            } else {
-                return nil
-            }
-        case .image(let wrapper):
-            return UIImageView(image: wrapper.image)
-        }
-    }
+
 }

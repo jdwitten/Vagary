@@ -89,7 +89,7 @@ extension FeedViewController: CellActionDelegate {
         switch action {
         case .selectPost:
             if let post = self.dataSource.dataSource.viewModel(at: indexPath) as? PostCellViewModel {
-                handler?.viewPost(post: post.id)
+                handler?.viewPost(post: post.postText)
             }
             
         }

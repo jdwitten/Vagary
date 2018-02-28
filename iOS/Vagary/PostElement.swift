@@ -8,30 +8,24 @@
 
 import Foundation
 enum PostElement: Codable{
-    case image(ImageWrapper)
+    case image(DraftImage)
     case text(String)
-    case url(String)
 }
 
 extension PostElement {
     enum CodingKeys: String, CodingKey {
         case image
         case text
-        case url
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let image = try container.decodeIfPresent(ImageWrapper.self, forKey: .image) {
+        if let image = try container.decodeIfPresent(DraftImage.self, forKey: .image) {
             self = .image(image)
             return
         }
         if let text = try container.decodeIfPresent(String.self, forKey: .text){
             self = .text(text)
-            return
-        }
-        if let url = try container.decodeIfPresent(String.self, forKey: .url){
-            self = .url(url)
             return
         }
         throw CacheError.FetchingError
@@ -43,8 +37,6 @@ extension PostElement {
             try container.encode(image, forKey: .image)
         case .text(let text):
             try container.encode(text, forKey: .text)
-        case .url(let url):
-            try container.encode(url, forKey: .url)
         }
     }
 }

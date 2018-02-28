@@ -8,21 +8,13 @@
 
 import Foundation
 
-
 struct Post: Codable, Resource {
-    
     var id: Int
     var author: Int
-    var content: [PostElement]
+    var body: String
     var title: String
-    var trip: Trip
+    var trip: Trip?
     var location: String
-}
-
-extension Post: Equatable {
-    static func ==(lhs: Post, rhs: Post) -> Bool {
-        return lhs.id == rhs.id
-    }
 }
 
 

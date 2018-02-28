@@ -64,6 +64,7 @@
 		23E5F2DE1F888E810082D5A9 /* DraftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */; };
 		23E5F2DF1F888E810082D5A9 /* DraftTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */; };
 		23F499801F7F63BF007DC22B /* PostElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F4997F1F7F63BF007DC22B /* PostElement.swift */; };
+		23F9C971203E81F9000E5389 /* TravelApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539311F1F016200E41C7B /* TravelApi.swift */; };
 		23FB17231F3D500200DA41A3 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB17221F3D500200DA41A3 /* ReSwift.framework */; };
 		31A3F751A343EFF9267E900B /* Pods_Vagary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C380CB09DD737CEB973D558A /* Pods_Vagary.framework */; };
 		49E6505AB24E5DAD88A22830 /* Pods_TravelUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F578A2CEFEEA0436839F152D /* Pods_TravelUITests.framework */; };
@@ -73,7 +74,6 @@
 		4B65392C1F1EFD3700E41C7B /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65392B1F1EFD3700E41C7B /* FeedViewModel.swift */; };
 		4B65392E1F1EFEA700E41C7B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65392D1F1EFEA700E41C7B /* Post.swift */; };
 		4B6539301F1EFEE200E41C7B /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65392F1F1EFEE200E41C7B /* Protocols.swift */; };
-		4B6539321F1F016200E41C7B /* TravelApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539311F1F016200E41C7B /* TravelApi.swift */; };
 		4B6539351F1F029D00E41C7B /* TravelAPIResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539341F1F029D00E41C7B /* TravelAPIResponses.swift */; };
 		4B6539371F1F96A500E41C7B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539361F1F96A500E41C7B /* Constants.swift */; };
 		4B9420721F1C4B8D00FDE7EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9420711F1C4B8D00FDE7EB /* AppDelegate.swift */; };
@@ -802,11 +802,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Vagary/Pods-Vagary-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MarkdownView/MarkdownView.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarkdownView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
 			);
@@ -863,6 +865,7 @@
 				23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */,
 				4B6539301F1EFEE200E41C7B /* Protocols.swift in Sources */,
 				23380F3F201592F400233813 /* UIScrollView.swift in Sources */,
+				23F9C971203E81F9000E5389 /* TravelApi.swift in Sources */,
 				23B3B26C1F5E1FC4001A2D5B /* DraftPostViewController.swift in Sources */,
 				23B3B26E1F5E254C001A2D5B /* DraftPostViewModel.swift in Sources */,
 				23F499801F7F63BF007DC22B /* PostElement.swift in Sources */,
@@ -875,7 +878,6 @@
 				235DE7C52014043B003AEC2F /* TableViewModel.swift in Sources */,
 				23D4868E200329EE00CE9EC0 /* PresenterFactory.swift in Sources */,
 				23E5F2DB1F888D320082D5A9 /* DraftListViewController.swift in Sources */,
-				4B6539321F1F016200E41C7B /* TravelApi.swift in Sources */,
 				23E5F2DE1F888E810082D5A9 /* DraftTableViewCell.swift in Sources */,
 				4BCF6E781F1C61D000695484 /* DesignableImage.swift in Sources */,
 				4B65392A1F1EFD0500E41C7B /* FeedViewController.swift in Sources */,

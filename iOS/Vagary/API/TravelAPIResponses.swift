@@ -23,3 +23,23 @@ struct DraftResponse: Codable {
 struct PostResponse: Codable {
     var post: Post
 }
+
+struct CreatePostRequest: Codable {
+    var user: Int
+    var body: String
+    var title: String
+    var location: String
+}
+
+struct CreatePostResponse: Codable {
+    var success: Bool
+}
+
+struct PostImageURLResponse: Codable {
+    var signedRequest: String
+    var url: String
+}
+
+struct UploadImageResponse: Codable {
+    
+}

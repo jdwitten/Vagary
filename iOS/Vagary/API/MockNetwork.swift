@@ -11,13 +11,26 @@ import PromiseKit
 
 class MockNetwork: APINetwork {
     
-    func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]? = nil) -> Promise<T> {
+    func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]? = nil, method: HTTPRequestType) -> Promise<T> {
         return firstly {
             getJsonData(path.rawValue)
         }.then { response -> Promise<T> in
             let objects = try JSONDecoder().decode(T.self, from: response)
             return Promise(value: objects)
         }
+    }
+    
+    func request<T: Codable, R: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]? = nil, requestBody: R, method: HTTPRequestType) -> Promise<T> {
+        return firstly {
+            getJsonData(path.rawValue)
+            }.then { response -> Promise<T> in
+                let objects = try JSONDecoder().decode(T.self, from: response)
+                return Promise(value: objects)
+        }
+    }
+    
+    func request(url: URL, requestBody: Data, method: HTTPRequestType, contentType: String) -> Promise<Void> {
+        return Promise(error: APIError.apiError)
     }
     
     

@@ -18,6 +18,8 @@ enum DraftAction: Action {
     case updateDraft(Draft)
     case loadedDrafts(Loaded<[Draft]>)
     case setContent([PostElement])
+    case appendDraftElement(PostElement)
+    case updateElement(PostElement, Int)
 }
 
 struct DraftReducer: SubstateReducer {
@@ -51,6 +53,12 @@ struct DraftReducer: SubstateReducer {
             newState.drafts = drafts
         case .setContent(let content):
             newState.workingPost?.content = content
+        case .appendDraftElement(let element):
+            newState.workingPost?.content?.append(element)
+        case .updateElement(let element, let index):
+            if newState.workingPost?.content?.count ?? 0 > index {
+                newState.workingPost?.content?[index] = element
+            }
         }
         return newState
     }
