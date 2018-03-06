@@ -13,6 +13,7 @@ protocol NavigationPresenter: Presenter {
     func push(presenter: Presenter, animated: Bool)
     func pop(animated: Bool)
     func setPresenters(presenters: [Presenter])
+    var topPresenter: Presenter? { get }
 }
 
 extension UINavigationController: NavigationPresenter {
@@ -31,6 +32,10 @@ extension UINavigationController: NavigationPresenter {
         if let vcs = presenters as? [UIViewController] {
             self.setViewControllers(vcs, animated: true)
         }
+    }
+    
+    var topPresenter: Presenter? {
+        return self.viewControllers.last
     }
 }
 

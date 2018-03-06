@@ -89,7 +89,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     func addNewElement(element: PostElement) {
-        handler?.appendDraftElement(element: element)
         if let view = createBodyElement(element) {
             stackView.addArrangedSubview(view)
             self.view.layoutIfNeeded()
@@ -106,6 +105,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
             let textView = UITextView()
             textView.isScrollEnabled = false
             textView.text = text
+            textView.delegate = self
             return textView
         }
         else if case let .image(imageWrapper) = element {
@@ -115,6 +115,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
                 imageView.contentMode = .scaleAspectFit
                 imageView.clipsToBounds = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
+                return imageView
             case .url(let url):
                 if let url = URL(string: url) {
                     let imageView = UIImageView()
@@ -179,5 +180,12 @@ extension DraftPostViewController {
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if let index = stackView.arrangedSubviews.index(of: textView) {
+            handler?.updatePostElement(element: PostElement.text(textView.text), at: Int(index))
+        }
+    }
 }
+
 

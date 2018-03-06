@@ -15,6 +15,7 @@ struct Draft: Codable {
     var title: String?
     var trip: Trip?
     var location: String?
+    var coverImage: DraftImage?
 }
 
 extension Draft: Equatable {

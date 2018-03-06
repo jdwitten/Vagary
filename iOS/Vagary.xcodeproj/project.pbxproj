@@ -66,6 +66,8 @@
 		23F499801F7F63BF007DC22B /* PostElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F4997F1F7F63BF007DC22B /* PostElement.swift */; };
 		23F9C971203E81F9000E5389 /* TravelApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539311F1F016200E41C7B /* TravelApi.swift */; };
 		23FB17231F3D500200DA41A3 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB17221F3D500200DA41A3 /* ReSwift.framework */; };
+		23FEE357204B05E200F7DA1F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FEE356204B05E200F7DA1F /* UIImage.swift */; };
+		23FEE359204B0AE700F7DA1F /* ImageSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FEE358204B0AE700F7DA1F /* ImageSelectorPresenter.swift */; };
 		31A3F751A343EFF9267E900B /* Pods_Vagary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C380CB09DD737CEB973D558A /* Pods_Vagary.framework */; };
 		49E6505AB24E5DAD88A22830 /* Pods_TravelUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F578A2CEFEEA0436839F152D /* Pods_TravelUITests.framework */; };
 		4B6539261F1EF71E00E41C7B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6539251F1EF71D00E41C7B /* AppCoordinator.swift */; };
@@ -170,6 +172,8 @@
 		23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DraftTableViewCell.xib; sourceTree = "<group>"; };
 		23F4997F1F7F63BF007DC22B /* PostElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostElement.swift; sourceTree = "<group>"; };
 		23FB17221F3D500200DA41A3 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = "Pods/../build/Debug-iphoneos/ReSwift/ReSwift.framework"; sourceTree = "<group>"; };
+		23FEE356204B05E200F7DA1F /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		23FEE358204B0AE700F7DA1F /* ImageSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorPresenter.swift; sourceTree = "<group>"; };
 		24E69F95AD043EA67D796215 /* Pods-TravelUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelUITests/Pods-TravelUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		276B34656365DC55E37C8A6E /* Pods-VagaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VagaryTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VagaryTests/Pods-VagaryTests.release.xcconfig"; sourceTree = "<group>"; };
 		372DE873F31B868B6F0B5FB8 /* Pods-VagaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VagaryUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VagaryUITests/Pods-VagaryUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 		235DE7BD2013FFFE003AEC2F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				23FEE355204B05C500F7DA1F /* UIImage */,
 				23380F3D201592E200233813 /* ScrollView */,
 				235DE7BE20140008003AEC2F /* TableView */,
 			);
@@ -384,6 +389,7 @@
 				2313DBF22020266D00F60E53 /* DraftListViewModel.swift */,
 				23E5F2DC1F888E810082D5A9 /* DraftTableViewCell.swift */,
 				23E5F2DD1F888E810082D5A9 /* DraftTableViewCell.xib */,
+				23FEE358204B0AE700F7DA1F /* ImageSelectorPresenter.swift */,
 			);
 			path = Draft;
 			sourceTree = "<group>";
@@ -397,6 +403,14 @@
 				2313DC39202A98B400F60E53 /* Network.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		23FEE355204B05C500F7DA1F /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				23FEE356204B05E200F7DA1F /* UIImage.swift */,
+			);
+			path = UIImage;
 			sourceTree = "<group>";
 		};
 		4B9420651F1C4B8B00FDE7EB = {
@@ -858,11 +872,13 @@
 				4B9420721F1C4B8D00FDE7EB /* AppDelegate.swift in Sources */,
 				230DF7141F75CF38005EABE9 /* CreateDraftDetailViewController.swift in Sources */,
 				23D4869320032C6600CE9EC0 /* UIRootPresenter.swift in Sources */,
+				23FEE359204B0AE700F7DA1F /* ImageSelectorPresenter.swift in Sources */,
 				23B3B2741F677A9F001A2D5B /* Extensions.swift in Sources */,
 				2313DC38202A985D00F60E53 /* MockNetwork.swift in Sources */,
 				23236A8C1F4A14A800043021 /* Trip.swift in Sources */,
 				236BD32B1F43F01100812B34 /* AppReducer.swift in Sources */,
 				23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */,
+				23FEE357204B05E200F7DA1F /* UIImage.swift in Sources */,
 				4B6539301F1EFEE200E41C7B /* Protocols.swift in Sources */,
 				23380F3F201592F400233813 /* UIScrollView.swift in Sources */,
 				23F9C971203E81F9000E5389 /* TravelApi.swift in Sources */,

@@ -15,6 +15,8 @@ class DraftPostCoordinator: DraftHandler {
     var rootPresenter: NavigationPresenter?
     var createPostNavigationPresenter: NavigationPresenter?
     
+    var imageSelectorPresenter: ImageSelectorPresenter?
+    
     var dependencies: AppDependency
     var factory: PresenterFactory {
         return dependencies.factory
@@ -82,6 +84,33 @@ class DraftPostCoordinator: DraftHandler {
         }
     }
     
+    func showCoverImageSelector() {
+        let controller = self.factory.imageSelectorPresenter(handler: self)
+        guard let createPostPresenter = createPostNavigationPresenter?.topPresenter else {
+            return
+        }
+        imageSelectorPresenter = controller
+        controller.presentImagePicker(on: createPostPresenter)
+        
+    }
+    
+    func selectCoverImage(image: UIImage) {
+        var url: String = ""
+        ViaStore.sharedStore.dispatch(DraftAction.setCoverImage(DraftImage.image(image)))
+        firstly {
+            self.apiService.getPostImageURL(fileType: "jpeg")
+        }.then{ response -> Promise<Void> in
+            url = response.url
+            if let data = UIImageJPEGRepresentation(image, 1) {
+                return self.apiService.uploadImage(to: response.signedRequest, data: data)
+            } else {
+                return Promise(error: DraftCoordinatorError.invalidImageData)
+            }
+        }.then { response -> Void in
+            ViaStore.sharedStore.dispatch(DraftAction.setCoverImage(DraftImage.url(url)))
+        }
+    }
+    
     func showDraftContent() {
         guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost else {
             return
@@ -92,7 +121,6 @@ class DraftPostCoordinator: DraftHandler {
     }
     
     func finishEditingDraft(content: [PostElement]) {
-        ViaStore.sharedStore.dispatch(DraftAction.setContent(content))
         
         guard let draft = ViaStore.sharedStore.state.authenticatedState?.draft.workingPost,
             let markdown = draft.markdown,
@@ -106,7 +134,7 @@ class DraftPostCoordinator: DraftHandler {
             apiService.createPost(draft: draft)
         }.then { response -> Void in
             self.draftCache.replace(item: draft)
-            self.rootPresenter?.dismiss(animated: true)
+            self.createPostNavigationPresenter?.dismiss(animated: true)
         }.catch { error in
             // TODO: handle errors saving drafts
         }
@@ -118,6 +146,8 @@ class DraftPostCoordinator: DraftHandler {
     
     func addedImage(image: UIImage, at index: Int)  {
         var url: String = ""
+        appendDraftElement(element: PostElement.image(.image(image)))
+        ViaStore.sharedStore.dispatch(DraftAction.appendDraftElement(.text("")))
         firstly {
             self.apiService.getPostImageURL(fileType: "jpeg")
         }.then{ response -> Promise<Void> in
@@ -135,6 +165,10 @@ class DraftPostCoordinator: DraftHandler {
     func appendDraftElement(element: PostElement) {
         ViaStore.sharedStore.dispatch(DraftAction.appendDraftElement(element))
     }
+    
+    func updatePostElement(element: PostElement, at index: Int) {
+        ViaStore.sharedStore.dispatch(DraftAction.updateElement(element, index))
+    }
 }
 
 enum DraftCoordinatorError: Error {
@@ -145,11 +179,14 @@ protocol DraftHandler {
     func selectPostOption(option: PostOption)
     func selectFieldToEdit(field: DraftField)
     func updateDraftField(field: DraftField)
+    func showCoverImageSelector()
     func showDraftContent()
     func finishEditingDraft(content: [PostElement])
     func doneEditingDraftInfoDetail()
     func addedImage(image: UIImage, at index: Int)
     func appendDraftElement(element: PostElement)
+    func updatePostElement(element: PostElement, at index: Int)
+    func selectCoverImage(image: UIImage)
 }
 
 enum DraftField{

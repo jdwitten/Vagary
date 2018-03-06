@@ -14,9 +14,8 @@ protocol CreatePostPresenter: Presenter {
 }
 
 class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, CreatePostPresenter {
-
-    @IBOutlet weak var nextButton: UIBarButtonItem!
     
+    @IBOutlet weak var coverImage: UIButton!
     @IBOutlet weak var formTableView: UITableView!
     var workingPost: Draft?
     
@@ -34,7 +33,12 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         formTableView.dataSource = self
         let nib = UINib(nibName: "CreatePostTableViewCell", bundle: nil)
         formTableView.register(nib, forCellReuseIdentifier: "CreatePostTableViewCell")
-        formTableView.rowHeight = 75
+        formTableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(CreatePostViewController.pressNext(_:)))
+        coverImage.layer.cornerRadius = 15
+        coverImage.imageView?.contentMode = .scaleAspectFill
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,19 +50,25 @@ class CreatePostViewController: UIViewController, StoreSubscriber, UITextViewDel
         super.viewWillDisappear(animated)
         ViaStore.sharedStore.unsubscribe(self)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func newState(state: AppState) {
         self.workingPost = state.authenticatedState?.draft.workingPost
         formTableView.reloadData()
+        if let covIm = workingPost?.coverImage {
+            let _ = UIImage.build(with: covIm).then { image in
+                DispatchQueue.main.async { self.coverImage.setImage(image, for: .normal) }
+            }
+        } else {
+            self.coverImage.setImage(nil, for: .normal)
+        }
     }
         
-    @IBAction func pressNext(_ sender: Any) {
+    @objc func pressNext(_ sender: Any) {
         handler?.showDraftContent()
+    }
+    
+    @IBAction func pressCoverImage(_ sender: Any) {
+        handler?.showCoverImageSelector()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

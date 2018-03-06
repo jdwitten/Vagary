@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -638,51 +637,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mfe-xH-bcY" customClass="DesignableImage" customModule="Vagary" customModuleProvider="target">
-                                <rect key="frame" x="10" y="45" width="355" height="200"/>
-                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="4LY-7A-Dc2"/>
-                                    <constraint firstAttribute="width" secondItem="Mfe-xH-bcY" secondAttribute="height" multiplier="16:9" id="Qkv-gr-3kO"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="30"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a Cover Image" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eg-Wm-snv">
-                                <rect key="frame" x="111" y="133" width="153" height="20.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Htp-gj-AzM">
-                                <rect key="frame" x="16" y="253" width="343" height="401"/>
+                                <rect key="frame" x="16" y="240" width="343" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <sections/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXj-Vk-ZWU">
+                                <rect key="frame" x="26" y="30" width="323" height="200"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="l90-fn-3F8"/>
+                                </constraints>
+                                <state key="normal" title="Select a cover image">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressCoverImage:" destination="7xH-TA-19c" eventType="touchUpInside" id="IGY-nT-6Tb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pXj-Vk-ZWU" firstAttribute="leading" secondItem="t98-nX-oQB" secondAttribute="leadingMargin" constant="10" id="7za-zA-Q8b"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pXj-Vk-ZWU" secondAttribute="trailing" constant="10" id="F21-Jt-8z9"/>
                             <constraint firstItem="Htp-gj-AzM" firstAttribute="leading" secondItem="t98-nX-oQB" secondAttribute="leadingMargin" id="F2p-cq-Ryg"/>
-                            <constraint firstItem="Mfe-xH-bcY" firstAttribute="top" secondItem="eq3-4S-tHY" secondAttribute="bottom" constant="25" id="K8q-uz-DFH"/>
                             <constraint firstItem="0EI-7R-ovE" firstAttribute="top" secondItem="Htp-gj-AzM" secondAttribute="bottom" constant="13" id="OFY-Ou-VHR"/>
-                            <constraint firstItem="0eg-Wm-snv" firstAttribute="top" secondItem="eq3-4S-tHY" secondAttribute="bottom" constant="113" id="Rde-h3-xLe"/>
-                            <constraint firstItem="0eg-Wm-snv" firstAttribute="centerX" secondItem="t98-nX-oQB" secondAttribute="centerX" id="jZx-9f-aip"/>
-                            <constraint firstItem="Mfe-xH-bcY" firstAttribute="centerX" secondItem="t98-nX-oQB" secondAttribute="centerX" id="o74-vH-KHT"/>
+                            <constraint firstItem="Htp-gj-AzM" firstAttribute="top" secondItem="pXj-Vk-ZWU" secondAttribute="bottom" constant="10" id="ZlB-Xj-B2t"/>
                             <constraint firstItem="Htp-gj-AzM" firstAttribute="trailing" secondItem="t98-nX-oQB" secondAttribute="trailingMargin" id="spP-xO-kc2"/>
-                            <constraint firstItem="Htp-gj-AzM" firstAttribute="top" secondItem="Mfe-xH-bcY" secondAttribute="bottom" constant="8" id="uTz-qw-ska"/>
+                            <constraint firstItem="pXj-Vk-ZWU" firstAttribute="top" secondItem="eq3-4S-tHY" secondAttribute="bottom" constant="10" id="wCe-pJ-Kes"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wf7-d1-ugi">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="0xt-FS-c2v">
-                            <connections>
-                                <action selector="pressNext:" destination="7xH-TA-19c" id="2rE-9T-az1"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="0xt-FS-c2v"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="coverImage" destination="pXj-Vk-ZWU" id="QdU-ZD-Y3o"/>
                         <outlet property="formTableView" destination="Htp-gj-AzM" id="7Jj-YM-pe4"/>
                     </connections>
                 </viewController>

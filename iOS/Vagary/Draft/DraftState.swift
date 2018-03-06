@@ -20,6 +20,7 @@ enum DraftAction: Action {
     case setContent([PostElement])
     case appendDraftElement(PostElement)
     case updateElement(PostElement, Int)
+    case setCoverImage(DraftImage)
 }
 
 struct DraftReducer: SubstateReducer {
@@ -59,6 +60,8 @@ struct DraftReducer: SubstateReducer {
             if newState.workingPost?.content?.count ?? 0 > index {
                 newState.workingPost?.content?[index] = element
             }
+        case .setCoverImage(let image):
+            newState.workingPost?.coverImage = image
         }
         return newState
     }
