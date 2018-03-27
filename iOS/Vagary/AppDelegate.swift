@@ -25,12 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let draftCache = Cache<Draft>(path: "Drafts") else {
             return false
         }
-        var network: APINetwork = Network(baseURL: "http://localhost:81")
+        var network: APINetwork = APIAuthProxy(network: Network(baseURL: "http://localhost:81"))
         if let useMockAPI = ProcessInfo.processInfo.environment["Mock API"], useMockAPI == "YES" {
             network = MockNetwork()
         }
         let api = TravelApi(network: network)
         appCoordinator = AppCoordinator(dependencies: AppDependency(factory: UIPresenterFactory(), api: api, draftCache: draftCache))
+        appCoordinator?.start()
         return true
     }
 

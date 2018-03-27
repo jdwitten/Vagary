@@ -103,6 +103,95 @@
             </objects>
             <point key="canvasLocation" x="-761" y="361"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="cC0-U0-Scv">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="3Mp-yq-fRZ" customClass="LoginViewController" customModule="Vagary" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="k5E-KG-nti"/>
+                        <viewControllerLayoutGuide type="bottom" id="6au-M9-FMM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M69-OV-xrz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ssX-S6-ME9">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2dD-li-0Ru">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m71-li-iS9">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="167"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mLu-HB-ff0">
+                                                <rect key="frame" x="0.0" y="167" width="375" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Vdm-fW-wZj"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FWf-ry-MA8">
+                                                <rect key="frame" x="0.0" y="217" width="375" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="WKp-Ap-EI3"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3a-g6-bfX">
+                                                <rect key="frame" x="0.0" y="267" width="375" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="aQF-Lg-To3"/>
+                                                </constraints>
+                                                <state key="normal" title="Submit"/>
+                                                <connections>
+                                                    <action selector="pressedSubmit:" destination="3Mp-yq-fRZ" eventType="touchUpInside" id="JM5-4Q-a3S"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BB2-cL-ZJV">
+                                                <rect key="frame" x="0.0" y="317" width="375" height="350"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="m71-li-iS9" firstAttribute="width" secondItem="2dD-li-0Ru" secondAttribute="width" id="E4E-la-hqJ"/>
+                                            <constraint firstItem="m71-li-iS9" firstAttribute="height" secondItem="2dD-li-0Ru" secondAttribute="height" multiplier="0.25" id="Qyv-g5-LKV"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="2dD-li-0Ru" secondAttribute="bottom" id="9pU-qb-8I7"/>
+                                    <constraint firstAttribute="trailing" secondItem="2dD-li-0Ru" secondAttribute="trailing" id="Blf-ar-WaY"/>
+                                    <constraint firstItem="2dD-li-0Ru" firstAttribute="height" secondItem="ssX-S6-ME9" secondAttribute="height" constant="0.5" id="F8P-77-2hj"/>
+                                    <constraint firstItem="2dD-li-0Ru" firstAttribute="leading" secondItem="ssX-S6-ME9" secondAttribute="leading" id="Y64-Lr-pUc"/>
+                                    <constraint firstItem="2dD-li-0Ru" firstAttribute="width" secondItem="ssX-S6-ME9" secondAttribute="width" constant="0.5" id="f58-1j-DNC"/>
+                                    <constraint firstItem="2dD-li-0Ru" firstAttribute="top" secondItem="ssX-S6-ME9" secondAttribute="top" id="oYx-n3-8HI"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ssX-S6-ME9" firstAttribute="top" secondItem="M69-OV-xrz" secondAttribute="top" id="15V-x3-kQL"/>
+                            <constraint firstAttribute="trailing" secondItem="ssX-S6-ME9" secondAttribute="trailing" id="MJ3-JG-MGo"/>
+                            <constraint firstItem="6au-M9-FMM" firstAttribute="top" secondItem="ssX-S6-ME9" secondAttribute="bottom" id="Vfq-Up-JyD"/>
+                            <constraint firstItem="ssX-S6-ME9" firstAttribute="leading" secondItem="M69-OV-xrz" secondAttribute="leading" id="cPm-RI-eLC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailField" destination="mLu-HB-ff0" id="id1-dj-wQR"/>
+                        <outlet property="passwordField" destination="FWf-ry-MA8" id="jXR-el-mQG"/>
+                        <outlet property="submitButton" destination="c3a-g6-bfX" id="fvj-AM-71W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="13W-K6-cLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-765" y="1119"/>
+        </scene>
         <!--Passport-->
         <scene sceneID="aTd-UX-lh5">
             <objects>

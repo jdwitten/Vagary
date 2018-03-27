@@ -33,6 +33,10 @@ class MockNetwork: APINetwork {
         return Promise(error: APIError.apiError)
     }
     
+    func set(header: String, value: String) {
+        return
+    }
+    
     
     private func getJsonData(_ path: String) -> Promise<Data> {
         do {

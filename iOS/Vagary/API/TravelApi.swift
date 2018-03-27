@@ -17,12 +17,15 @@ protocol APIService {
     func getPost(id: String) -> Promise<PostResponse>
     func getPostImageURL(fileType: String) -> Promise<PostImageURLResponse>
     func uploadImage(to url: String, data: Data) -> Promise<Void>
+    func login(email: String, password: String) -> Promise<LoginResponse>
+    func set(token: String)
 }
 
 protocol APINetwork {
     func request<T: Codable, R: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]?, requestBody: R, method: HTTPRequestType) -> Promise<T>
     func request<T: Codable>(resource: T.Type, path: ResourcePath, requestParams: [String: String]?, method: HTTPRequestType) -> Promise<T>
     func request(url: URL, requestBody: Data, method: HTTPRequestType, contentType: String) -> Promise<Void>
+    func set(header: String, value: String)
 }
 
 public enum HTTPRequestType: String {
@@ -73,6 +76,19 @@ class TravelApi: APIService {
             return Promise(error: APIError.invalidUrl)
         }
         return self.network.request(url: url, requestBody: data, method: .PUT, contentType: "image/jpeg")
+    }
+    
+    func login(email: String, password: String) -> Promise<LoginResponse> {
+        struct LoginRequest: Codable {
+            var email: String
+            var password: String
+        }
+        let body = LoginRequest(email: email, password: password)
+        return self.network.request(resource: LoginResponse.self, path: ResourcePath.login, requestParams: nil, requestBody: body, method: .POST)
+    }
+    
+    func set(token: String) {
+        network.set(header: "x-access-token", value: token)
     }
 }
 

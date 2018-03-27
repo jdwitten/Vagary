@@ -14,14 +14,23 @@ struct AppReducer: SubstateReducer {
     typealias SubstateType = AppState
     typealias ActionType = AppAction
     func unwrap(action: Action, state: AppState) -> StateType? {
-        return nil
+        if action is AppAction {
+            return state
+        } else {
+            return nil
+        }
     }
     
     func wrap(substate: AppState, appState: AppState) -> AppState {
-        return appState
+        return substate
     }
     
     func reduce(action: AppAction, substate: AppState) -> AppState {
-        return substate
+        var newState = substate
+        switch action {
+        case .authenticated:
+            newState = .authenticated(AuthenticatedState())
+        }
+        return newState
     }
 }

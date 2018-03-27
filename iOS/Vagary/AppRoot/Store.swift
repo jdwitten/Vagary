@@ -13,7 +13,7 @@ class ViaStore {
     
     static let sharedStore = Store(
         reducer: appReducer,
-        state: AppState.authenticated(AuthenticatedState())
+        state: AppState.unauthenticated
     )
     
 }
@@ -33,7 +33,8 @@ func appReducer(action: Action, state: AppState?) -> AppState {
     
     for reducer in reducers {
         if let substate = reducer.unwrap(action: action, state: appState) {
-            return reducer.reduce(state: appState, action: action, substate: substate)
+            let state = reducer.reduce(state: appState, action: action, substate: substate)
+            return state
         }
     }
     

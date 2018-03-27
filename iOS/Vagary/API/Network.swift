@@ -11,6 +11,7 @@ import PromiseKit
 
 class Network: APINetwork {
     let baseURL: String
+    var headers: [String: String] = [:]
     
     init(baseURL: String) {
         self.baseURL = baseURL
@@ -51,14 +52,21 @@ class Network: APINetwork {
             request.httpMethod = method.rawValue
             request.httpBody = requestBody
             request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            for (key, value) in headers { request.setValue(key, forHTTPHeaderField: value)}
             return URLSession.shared.dataTask(with: request).asDataAndResponse()
         }.then { data, response in
             return Promise()
         }
     }
+    
+    func set(header: String, value: String) {
+        headers[header] = value
+    }
 
 
     private func send<T: Codable>(request: URLRequest) -> Promise<T> {
+        var request = request
+        for (key, value) in headers { request.setValue(value, forHTTPHeaderField: key)}
         return firstly {
             return URLSession.shared.dataTask(with: request).asDataAndResponse()
         }.then { (data, response) -> Promise<T> in

@@ -30,7 +30,7 @@ struct AuthenticatedState {
 }
 
 enum AppAction: Action {
-    
+    case authenticated
 }
 
 struct AuthState{

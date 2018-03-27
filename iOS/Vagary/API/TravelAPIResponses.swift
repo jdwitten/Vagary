@@ -42,5 +42,11 @@ struct PostImageURLResponse: Codable {
 }
 
 struct UploadImageResponse: Codable {
-    
+}
+
+struct LoginResponse: Codable {
+    var auth: Bool
+    var token: String
+    var refresh: String
+    var email: String
 }

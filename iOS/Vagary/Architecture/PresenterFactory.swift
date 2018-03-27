@@ -11,6 +11,7 @@ import UIKit
 import ReSwift
 
 protocol PresenterFactory {
+    func loginPresenter(handler: LoginHandler) -> LoginPresenter
     func feedPresenter(handler: FeedHandler) -> FeedPresenter
     func tabBarPresenter() -> TabBarPresenter
     func navigationPresenter() -> NavigationPresenter
@@ -26,6 +27,10 @@ protocol PresenterFactory {
 }
 
 struct UIPresenterFactory: PresenterFactory {
+    
+    func loginPresenter(handler: LoginHandler) -> LoginPresenter {
+        return LoginViewController.build(handler: handler)
+    }
     
     func rootPresenter() -> RootPresenter {
         return UIRootPresenter()
