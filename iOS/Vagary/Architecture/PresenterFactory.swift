@@ -23,7 +23,8 @@ protocol PresenterFactory {
     func draftPostPresenter(handler: DraftHandler) -> DraftPostPresenter
     func draftListPresenter(handler: DraftHandler) -> DraftListPresenter
     func postDetailPresenter(handler: FeedHandler) -> PostDetailPresenter
-    func imageSelectorPresenter(handler: DraftHandler) -> ImageSelectorPresenter
+    func imageSelectorPresenter(handler: ImageSelectorHandler) -> ImageSelectorPresenter
+    func createTripPresenter(handler: CreateTripHandler) -> CreateTripPresenter
 }
 
 struct UIPresenterFactory: PresenterFactory {
@@ -75,8 +76,12 @@ struct UIPresenterFactory: PresenterFactory {
         return PostDetailViewController.build(handler: handler)
     }
     
-    func imageSelectorPresenter(handler: DraftHandler) -> ImageSelectorPresenter {
+    func imageSelectorPresenter(handler: ImageSelectorHandler) -> ImageSelectorPresenter {
         return ImageSelectorController.build(handler:handler)
+    }
+    
+    func createTripPresenter(handler: CreateTripHandler) -> CreateTripPresenter {
+        return CreateTripViewController.build(handler: handler)
     }
     
 }

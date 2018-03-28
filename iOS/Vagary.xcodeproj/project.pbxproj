@@ -46,6 +46,7 @@
 		23B3B26E1F5E254C001A2D5B /* DraftPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */; };
 		23B3B2701F5E2841001A2D5B /* DraftPostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */; };
 		23B3B2741F677A9F001A2D5B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B2731F677A9F001A2D5B /* Extensions.swift */; };
+		23BF3A4A2069D6DD0017155A /* CreateTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BF3A492069D6DD0017155A /* CreateTripViewController.swift */; };
 		23D4868120030FAC00CE9EC0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4868020030FAC00CE9EC0 /* ViewModel.swift */; };
 		23D48684200310D800CE9EC0 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D48683200310D800CE9EC0 /* Presenter.swift */; };
 		23D48687200311EE00CE9EC0 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D48686200311EE00CE9EC0 /* AppDependency.swift */; };
@@ -154,6 +155,7 @@
 		23B3B26D1F5E254C001A2D5B /* DraftPostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftPostViewModel.swift; sourceTree = "<group>"; };
 		23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftPostCoordinator.swift; sourceTree = "<group>"; };
 		23B3B2731F677A9F001A2D5B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		23BF3A492069D6DD0017155A /* CreateTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripViewController.swift; sourceTree = "<group>"; };
 		23D4868020030FAC00CE9EC0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		23D48683200310D800CE9EC0 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		23D48686200311EE00CE9EC0 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				23B3B2631F5CC88B001A2D5B /* TripDetailViewController.swift */,
 				23B3B2651F5CC901001A2D5B /* TripViewModel.swift */,
 				23D4869E2005A51500CE9EC0 /* PassportState.swift */,
+				23BF3A492069D6DD0017155A /* CreateTripViewController.swift */,
 			);
 			path = Passport;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 				23D486A12005B66400CE9EC0 /* DraftState.swift in Sources */,
 				4B65392C1F1EFD3700E41C7B /* FeedViewModel.swift in Sources */,
 				23D4868B200313C000CE9EC0 /* Reducer.swift in Sources */,
+				23BF3A4A2069D6DD0017155A /* CreateTripViewController.swift in Sources */,
 				23D48684200310D800CE9EC0 /* Presenter.swift in Sources */,
 				23D4869920032F0E00CE9EC0 /* UIViewController.swift in Sources */,
 				23236A941F4A1A8900043021 /* PassportViewModel.swift in Sources */,

@@ -36,6 +36,8 @@ class LoginCoordinator: LoginHandler {
                 UserDefaults.standard.set(response.email, forKey: "email")
                 ViaStore.sharedStore.dispatch(AppAction.authenticated)
             }
+        }.catch{ error in
+             print(error)
         }
     }
 }

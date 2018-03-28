@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 import PromiseKit
 
-class DraftPostCoordinator: DraftHandler {
+class DraftPostCoordinator: DraftHandler, ImageSelectorHandler {
     
     var rootPresenter: NavigationPresenter?
     var createPostNavigationPresenter: NavigationPresenter?

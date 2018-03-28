@@ -39,6 +39,6 @@ enum ResourcePath: String{
     case draft = "draft"
     case drafts = "drafts"
     case postImageRequest = "posts/image/request"
-    case login = "authentication/login"
-    case token = "authentication/token"
+    case login = "auth/login"
+    case token = "auth/token"
 }

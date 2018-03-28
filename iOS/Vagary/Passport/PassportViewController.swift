@@ -65,6 +65,9 @@ class PassportViewController: UIViewController, StoreSubscriber, UICollectionVie
         ViaStore.sharedStore.unsubscribe(self)
     }
     
+    @IBAction func pressAddTrip(_ sender: Any) {
+        handler?.addTrip()
+    }
     static func build(handler: PassportHandler) -> PassportViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PassportViewController") as! PassportViewController
         vc.handler = handler

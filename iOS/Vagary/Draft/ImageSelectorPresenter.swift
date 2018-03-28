@@ -10,15 +10,18 @@ import Foundation
 import UIKit
 
 protocol ImageSelectorPresenter {
-    var handler: DraftHandler? { get }
+    var handler: ImageSelectorHandler? { get }
     func presentImagePicker(on controller: Presenter)
+}
+protocol ImageSelectorHandler {
+    func selectCoverImage(image: UIImage)
 }
 
 class ImageSelectorController: UIViewController, ImageSelectorPresenter, UINavigationControllerDelegate {
-    var handler: DraftHandler?
+    var handler: ImageSelectorHandler?
     var rootController: Presenter?
     
-    static func build(handler: DraftHandler) -> ImageSelectorPresenter {
+    static func build(handler: ImageSelectorHandler) -> ImageSelectorPresenter {
         let vc = ImageSelectorController()
         vc.handler = handler
         return vc

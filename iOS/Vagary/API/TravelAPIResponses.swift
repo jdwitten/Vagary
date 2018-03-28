@@ -50,3 +50,11 @@ struct LoginResponse: Codable {
     var refresh: String
     var email: String
 }
+
+struct CreateTripRequest: Codable {
+    var title: String
+    var image: String
+}
+struct CreateTripResponse: Codable{
+    var success: Bool
+}

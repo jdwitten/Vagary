@@ -19,6 +19,7 @@ protocol APIService {
     func uploadImage(to url: String, data: Data) -> Promise<Void>
     func login(email: String, password: String) -> Promise<LoginResponse>
     func set(token: String)
+    func createTrip(title: String, image: String) -> Promise<CreateTripResponse>
 }
 
 protocol APINetwork {
@@ -89,6 +90,11 @@ class TravelApi: APIService {
     
     func set(token: String) {
         network.set(header: "x-access-token", value: token)
+    }
+    
+    func createTrip(title: String, image: String) -> Promise<CreateTripResponse> {
+        let body = CreateTripRequest(title: title, image: image)
+        return self.network.request(resource: CreateTripResponse.self, path: .trips, requestParams: nil, requestBody: body, method: .POST)
     }
 }
 
