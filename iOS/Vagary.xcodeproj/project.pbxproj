@@ -47,6 +47,7 @@
 		23B3B2701F5E2841001A2D5B /* DraftPostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */; };
 		23B3B2741F677A9F001A2D5B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B2731F677A9F001A2D5B /* Extensions.swift */; };
 		23BF3A4A2069D6DD0017155A /* CreateTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BF3A492069D6DD0017155A /* CreateTripViewController.swift */; };
+		23BF3A4C206FE61B0017155A /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BF3A4B206FE61B0017155A /* NSAttributedString.swift */; };
 		23D4868120030FAC00CE9EC0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4868020030FAC00CE9EC0 /* ViewModel.swift */; };
 		23D48684200310D800CE9EC0 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D48683200310D800CE9EC0 /* Presenter.swift */; };
 		23D48687200311EE00CE9EC0 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D48686200311EE00CE9EC0 /* AppDependency.swift */; };
@@ -156,6 +157,7 @@
 		23B3B26F1F5E2841001A2D5B /* DraftPostCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftPostCoordinator.swift; sourceTree = "<group>"; };
 		23B3B2731F677A9F001A2D5B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		23BF3A492069D6DD0017155A /* CreateTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripViewController.swift; sourceTree = "<group>"; };
+		23BF3A4B206FE61B0017155A /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		23D4868020030FAC00CE9EC0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		23D48683200310D800CE9EC0 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		23D48686200311EE00CE9EC0 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
@@ -267,20 +269,10 @@
 			name = Persistance;
 			sourceTree = "<group>";
 		};
-		23380F3D201592E200233813 /* ScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				23380F3E201592F400233813 /* UIScrollView.swift */,
-			);
-			path = ScrollView;
-			sourceTree = "<group>";
-		};
 		235DE7BD2013FFFE003AEC2F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				23FEE355204B05C500F7DA1F /* UIImage */,
-				23380F3D201592E200233813 /* ScrollView */,
-				235DE7BE20140008003AEC2F /* TableView */,
+				23BF3A4D206FEA190017155A /* UIKit */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -315,6 +307,17 @@
 				23B3B2691F5CCA88001A2D5B /* trip.json */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		23BF3A4D206FEA190017155A /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				23FEE356204B05E200F7DA1F /* UIImage.swift */,
+				23380F3E201592F400233813 /* UIScrollView.swift */,
+				23BF3A4B206FE61B0017155A /* NSAttributedString.swift */,
+				235DE7BE20140008003AEC2F /* TableView */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		23D48682200310C300CE9EC0 /* Architecture */ = {
@@ -413,14 +416,6 @@
 				23FEE35F204F857A00F7DA1F /* APIAuthenticationHandler.swift */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		23FEE355204B05C500F7DA1F /* UIImage */ = {
-			isa = PBXGroup;
-			children = (
-				23FEE356204B05E200F7DA1F /* UIImage.swift */,
-			);
-			path = UIImage;
 			sourceTree = "<group>";
 		};
 		23FEE35A204F615900F7DA1F /* Login */ = {
@@ -901,6 +896,7 @@
 				236BD32B1F43F01100812B34 /* AppReducer.swift in Sources */,
 				23A6003E1F6D7A570087767B /* CreatePostViewController.swift in Sources */,
 				23FEE357204B05E200F7DA1F /* UIImage.swift in Sources */,
+				23BF3A4C206FE61B0017155A /* NSAttributedString.swift in Sources */,
 				4B6539301F1EFEE200E41C7B /* Protocols.swift in Sources */,
 				23380F3F201592F400233813 /* UIScrollView.swift in Sources */,
 				23F9C971203E81F9000E5389 /* TravelApi.swift in Sources */,

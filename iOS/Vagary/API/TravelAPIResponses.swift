@@ -29,7 +29,7 @@ struct CreatePostRequest: Codable {
     var body: String
     var title: String
     var location: String
-    var trip: String
+    var trip: Int
 }
 
 struct CreatePostResponse: Codable {

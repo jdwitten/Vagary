@@ -61,7 +61,7 @@ class TravelApi: APIService {
     }
 
     func createPost(draft: Draft) -> Promise<CreatePostResponse> {
-        return self.network.request(resource: CreatePostResponse.self, path: ResourcePath.posts, requestParams: nil, requestBody: CreatePostRequest(user: draft.author, body: draft.markdown ?? "", title: draft.title ?? "", location: draft.location ?? "", trip: draft.trip?.title ?? ""), method: .POST)
+        return self.network.request(resource: CreatePostResponse.self, path: ResourcePath.posts, requestParams: nil, requestBody: CreatePostRequest(user: draft.author, body: draft.markdown ?? "", title: draft.title ?? "", location: draft.location ?? "", trip: 1), method: .POST)
     }
 
     func getPost(id: String) -> Promise<PostResponse> {

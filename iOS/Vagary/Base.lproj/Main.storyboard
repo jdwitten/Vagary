@@ -591,21 +591,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gog-Fs-vWx">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UfX-zW-6Yu">
-                                        <rect key="frame" x="0.0" y="191" width="375" height="200"/>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="width" secondItem="gog-Fs-vWx" secondAttribute="width" id="LF5-j1-Bpg"/>
-                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="top" secondItem="gog-Fs-vWx" secondAttribute="top" id="cer-nI-JSd"/>
-                                    <constraint firstAttribute="trailing" secondItem="UfX-zW-6Yu" secondAttribute="trailing" id="dwd-8w-tNP"/>
-                                    <constraint firstItem="UfX-zW-6Yu" firstAttribute="leading" secondItem="gog-Fs-vWx" secondAttribute="leading" id="liP-8p-Icp"/>
-                                    <constraint firstAttribute="bottom" secondItem="UfX-zW-6Yu" secondAttribute="bottom" id="x0f-2s-aHu"/>
-                                </constraints>
-                            </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-Ap-6I5">
                                 <rect key="frame" x="175" y="578" width="25" height="25"/>
                                 <subviews>
@@ -633,15 +618,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OmT-Mm-UO3">
+                                <rect key="frame" x="16" y="20" width="343" height="558"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cl0-Ap-6I5" firstAttribute="centerX" secondItem="ufo-0C-f2g" secondAttribute="centerX" id="2hw-KD-nGw"/>
-                            <constraint firstItem="Cl0-Ap-6I5" firstAttribute="bottom" secondItem="gog-Fs-vWx" secondAttribute="bottom" id="BMf-gL-F2G"/>
-                            <constraint firstAttribute="trailing" secondItem="gog-Fs-vWx" secondAttribute="trailing" id="Iuc-vi-Orb"/>
-                            <constraint firstItem="gog-Fs-vWx" firstAttribute="top" secondItem="ufo-0C-f2g" secondAttribute="top" id="KIs-lQ-JO8"/>
+                            <constraint firstItem="OmT-Mm-UO3" firstAttribute="top" secondItem="JSh-B6-oSd" secondAttribute="bottom" id="Kgn-ZK-JfE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OmT-Mm-UO3" secondAttribute="trailing" id="QCr-HT-D2f"/>
                             <constraint firstItem="eSg-ma-DiX" firstAttribute="top" secondItem="Cl0-Ap-6I5" secondAttribute="bottom" constant="20" id="W7r-ic-Psk"/>
-                            <constraint firstItem="gog-Fs-vWx" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leading" id="ewn-vB-GBh"/>
+                            <constraint firstItem="OmT-Mm-UO3" firstAttribute="leading" secondItem="ufo-0C-f2g" secondAttribute="leadingMargin" id="bvb-Jw-ANP"/>
+                            <constraint firstItem="Cl0-Ap-6I5" firstAttribute="top" secondItem="OmT-Mm-UO3" secondAttribute="bottom" id="cHo-EW-md6"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -651,9 +642,8 @@
                         <outlet property="buttonsBottomConstraint" destination="W7r-ic-Psk" id="I4F-Xw-BFH"/>
                         <outlet property="editingModeButtons" destination="Cl0-Ap-6I5" id="fcF-PX-grT"/>
                         <outlet property="imageButton" destination="Ftn-AS-DNj" id="C6g-s9-w3l"/>
-                        <outlet property="scrollView" destination="gog-Fs-vWx" id="KCN-CH-avs"/>
-                        <outlet property="stackView" destination="UfX-zW-6Yu" id="0Cu-0l-wEV"/>
                         <outlet property="textButton" destination="Lzk-Bo-IDz" id="HMr-jA-SKH"/>
+                        <outlet property="textView" destination="OmT-Mm-UO3" id="wKr-Br-dne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKA-qs-rad" userLabel="First Responder" sceneMemberID="firstResponder"/>

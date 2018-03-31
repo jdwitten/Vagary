@@ -16,8 +16,7 @@ protocol DraftPostPresenter: Presenter {
 
 class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DraftPostPresenter {
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var buttonsBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var editingModeButtons: UIStackView!
     @IBOutlet weak var imageButton: UIButton!
@@ -35,9 +34,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         NotificationCenter.default.addObserver(self, selector: #selector(DraftPostViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DraftPostViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         configureBackButton()
-        if let content = layout {
-           layout(content: content)
-        }
+        textView.attributedText = NSAttributedString()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,20 +58,14 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     @objc func doneEditing(sender: UIBarButtonItem) {
-        handler?.finishEditingDraft(content: layout ?? [])
+        let elements = textView.attributedText.postElements
+        handler?.finishEditingDraft(content: elements)
     }
     
     func setLayout(content: [PostElement]) {
         layout = content
     }
     
-    func layout(content: [PostElement]) {
-        for element in content {
-            if let view = createBodyElement(element) {
-                stackView.addArrangedSubview(view)
-            }
-        }
-    }
     
     @objc func keyboardWillShow(notification:NSNotification){
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
@@ -88,52 +79,50 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         view.layoutIfNeeded()
     }
     
-    func addNewElement(element: PostElement) {
-        if let view = createBodyElement(element) {
-            stackView.addArrangedSubview(view)
-            self.view.layoutIfNeeded()
-            scrollView.scrollToBottom(animated: true, offsetFromBottom: 30.0)
-            if let textView = view as? UITextView {
-                textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
-                textView.becomeFirstResponder()
-            }
-        }
-    }
-
-    func createBodyElement(_ element: PostElement) -> UIView?{
-        if case let .text(text) = element {
-            let textView = UITextView()
-            textView.isScrollEnabled = false
-            textView.text = text
-            textView.delegate = self
-            return textView
-        }
-        else if case let .image(imageWrapper) = element {
-            switch imageWrapper {
-            case .image(let image):
-                let imageView = UIImageView(image: image)
-                imageView.contentMode = .scaleAspectFit
-                imageView.clipsToBounds = true
-                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
-                return imageView
-            case .url(let url):
-                if let url = URL(string: url) {
-                    let imageView = UIImageView()
-                    imageView.loadFromURL(url: url) { image in
-                        imageView.contentMode = .scaleAspectFit
-                        imageView.clipsToBounds = true
-                        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
-                    }
-                    return imageView
-                }
-            }
-        }
-        return nil
+    func addNewImage(image: UIImage) {
+        let newString = NSMutableAttributedString()
+        guard let fullString = textView.attributedText else { return }
+        newString.insert(fullString, at: 0)
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = image
+        imageAttachment.bounds = CGRect(x: 0, y: 0, width: textView.bounds.width, height: 200)
+        let imageString = NSAttributedString(attachment: imageAttachment)
+        newString.append(imageString)
+        textView.attributedText = newString
     }
     
-    @IBAction func pressText(_ sender: Any) {
-        addNewElement(element: .text("This is some text"))
-    }
+
+//    func createBodyElement(_ element: PostElement) -> UIView?{
+//        if case let .text(text) = element {
+//            let textView = UITextView()
+//            textView.isScrollEnabled = false
+//            textView.text = text
+//            textView.delegate = self
+//            return textView
+//        }
+//        else if case let .image(imageWrapper) = element {
+//            switch imageWrapper {
+//            case .image(let image):
+//                let imageView = UIImageView(image: image)
+//                imageView.contentMode = .scaleAspectFit
+//                imageView.clipsToBounds = true
+//                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
+//                return imageView
+//            case .url(let url):
+//                if let url = URL(string: url) {
+//                    let imageView = UIImageView()
+//                    imageView.loadFromURL(url: url) { image in
+//                        imageView.contentMode = .scaleAspectFit
+//                        imageView.clipsToBounds = true
+//                        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: image.size.width / image.size.height).isActive = true
+//                    }
+//                    return imageView
+//                }
+//            }
+//        }
+//        return nil
+//    }
+    
 
     @IBAction func pressImage(_ sender: Any) {
         selectPicture()
@@ -154,9 +143,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage  {
             let wrapper = DraftImage.image(editedImage)
-            addNewElement(element: .image(wrapper))
-            addNewElement(element: .text(""))
-            handler?.addedImage(image: editedImage, at: max(0, (layout?.count ?? 0) - 1))
+            addNewImage(image: editedImage)
         } else {
             return
         }
@@ -181,11 +168,11 @@ extension DraftPostViewController {
         textView.resignFirstResponder()
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        if let index = stackView.arrangedSubviews.index(of: textView) {
-            handler?.updatePostElement(element: PostElement.text(textView.text), at: Int(index))
-        }
-    }
+//    func textViewDidChange(_ textView: UITextView) {
+//        if let index = stackView.arrangedSubviews.index(of: textView) {
+//            handler?.updatePostElement(element: PostElement.text(textView.text), at: Int(index))
+//        }
+//    }
 }
 
 
