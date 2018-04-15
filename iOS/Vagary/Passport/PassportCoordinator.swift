@@ -60,7 +60,6 @@ extension PassportCoordinator: CreateTripHandler, ImageSelectorHandler {
     
     func selectCoverImage(image: UIImage) {
         var url: String = ""
-        ViaStore.sharedStore.dispatch(PassportAction.setNewTripImage(DraftImage.image(image)))
         firstly {
             self.apiService.getPostImageURL(fileType: "jpeg")
         }.then{ response -> Promise<Void> in
@@ -71,7 +70,10 @@ extension PassportCoordinator: CreateTripHandler, ImageSelectorHandler {
                 return Promise(error: DraftCoordinatorError.invalidImageData)
             }
         }.then { response -> Void in
-            ViaStore.sharedStore.dispatch(PassportAction.setNewTripImage(DraftImage.url(url)))
+            guard let url = URL(string: url) else {
+                throw ImageError.invalidUrl
+            }
+            ViaStore.sharedStore.dispatch(PassportAction.setNewTripImage(PostImage(url: url)))
         }
     }
     
@@ -81,11 +83,9 @@ extension PassportCoordinator: CreateTripHandler, ImageSelectorHandler {
             let image = ViaStore.sharedStore.state.authenticatedState?.passport.newTripImage else {
                 return
         }
-        if case .url(let url) = image {
-            let _ = apiService.createTrip(title: title, image: url).then { response -> Void in
-                if response.success {
-                    self.rootPresenter?.dismiss(animated: true)
-                }
+        let _ = apiService.createTrip(title: title, image: image.url.absoluteString).then { response -> Void in
+            if response.success {
+                self.rootPresenter?.dismiss(animated: true)
             }
         }
     }

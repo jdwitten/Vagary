@@ -56,8 +56,8 @@ class TravelApi: APIService {
     }
 
     func createDraft() -> Promise<DraftResponse> {
-        let post = Draft(id: 1, author: 1, content: [], title: "", trip: Trip(id: 0, title: "", posts: []), location: "", coverImage: DraftImage.url(""))
-        return Promise(value: DraftResponse(draft: post))
+        let draft = Draft(id: 1, author: 1, content: nil, title: nil, trip: nil, location: nil, coverImage: nil)
+        return Promise(value: DraftResponse(draft: draft))
     }
 
     func createPost(draft: Draft) -> Promise<CreatePostResponse> {

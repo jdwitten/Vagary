@@ -20,7 +20,7 @@ enum DraftAction: Action {
     case setContent([PostElement])
     case appendDraftElement(PostElement)
     case updateElement(PostElement, Int)
-    case setCoverImage(DraftImage)
+    case setCoverImage(PostImage)
 }
 
 struct DraftReducer: SubstateReducer {

@@ -46,13 +46,12 @@ extension UIImageView{
     
 }
 
-public enum DraftImage: Codable {
-    case image(UIImage)
-    case url(String)
+public struct DraftImage: Codable {
     
-    public enum CodingKeys: String, CodingKey {
-        case image
-        case url
+    var image: UIImage
+    
+    public init(image: UIImage) {
+        self.image = image
     }
     
     public init(from decoder: Decoder) throws {
@@ -62,49 +61,10 @@ public enum DraftImage: Codable {
             guard let image = UIImage(data: data) else {
                 throw CacheError.FetchingError
             }
-            self = .image(image)
-        } else if container.contains(.url) {
-            let url = try container.decode(String.self, forKey: CodingKeys.url)
-            self = .url(url)
+            self.image = image
         } else {
             throw CacheError.FetchingError
         }
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .image(let image):
-            guard let data = UIImageJPEGRepresentation(image, 1.0) else {
-                throw CacheError.InsertError
-            }
-                
-            try container.encode(data, forKey: CodingKeys.image)
-        case .url(let url):
-            try container.encode(url, forKey: .url)
-        }
-    }
-}
-
-public struct ImageWrapper: Codable {
-    public let image: UIImage
-    
-    public enum CodingKeys: String, CodingKey {
-        case image
-    }
-    
-    public init(image: UIImage) {
-        self.image = image
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let data = try container.decode(Data.self, forKey: CodingKeys.image)
-        guard let image = UIImage(data: data) else {
-            throw CacheError.FetchingError
-        }
-        
-        self.image = image
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -115,7 +75,12 @@ public struct ImageWrapper: Codable {
         
         try container.encode(data, forKey: CodingKeys.image)
     }
+    
+    public enum CodingKeys: String, CodingKey {
+        case image
+    }
 }
 
-
-
+public struct PostImage: Codable {
+    var url: URL
+}

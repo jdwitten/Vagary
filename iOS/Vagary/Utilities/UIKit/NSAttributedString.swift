@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 extension NSAttributedString {
-    var postElements: [PostElement] {
-        var elements: [PostElement] = []
+    var draftElements: [DraftElement] {
+        var elements: [DraftElement] = []
         self.enumerateAttributes(in: NSMakeRange(0, self.length), options: .longestEffectiveRangeNotRequired) { object, range, stop in
             if object.keys.contains(NSAttributedStringKey.attachment) {
                 if let attachment = object[NSAttributedStringKey.attachment] as? NSTextAttachment {
                     if let image = attachment.image {
-                        elements.append(.image(DraftImage.image(image)))
+                        elements.append(.image(DraftImage(image: image)))
                     }
                 }
             }else {

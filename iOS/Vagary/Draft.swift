@@ -15,7 +15,7 @@ struct Draft: Codable {
     var title: String?
     var trip: Trip?
     var location: String?
-    var coverImage: DraftImage?
+    var coverImage: PostImage?
 }
 
 extension Draft: Equatable {
@@ -29,13 +29,8 @@ extension Draft {
         var s: String = ""
         for element in content ?? [] {
             switch element {
-            case .image(let wrapper):
-                switch wrapper {
-                case .image(let image):
-                    break
-                case .url(let url):
-                    s.append(contentsOf: " ![image](\(url))")
-                }
+            case .image(let image):
+                s.append(contentsOf: " ![image](\(image.url.absoluteURL))")
             case .text(let text):
                 s.append(contentsOf: " ")
                 s.append(contentsOf: text)

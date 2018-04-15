@@ -58,7 +58,7 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     @objc func doneEditing(sender: UIBarButtonItem) {
-        let elements = textView.attributedText.postElements
+        let elements = textView.attributedText.draftElements
         handler?.finishEditingDraft(content: elements)
     }
     
@@ -142,7 +142,6 @@ class DraftPostViewController: UIViewController, UITextViewDelegate, UIImagePick
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage  {
-            let wrapper = DraftImage.image(editedImage)
             addNewImage(image: editedImage)
         } else {
             return

@@ -7,8 +7,8 @@
 //
 
 import Foundation
-enum PostElement: Codable{
-    case image(DraftImage)
+enum PostElement: Codable {
+    case image(PostImage)
     case text(String)
 }
 
@@ -20,7 +20,7 @@ extension PostElement {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let image = try container.decodeIfPresent(DraftImage.self, forKey: .image) {
+        if let image = try container.decodeIfPresent(PostImage.self, forKey: .image) {
             self = .image(image)
             return
         }
@@ -38,5 +38,38 @@ extension PostElement {
         case .text(let text):
             try container.encode(text, forKey: .text)
         }
+    }
+}
+
+enum DraftElement: Codable {
+    case image(DraftImage)
+    case text(String)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let image = try container.decodeIfPresent(DraftImage.self, forKey: .image) {
+            self = .image(image)
+            return
+        }
+        if let text = try container.decodeIfPresent(String.self, forKey: .text){
+            self = .text(text)
+            return
+        }
+        throw CacheError.FetchingError
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .image(let image):
+            try container.encode(image, forKey: .image)
+        case .text(let text):
+            try container.encode(text, forKey: .text)
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case image
+        case text
     }
 }

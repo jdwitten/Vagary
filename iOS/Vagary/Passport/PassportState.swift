@@ -14,7 +14,7 @@ struct PassportState: StateType {
     var trips: Loaded<[Trip]> = .loaded(data: [])
     var selectedTrip: Trip?
     var selectedTripPosts: Loaded<[Post]> = .loaded(data: [])
-    var newTripImage: DraftImage?
+    var newTripImage: PostImage?
     var newTripTitle: String?
 }
 
@@ -24,7 +24,7 @@ enum PassportAction: Action {
     case tripDetailResponse(Loaded<Trip>)
     case tripDetailPostsResponse(Loaded<[Post]>)
     case showTripDetail(Int)
-    case setNewTripImage(DraftImage)
+    case setNewTripImage(PostImage)
     case setNewTripTitle(String)
     case endNewTrip
 }
